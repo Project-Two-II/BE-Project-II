@@ -1,0 +1,11 @@
+## Sakai LMS
+
+The Sakai Project began as a $6.8 million community source software development project started as a partnership between four universities: Indiana University, University of Michigan, Stanford University, and the University of Massachusetts Institute of Technology and two well-established higher education projects in the uPortal activity and Open Knowledge Initiative (OKI). The purpose of the project was to produce open-source collaboration and Learning Environment (CLE) software by integrating and synchronizing their many educational software into a pre-integrated collection of open-source tools[1,2].
+
+The project was first released in March 2005 using Java programming language. The system of the Sakai project can also be considered a Learning Management System (LMS), Course Management System(CMS), or Virtual Learning Environment(VLE). This is an open-source education software platform designed to support Enterprise services-based portal, a complete course management system with sophisticated assessment tools, a research support collaboration system, a workflow engine, and a tool portability profile. The Sakai LMS can be downloaded and used freely from sakailms.org. After registration, it gives a beautiful dashboard where a user can edit/setup his/her profile, read and add the contents, add a group, create a research project and a course. Sakai is used by hundreds of institutions as their primary LMS, mainly in USA but also in Canada, Europe, Asia, Africa, and Australia. Sakai provides the flexibility of customization, third-party software integration, resource sharing, online discussion, etc., and hence supports improving teaching quality[1,2].
+
+The Sakai LMS can be useful for every subject as a general LMS, but in the case of programming subjects like C++, Data Structure and Algorithm(DSA), it fails to provide such a sandboxing environment where a user can write, compile and submit their code for evaluation.
+
+[1] Jovanovic S, Ignjatovic M. Implementing Sakai OAE. International Journal of Emerging Technologies in Learning (Online). 2013;8(1):64.
+
+[2] Farmer J, Dolphin I. Sakai: eLearning and more. EUNIS 2005-Leadership and Strategy in a Cyber-Infrastructure World. 2005 Jun.
