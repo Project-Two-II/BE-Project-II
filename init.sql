@@ -8,6 +8,8 @@ id of Table Course is course_id
 
 Create Database ELabx_db Default Character Set utf8;
 
+Use ELabx_db;
+
 -- Table definition begins here
 
 -- Todo? what to do with thumbnail? using a BLOB or storing path to the file?
