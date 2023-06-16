@@ -1,0 +1,9 @@
+.idea
+venv
+
+*/__pycache__
+
+elabx_db.sqlite3
+
+mysql.conf
+models.py
