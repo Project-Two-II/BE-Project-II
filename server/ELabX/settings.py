@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'ELabX.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'elabx_db.sqlite3',
     }
 }
 
@@ -127,6 +127,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Path where static files are stored
+STATICFILES_DIRS = [
+    BASE_DIR / "staticfiles",
+]
+
+# Base url to serve media files
+MEDIA_URL = "/media/"
+
+# Path where media is stored
+MEDIA_ROOT = BASE_DIR / "mediafiles/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
