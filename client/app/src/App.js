@@ -1,9 +1,26 @@
 import './App.css';
+// import { Editor } from 'monaco-editor';
+import Editor from "@monaco-editor/react";
+import React from 'react';
 
-function App() {
+function App({
+  defaultLang
+}) {
   return (
     <div className="App">
-      This is ELabX by ARBA &lt;3
+      <header>Blah</header>
+      <div className="body">
+        <div className="course">
+
+        </div>
+        <Editor
+          height="100vh"
+          width="50%"
+          defaultLanguage={defaultLang}
+          theme="vs-dark"
+        />
+      </div>
+
     </div>
   );
 }
