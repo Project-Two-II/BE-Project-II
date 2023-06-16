@@ -24,7 +24,8 @@ urlpatterns = [
 ]
 
 # urlpatterns to serve static files
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # urlpatterns to serve user uploaded media files
 if settings.DEBUG:
