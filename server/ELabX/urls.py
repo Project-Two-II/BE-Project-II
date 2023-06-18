@@ -23,7 +23,7 @@ from .views import home
 urlpatterns = [
     path("", home, name="home"),
     path('admin/', admin.site.urls),
-    path("subject/", include("subject.urls")),
+    path("api/subjects/", include("subject.urls")),
 ]
 
 # urlpatterns to serve static files
