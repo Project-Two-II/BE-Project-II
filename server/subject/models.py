@@ -27,7 +27,7 @@ class Chapter(models.Model):
     """
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name="chapters")
 
     class Meta:
         db_table = "Chapter_elabx"
@@ -43,7 +43,7 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=225, unique=True)
     description = models.TextField()
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="questions")
 
     class Meta:
         db_table = "Question_elabx"
@@ -58,7 +58,7 @@ class Test(models.Model):
     One question can have one test.
     """
     source_code = models.TextField()
-    question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    question = models.OneToOneField(Question, on_delete=models.CASCADE, related_name="test")
 
     class Meta:
         db_table = "Test_elabx"
