@@ -57,6 +57,9 @@ class WorkerAPI {
         }
         break;
       }
+      // guaranteed it will never reach here
+      default:
+        break;
     }
   }
 }

@@ -27,8 +27,6 @@ const EditorNav = (props) => {
 
   function RunClickHandler(e){
     e.preventDefault();
-    console.log(props.sourceCode);
-    console.log(props.my_api);
     props.my_api.compileLinkRun(props.sourceCode);
     
   }
