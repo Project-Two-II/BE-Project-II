@@ -6,7 +6,8 @@ from .views import (
     ChapterListApiView,
     ChapterDetailApiView,
     QuestionListApiView,
-    QuestionDetailApiView
+    QuestionDetailApiView,
+    TestApiView
 )
 
 urlpatterns = [
@@ -17,4 +18,6 @@ urlpatterns = [
     path("<int:subject_id>/chapters/<int:chapter_id>/questions/", QuestionListApiView.as_view(), name="question-list"),
     path("<int:subject_id>/chapters/<int:chapter_id>/questions/<int:question_id>/",
          QuestionDetailApiView.as_view(), name="question-detail"),
+    path("<int:subject_id>/chapters/<int:chapter_id>/questions/<int:question_id>/test/",
+         TestApiView.as_view(), name="question-detail"),
 ]
