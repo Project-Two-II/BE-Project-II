@@ -1,0 +1,12 @@
+.idea
+venv
+
+*/__pycache__
+*/*/__pycache__
+
+*/migrations
+
+elabx_db.sqlite3
+
+mysql.conf
+inti_db.py
