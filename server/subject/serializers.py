@@ -15,7 +15,7 @@ class TestSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    test = TestSerializer(read_only=True)
+    # test = TestSerializer(read_only=True)
 
     class Meta:
         model = Question
@@ -23,7 +23,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class ChapterSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, read_only=True)
+    # questions = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chapter
@@ -31,7 +31,7 @@ class ChapterSerializer(serializers.ModelSerializer):
 
 
 class SubjectSerializer(serializers.ModelSerializer):
-    chapters = ChapterSerializer(many=True, read_only=True)
+    # chapters = ChapterSerializer(many=True, read_only=True)
 
     class Meta:
         model = Subject
