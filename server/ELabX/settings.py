@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "subject.apps.SubjectConfig",    # subject app
+    "userauth.apps.UserauthConfig",   # local app for user authentication
 
     "rest_framework"
 ]
@@ -147,3 +148,6 @@ MEDIA_ROOT = BASE_DIR / "mediafiles/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Default auth user model
+AUTH_USER_MODEL = "userauth.User"
