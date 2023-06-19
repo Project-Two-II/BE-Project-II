@@ -2,7 +2,7 @@ import './App.css';
 import Editor from "@monaco-editor/react";
 import {React, useState} from 'react';
 
-import WorkerAPI from './wasm-clang-exp/shared_web.js';
+import WorkerAPI from './shared_web.js';
 
 
 const EditorNav = (props) => {
