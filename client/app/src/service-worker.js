@@ -74,6 +74,7 @@ const expectedCaches = [CACHE_NAME];
 
 
 self.addEventListener('install', event => {
+  console.log("Install fired")
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
