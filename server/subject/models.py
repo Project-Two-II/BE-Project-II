@@ -1,5 +1,7 @@
 from django.db import models
 
+from userauth.models import User
+
 SUB_THUMB_DIR = "subject_thumb/"
 DEFAULT_SUB_THUMB = "subject_thumb/default.png"
 
@@ -10,6 +12,7 @@ class Subject(models.Model):
     """
     code_no = models.CharField(unique=True, max_length=50)
     title = models.CharField(unique=True, max_length=255)
+    users = models.ManyToManyField(User)
     description = models.TextField()
     thumbnail = models.ImageField(default=DEFAULT_SUB_THUMB, upload_to=SUB_THUMB_DIR, blank=True)
 
