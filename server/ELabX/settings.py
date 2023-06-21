@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     "subject.apps.SubjectConfig",    # subject app
     "userauth.apps.UserauthConfig",   # local app for user authentication
+    "submission.apps.SubmissionConfig",  # local app for post solution submission
 
     "rest_framework",
     "rest_framework_simplejwt"
