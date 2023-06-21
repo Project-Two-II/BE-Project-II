@@ -13,9 +13,9 @@ class User(AbstractUser):
         ("student", "Student"),
         ("teacher", "Teacher")
     )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="student")
 
-    objects = UserManager
+    objects = UserManager()
 
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = ["email"]
