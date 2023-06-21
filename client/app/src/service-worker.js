@@ -77,10 +77,10 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
-        './wasm-clang/memfs',
-        './wasm-clang/shared.js',
-        './wasm-clang/shared_web.js',
-        './wasm-clang/worker.js',
+        'memfs',
+        'shared.js',
+        '../src/shared_web.js',
+        'worker.js',
       ]);
     })
   );
@@ -93,7 +93,7 @@ self.addEventListener('activate', event => {
       keys.map(key => {
         if (!expectedCaches.includes(key)) {
           return caches.delete(key);
-        }
+        } else return null
       })
     ))
   );
