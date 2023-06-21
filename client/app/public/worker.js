@@ -5,6 +5,7 @@ let api;
 let port;
 
 const apiOptions = {
+
   async readBuffer(filename) {
     const response = await fetch(filename);
     return response.arrayBuffer();
@@ -31,8 +32,6 @@ const onAnyMessage = async event => {
 
   case 'compileLinkRun':
     if (currentApp) {
-      console.log('First, disallowing rAF from previous app.');
-      // Stop running rAF on the previous app, if any.
       currentApp.allowRequestAnimationFrame = false;
     }
     currentApp = await api.compileLinkRun(event.data.data);

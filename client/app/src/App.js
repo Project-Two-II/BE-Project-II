@@ -4,6 +4,9 @@ import Footer from './components/footer.js';
 import Header from './components/header.js'; 
 import Body from './components/Body.js';
 
+import WorkerAPI from './shared_web.js';
+
+
 const CourseHeader = () => {
     const headerStyle = {
       height: "18vh",
@@ -25,12 +28,15 @@ const CourseHeader = () => {
     );
   }
 
-function App() {
+const App = () => {
+
+  let api = new WorkerAPI();
+
   return (
     <div className="App">
       <Header />
       <CourseHeader />
-      <Body />
+      <Body my_api={api}/>
       <Footer />
     </div>
   );
