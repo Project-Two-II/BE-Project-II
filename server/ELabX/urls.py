@@ -24,7 +24,8 @@ urlpatterns = [
     path("", home, name="home"),
     path('admin/', admin.site.urls),
     path("api/subjects/", include("subject.urls")),
-    path("api/userauth/", include("userauth.urls"))
+    path("api/userauth/", include("userauth.urls")),
+    path("api/submission/", include("submission.urls"))
 ]
 
 # urlpatterns to serve static files
