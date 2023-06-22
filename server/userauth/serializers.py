@@ -18,7 +18,7 @@ class UserLoginSerializer(serializers.Serializer):
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ("email", "username", "password")
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
@@ -28,10 +28,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ("id", "email", "username")
 
 
 class ProfileSerializer(UserSerializer):
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = ("avatar", "bio")
