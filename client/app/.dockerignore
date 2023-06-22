@@ -1,0 +1,10 @@
+# Exclude development related files
+
+build
+node_modules
+
+
+# Exclude docker related files
+
+Dockerfile
+.dockerignore
