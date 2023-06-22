@@ -4,7 +4,6 @@ import Question from './Question.js';
 import Editor from './Editor.js'
 import EditorWindow from "@monaco-editor/react";
 
-
 function Body() {
   return (
     <div className="body">
