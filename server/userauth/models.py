@@ -10,10 +10,10 @@ DEFAULT_AVATAR = "user_avatar/default.png"
 class User(AbstractUser):
     email = models.EmailField(verbose_name="Email address", unique=True)
     ROLE_CHOICES = (
-        ("student", "Student"),
-        ("teacher", "Teacher")
+        (0, "Student"),
+        (1, "Teacher")
     )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="student")
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=0)
 
     objects = UserManager()
 
