@@ -10,7 +10,6 @@ __pycache__
 */*/__pycache__
 venv
 */migrations
-elabx_db.sqlite3
 inti_db.py
 mysql.conf
 

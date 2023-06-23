@@ -18,7 +18,7 @@ class TestApiView(APIView):
     """
     CRUD for test of a question
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -78,7 +78,7 @@ class QuestionListApiView(APIView):
     """
     Return list of all the question under that chapter
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -101,7 +101,7 @@ class QuestionDetailApiView(APIView):
     """
     Return the detail of a question
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -150,7 +150,7 @@ class ChapterListApiView(APIView):
     """
     It shows the list of all available chapters under that subject
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         chapters = Chapter.objects.filter(subject=subject_id)
@@ -170,7 +170,7 @@ class ChapterDetailApiView(APIView):
     """
     Shows details of a chapter.
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get_object(self, subject_id, chapter_id):
         try:
@@ -216,7 +216,7 @@ class SubjectListApiView(APIView):
     """
     It shows the list of all available subjects
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get(self, request, *args, **kwargs):
         subjects = Subject.objects.all()
@@ -235,7 +235,7 @@ class SubjectDetailApiView(APIView):
     """
     Shows details of a Subject.
     """
-    permission_classes = (IsAuthenticated, BaseAccessPermission)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get_object(self, subject_id):
         try:

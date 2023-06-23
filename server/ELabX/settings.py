@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "rest_framework_simplejwt",
-    "django_extensions",
+    # "django_extensions",
     "corsheaders",
 ]
 
@@ -161,14 +161,14 @@ AUTH_USER_MODEL = "userauth.User"
 
 # Add the authentication and permission classes
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    # 'DEFAULT_PERMISSION_CLASSES': [],
-    # 'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 # Configure JWT settings
