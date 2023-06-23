@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route index element={<Syllabus />}/>
         <Route path="/questionSolve" element={<QuestionSolve />}/>
+        <Route path='/' element={<Syllabus />}/>
       </Routes>
       <Footer />
     </div>
