@@ -14,7 +14,7 @@ function App() {
       <CourseHeader />
       <Routes>
         <Route index element={<Syllabus />}/>
-        <Route path="/questionSolve" element={<QuestionSolve />}/>
+        <Route path="/questionSolve/:id" element={<QuestionSolve />}/>
         <Route path='/' element={<Syllabus />}/>
       </Routes>
       <Footer />

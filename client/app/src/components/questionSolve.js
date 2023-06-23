@@ -3,14 +3,17 @@ import '../App.css';
 import Question from './Question.js';
 import Editor from './Editor.js'
 import EditorWindow from "@monaco-editor/react";
+import { useLocation } from 'react-router-dom';
 
-function questionSolve() {
+
+function QuestionSolve() {
+  let { state } = useLocation();
   return (
     <div className="body">
-      <Question />
+      <Question state={state.title}/>
       <Editor />
     </div>
   );
 }
 
-export default questionSolve;
+export default QuestionSolve;
