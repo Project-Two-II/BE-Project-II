@@ -4,8 +4,7 @@ import Question from './Question.js';
 import Editor from './Editor.js'
 import EditorWindow from "@monaco-editor/react";
 
-
-function Body() {
+function questionSolve() {
   return (
     <div className="body">
       <Question />
@@ -14,4 +13,4 @@ function Body() {
   );
 }
 
-export default Body
+export default questionSolve;
