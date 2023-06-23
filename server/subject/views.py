@@ -2,8 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
-
+from .permissions import BaseAccessPermission
 from .models import Subject, Chapter, Question, Test
 from .serializers import (
     SubjectSerializer,
@@ -14,6 +15,11 @@ from .serializers import (
 
 
 class TestApiView(APIView):
+    """
+    CRUD for test of a question
+    """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get_object(self, subject_id, chapter_id, question_id):
         try:
             subject = get_object_or_404(Subject, id=subject_id)
@@ -69,6 +75,11 @@ class TestApiView(APIView):
 
 
 class QuestionListApiView(APIView):
+    """
+    Return list of all the question under that chapter
+    """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
         chapter = get_object_or_404(Chapter, id=chapter_id, subject=subject)
@@ -87,6 +98,11 @@ class QuestionListApiView(APIView):
 
 
 class QuestionDetailApiView(APIView):
+    """
+    Return the detail of a question
+    """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get_object(self, subject_id, chapter_id, question_id):
         try:
             subject = get_object_or_404(Subject, id=subject_id)
@@ -132,12 +148,10 @@ class QuestionDetailApiView(APIView):
 
 class ChapterListApiView(APIView):
     """
-    It shows the list of all available chapters
-    TODO:
-        - only access to authenticated user
-        - Student can access only GET request
-        - Teacher can access both GET and POST request
+    It shows the list of all available chapters under that subject
     """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get(self, request, subject_id, *args, **kwargs):
         chapters = Chapter.objects.filter(subject=subject_id)
         serializer = ChapterSerializer(chapters, many=True)
@@ -154,12 +168,10 @@ class ChapterListApiView(APIView):
 
 class ChapterDetailApiView(APIView):
     """
-    Shows details of a Subject.
-    TODO:
-        - only access to authenticated user, GET request
-        - Add put and delete request
-        - Only teacher who create this subject can access PUT, and DELETE request
+    Shows details of a chapter.
     """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get_object(self, subject_id, chapter_id):
         try:
             return Chapter.objects.get(subject=subject_id, id=chapter_id)
@@ -203,11 +215,9 @@ class ChapterDetailApiView(APIView):
 class SubjectListApiView(APIView):
     """
     It shows the list of all available subjects
-    TODO:
-        - only access to authenticated user
-        - Student can access only GET request
-        - Teacher can access both GET and POST request
     """
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
+
     def get(self, request, *args, **kwargs):
         subjects = Subject.objects.all()
         serializer = SubjectSerializer(subjects, many=True)
@@ -224,17 +234,8 @@ class SubjectListApiView(APIView):
 class SubjectDetailApiView(APIView):
     """
     Shows details of a Subject.
-    TODO:
-        - only access to authenticated user, GET request
-        - Add put and delete request
-        - Only teacher who create this subject can access PUT, and DELETE request
     """
-
-    # def get(self, request, subject_id, *args, **kwargs):
-    #     subject = get_object_or_404(Subject, id=subject_id)
-    #
-    #     serializer = SubjectSerializer(subject)
-    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    # permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get_object(self, subject_id):
         try:
