@@ -1,7 +1,9 @@
 import {React, useState} from 'react'
 import EditorWindow from "@monaco-editor/react";
 
+const initialHeader = "#include <iostream>\n";
 
+const myMain = "int main(){try{}}"
 
 function Editor({defaultLang, api}) {
 
@@ -11,6 +13,7 @@ function Editor({defaultLang, api}) {
    setCode(code)
   }
 
+  
   
   const RunClickHandler = (e) => {
     e.preventDefault();

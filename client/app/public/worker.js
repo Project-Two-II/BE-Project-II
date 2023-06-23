@@ -38,6 +38,9 @@ const onAnyMessage = async event => {
     console.log(`finished compileLinkRun. currentApp = ${currentApp}.`);
     break;
   }
+
+
+
 };
 
 self.onmessage = onAnyMessage;

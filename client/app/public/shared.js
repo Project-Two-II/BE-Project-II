@@ -463,6 +463,7 @@ class API {
       '-ferror-limit', '19',
       '-fmessage-length', '80',
       '-fcolor-diagnostics',
+      '-fexceptions',
     ];
 
     this.memfs = new MemFS({
