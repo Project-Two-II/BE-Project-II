@@ -7,7 +7,7 @@ import EditorWindow from "@monaco-editor/react";
 import { useLocation } from 'react-router-dom';
 
 
-function QuestionSolve() {
+function QuestionSolve({my_api}) {
   let { state } = useLocation();
   return (
     <div className="body">
