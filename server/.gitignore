@@ -1,0 +1,12 @@
+.idea
+venv
+
+__pycache__
+*/__pycache__
+*/*/__pycache__
+
+*/migrations
+
+
+mysql.conf
+inti_db.py

@@ -3,14 +3,18 @@ import '../App.css';
 import Question from './Question.js';
 import Editor from './Editor.js'
 
+import EditorWindow from "@monaco-editor/react";
+import { useLocation } from 'react-router-dom';
 
-function questionSolve({my_api}) {
+
+function QuestionSolve() {
+  let { state } = useLocation();
   return (
     <div className="body">
-      <Question />
-      <Editor defaultLang = "cpp" api = {my_api}/>
+      <Question state={state.title}/>
+      <Editor defaultLang = "cpp" api = {my_api} />
     </div>
   );
 }
 
-export default questionSolve;
+export default QuestionSolve;

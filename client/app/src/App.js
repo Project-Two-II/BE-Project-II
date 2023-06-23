@@ -20,7 +20,7 @@ const App = () => {
       <CourseHeader />
       <Routes>
         <Route index element={<Syllabus />}/>
-        <Route path="/questionSolve" element={<QuestionSolve my_api={api}/>}/>
+        <Route path="/questionSolve/:id" element={<QuestionSolve my_api={api}/>}/>
         <Route path='/' element={<Syllabus />}/>
       </Routes>
       <Footer/>
