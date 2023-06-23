@@ -4,7 +4,7 @@ import Question from './Question.js';
 import Editor from './Editor.js'
 
 
-function Body({my_api}) {
+function questionSolve({my_api}) {
   return (
     <div className="body">
       <Question />
@@ -13,4 +13,4 @@ function Body({my_api}) {
   );
 }
 
-export default Body
+export default questionSolve;
