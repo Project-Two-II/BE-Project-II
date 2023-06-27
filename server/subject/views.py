@@ -119,7 +119,7 @@ class QuestionDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = TestSerializer(question)
+        serializer = QuestionSerializer(question)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
@@ -209,24 +209,31 @@ class ChapterDetailApiView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         chapter.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_209_NO_CONTENT)
 
 
 class SubjectListApiView(APIView):
     """
     It shows the list of all available subjects
+    Any Teacher can send POST request,
+    and associated user can send GET request
     """
     permission_classes = (IsAuthenticated, BaseAccessPermission)
 
     def get(self, request, *args, **kwargs):
         subjects = Subject.objects.all()
-        serializer = SubjectSerializer(subjects, many=True)
+        serializer = SubjectSerializer(subjects, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        serializer = SubjectSerializer(data=request.data)
+        serializer = SubjectSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
-            serializer.save()
+            subject = serializer.save()
+
+            # make requested user a teacher of this subject
+            subject.teachers.add(request.user)
+
+            # return response
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -250,7 +257,7 @@ class SubjectDetailApiView(APIView):
                 {"detail": "Subject does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        serializer = SubjectSerializer(subject)
+        serializer = SubjectSerializer(subject, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, subject_id, *args, **kwargs):
@@ -260,7 +267,7 @@ class SubjectDetailApiView(APIView):
                 {"detail": "Subject does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = SubjectSerializer(subject, data=request.data)
+        serializer = SubjectSerializer(subject, data=request.data, partial=True, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
