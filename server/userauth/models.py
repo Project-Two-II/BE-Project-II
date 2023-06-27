@@ -32,6 +32,12 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    def is_teacher(self):
+        return self.role == "Teacher"
+
+    def is_student(self):
+        return self.role == "Student"
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
