@@ -1,24 +1,38 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import EditorWindow from "@monaco-editor/react";
 
 const initialHeader = "#include <iostream>\n";
 
-const myMain = "int main(){try{}}"
 
 function Editor({defaultLang, api}) {
 
   const [code, setCode] = useState("")
+  const [testCode, setTestCode] = useState("");
 
   const handleCodeChange = (code) => {
    setCode(code)
   }
 
-  
+  function getData() {
+    fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/1/test/")
+        .then(resp => resp.json())
+        .then(data => {
+          setTestCode(data.source_code)
+        })
+        .catch(err => console.log(err))
+}
   
   const RunClickHandler = (e) => {
     e.preventDefault();
-    api.compileLinkRun(code);
+    let finalCode = initialHeader + code + testCode;
+    api.compileLinkRun(finalCode);
   }
+
+  useEffect(() => {
+    getData()
+}, []);
+
+
   
   return (
     <div className="editorSection">
