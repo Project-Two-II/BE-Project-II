@@ -31,8 +31,23 @@ class ChapterSerializer(serializers.ModelSerializer):
 
 
 class SubjectSerializer(serializers.ModelSerializer):
+    """
+    Display all the fields, if the request method is GET
+    For POST and PUT there are only certain fields
+    """
     # chapters = ChapterSerializer(many=True, read_only=True)
 
     class Meta:
         model = Subject
         fields = "__all__"
+
+    def get_fields(self, *args, **kwargs):
+        fields = self.Meta.fields
+        if self.request.method in ["POST", "PUT"]:
+            fields = [
+                "code_no",
+                "title",
+                "description",
+                "thumbnail",
+            ]
+        return fields
