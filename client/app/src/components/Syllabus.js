@@ -4,7 +4,6 @@ import arrowIcon from '../media/arrowicon.png'
 import { Link } from 'react-router-dom'
 import { QuestionSolve } from './questionSolve'
 import { useEffect, useState } from 'react';
-import chapterQuestion from '../data'
 
 const iconStyle = {
     width: "5%",
@@ -64,11 +63,6 @@ function Syllabus() {
             .then(resp => resp.json())
             .then(data => {
                 setChapterList(data)
-                // data.forEach((elt) => {
-                //     console.log(elt.title)
-                //     setChapterList(elt.title)
-                // }
-                // )
             })
             .catch(err => console.log(err))
     }

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 
 function Question(props) {
-  console.log(props)
   return (
     <div className="question">
       <div className=" ques questionTitle">{props.state}</div>
