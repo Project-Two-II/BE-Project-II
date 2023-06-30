@@ -1,17 +1,48 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
+from userauth.models import User
+from userauth.serializers import UserSerializer
 from .permissions import SubjectAccessPermission
-from .models import Subject, Chapter, Question, Test
+from .models import Subject, Chapter, Question, Test, SubjectGroup
 from .serializers import (
     SubjectSerializer,
     ChapterSerializer,
     QuestionSerializer,
-    TestSerializer
+    TestSerializer,
+    SubjectGroupSerializer
 )
+
+
+class SubjectGroupAPIView(APIView):
+    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+
+    def get(self, request, *args, **kwargs):
+        # Get group and students from request
+        group = SubjectGroup.objects.get(id=kwargs["pk"])
+        students = group.students.all()
+
+        data = {
+            "group": SubjectGroupSerializer(group).data,
+            "students": UserSerializer(students, many=True).data
+        }
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        # get group and user from request
+        group = SubjectGroup.objects.get(id=kwargs["pk"])
+        student = User.objects.get(id=request.data["user_id"])
+
+        # Add user in that group
+        group.students.add(student)
+        group.save()
+
+        serializer = SubjectGroupSerializer(group)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class TestApiView(APIView):

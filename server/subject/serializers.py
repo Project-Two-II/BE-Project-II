@@ -4,8 +4,15 @@ from .models import (
     Subject,
     Chapter,
     Question,
-    Test
+    Test,
+    SubjectGroup
 )
+
+
+class SubjectGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubjectGroup
+        fields = "__all__"
 
 
 class TestSerializer(serializers.ModelSerializer):
