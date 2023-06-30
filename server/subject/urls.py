@@ -7,7 +7,8 @@ from .views import (
     ChapterDetailApiView,
     QuestionListApiView,
     QuestionDetailApiView,
-    TestApiView
+    TestApiView,
+    SubjectGroupAPIView
 )
 
 urlpatterns = [
@@ -25,4 +26,6 @@ urlpatterns = [
          QuestionDetailApiView.as_view(), name="question-detail"),
     path("<int:subject_id>/chapters/<int:chapter_id>/questions/<int:question_id>/test/",
          TestApiView.as_view(), name="question-detail"),
+    path("<int:subject_id>/group/",
+         SubjectGroupAPIView.as_view(), name="subject-group"),
 ]
