@@ -62,12 +62,12 @@ class Review(models.Model):
     """
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     message = models.TextField()
-    commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    commented_at = models.DateTimeField(auto_now_add=True)
+    reviewed_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    reviewed_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Review_elabx"
 
     def __str__(self):
-        return f"Comment of {self.commented_by.username}"
+        return f"Comment of {self.reviewed_by.username}"
