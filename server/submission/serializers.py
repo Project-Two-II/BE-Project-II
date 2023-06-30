@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Submission, Result, Comment
+from .models import Submission, Result, Review
 
 
 class SubmissionSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class ResultSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comment
+        model = Review
         fields = "__all__"

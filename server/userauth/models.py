@@ -3,17 +3,23 @@ from django.contrib.auth.models import AbstractUser
 
 from .managers import UserManager
 
-AVATAR_DIR = "user_avatar/"
-DEFAULT_AVATAR = "user_avatar/default.png"
+DEFAULT_AVATAR = "user_avatars/default.png"
+
+
+def upload_to_user_avatars(instance, filename):
+    """
+    Upload path for user Avatar
+    """
+    return f"user_avatars/{instance.user.role}/{filename}"
 
 
 class User(AbstractUser):
     email = models.EmailField(verbose_name="Email address", unique=True)
     ROLE_CHOICES = (
-        ("student", "Student"),
-        ("teacher", "Teacher")
+        (0, "Student"),
+        (1, "Teacher")
     )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="student")
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=0)
 
     objects = UserManager()
 
@@ -26,10 +32,16 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    def is_teacher(self):
+        return self.role == "Teacher"
+
+    def is_student(self):
+        return self.role == "Student"
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default=DEFAULT_AVATAR, upload_to=AVATAR_DIR)
+    avatar = models.ImageField(default=DEFAULT_AVATAR, upload_to=upload_to_user_avatars)
     bio = models.CharField(max_length=255, blank=True)
 
     class Meta:

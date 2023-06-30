@@ -6,7 +6,12 @@ from subject.models import Question
 
 
 class Submission(models.Model):
-    question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    """
+    Submission model, used to submit a solution by a user i.e. Student
+    A question can have multiple submission and a user can have multiple submission
+    A user and a question can have only one submission
+    """
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     solution = models.TextField()
     submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)
@@ -14,9 +19,11 @@ class Submission(models.Model):
 
     @property
     def status(self):
+        # check if the user submitted the question
         return Submission.objects.filter(question=self.question, submitted_by=self.submitted_by).exists()
 
     class Meta:
+        unique_together = ("question", "submitted_by")
         db_table = "Submission_elabx"
 
     def __str__(self):
@@ -24,7 +31,12 @@ class Submission(models.Model):
 
 
 class Result(models.Model):
-    submission = models.OneToOneField(Submission, on_delete=models.CASCADE)
+    """
+    Model to store Result. There are two types of Result
+    i. autograde, if the user have submission to particular question
+    ii. marks, given by teacher
+    """
+    submission = models.OneToOneField(Submission, on_delete=models.PROTECT)
     marks = models.PositiveIntegerField(
         validators=[
             MinValueValidator(0),
@@ -34,6 +46,7 @@ class Result(models.Model):
 
     @property
     def autograde(self):
+        # Autograde if user submits the solution of a question
         return self.submission.status
 
     class Meta:
@@ -43,15 +56,18 @@ class Result(models.Model):
         return f"Result of {self.submission.question.title}"
 
 
-class Comment(models.Model):
-    result = models.ForeignKey(Result, on_delete=models.CASCADE)
+class Review(models.Model):
+    """
+    Model for Review. Teacher can review the solution submitted by student.
+    """
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     message = models.TextField()
     commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
     commented_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = "Comment_elabx"
+        db_table = "Review_elabx"
 
     def __str__(self):
         return f"Comment of {self.commented_by.username}"

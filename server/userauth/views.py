@@ -1,5 +1,6 @@
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -10,11 +11,15 @@ from .serializers import (
     UserSerializer,
     ProfileSerializer,
     UserLoginSerializer,
-    UserRegistrationSerializer
+    UserRegistrationSerializer,
+    ProfileAvatarSerializer
 )
 
 
 class UserLogoutAPIView(APIView):
+    """
+    API endpoint to log out the users
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -25,10 +30,13 @@ class UserLogoutAPIView(APIView):
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(e, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLoginAPIView(APIView):
+    """
+    API endpoint for User login, only POST method is allowed
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (AllowAny,)
 
@@ -47,6 +55,9 @@ class UserLoginAPIView(APIView):
 
 
 class UserRegistrationAPIView(APIView):
+    """
+    API endpoint to register a user
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (AllowAny,)
 
@@ -64,14 +75,36 @@ class UserRegistrationAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProfileAPIView(APIView):
+class UserAPIView(RetrieveAPIView):
+    """
+    Get and Update User information
+    """
     permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
 
-    def get(self, request, *args, **kwargs):
-        user_serializer = UserSerializer(user=request.user)
-        profile_serializer = ProfileSerializer(request.user.profile)
-        data = {
-            "user": user_serializer.data,
-            "profile": profile_serializer.data
-        }
-        return Response(data, status=status.HTTP_200_OK)
+    def get_object(self):
+        return self.request.user
+
+
+class UserProfileAPIView(RetrieveAPIView):
+    """
+    GET nad UPDATE user profile
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+    def get_object(self):
+        return self.request.user.profile
+
+
+class UserAvatarAPIView(RetrieveAPIView):
+    """
+    GET and DELETE user avatar
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProfileAvatarSerializer
+    queryset = Profile.objects.all()
+
+    def get_object(self):
+        return self.request.user.profile
