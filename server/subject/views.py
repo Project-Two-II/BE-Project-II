@@ -2,9 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
-from .permissions import BaseAccessPermission
+# from .permissions import BaseAccessPermission
 from .models import Subject, Chapter, Question, Test
 from .serializers import (
     SubjectSerializer,
@@ -107,7 +107,7 @@ class QuestionDetailApiView(APIView):
         try:
             subject = get_object_or_404(Subject, id=subject_id)
             chapter = get_object_or_404(subject.chapters, id=chapter_id)
-            return chapter.questions.filter(id=question_id)
+            return chapter.questions.get(id=question_id)
         except Question.DoesNotExist:
             return None
 
@@ -119,7 +119,7 @@ class QuestionDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = TestSerializer(question)
+        serializer = QuestionSerializer(question)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
