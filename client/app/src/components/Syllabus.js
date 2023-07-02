@@ -4,6 +4,7 @@ import arrowIcon from '../media/arrowicon.png'
 import { Link } from 'react-router-dom'
 import { QuestionSolve } from './questionSolve'
 import { useEffect, useState } from 'react';
+import CourseHeader from './CourseHeader'
 
 const iconStyle = {
     width: "5%",
@@ -57,9 +58,22 @@ const lockBtnStyle = {
 
 
 function Syllabus() {
+    const [course, setCourse] = useState([]);
+    function getCourse() {
+        fetch("http://localhost:8000/api/subjects/1/")
+            .then(resp => resp.json())
+            .then(data => {
+                setCourse(data)
+            })
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        getCourse()
+    }, [])
+
     const [chapterList, setChapterList] = useState([]);
-    function getData() {
-        fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/")
+    function getChapters() {
+        fetch("http://localhost:8000/api/subjects/1/chapters/")
             .then(resp => resp.json())
             .then(data => {
                 setChapterList(data)
@@ -67,171 +81,60 @@ function Syllabus() {
             .catch(err => console.log(err))
     }
     useEffect(() => {
-        getData()
+        getChapters()
+    }, []);
+
+    const [questionList, setQuestionList] = useState([]);
+    function getQuestions() {
+        fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/")
+            .then(resp => resp.json())
+            .then(data => {
+                setQuestionList(data)
+            })
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        getQuestions()
     }, []);
 
     return (
         <div className="main" style={mainStyle}>
-            <div className="chapters" style={chapterStyle}>
-                <img src={arrowIcon} style={iconStyle}></img>
-                <span style={textStyle}>1. Introduction to OOP in C++</span>
-            </div>
-            <ul>
-                {chapterList.map((chapter) => (
-                    <>
-                        <div className="chapterList">
-
-                            <div className="questions" style={questionStyle}>
-                                <img src={arrowIcon} style={iconStyleSmall}></img>
+            <CourseHeader />
+            {chapterList.map(chapter =>
+            (
+                <ul>
+                    <div className="chapterList">
+                        <li>
+                            <div className="chapters" style={chapterStyle}>
+                                <img src={arrowIcon} style={iconStyle}></img>
                                 <span style={textStyle}>{chapter.id}. {chapter.title}</span>
                             </div>
-                            <div className="description">
-                                <div className="quesDesc" style={descStyle}>
-                                    {chapter.description}
-                                </div>
-                                {chapter.id == 1 && <button className="statusBtn" style={completedBtnStyle}>Completed</button>}
-                                {chapter.id == 2 && <Link to="/questionSolve/{chapter.id}" state={{title: chapter.title}}>
-                                    <button className="statusBtn" style={solveBtnStyle}>Solve This</button>
-                                </Link>}
-                                {chapter.id == 3 && <button className="statusBtn" style={lockBtnStyle}>Locked</button>}
-                            </div>
-
-                            {/* <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>1.2 Question 2</span>
-                </div>
-                <div>
-                    <div className="quesDesc" style={descStyle}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
+                            {questionList.map(question =>
+                            (
+                                <ul>
+                                    <div className="questionList">
+                                        <li>
+                                            <div className="questions" style={questionStyle}>
+                                                <img src={arrowIcon} style={iconStyleSmall}></img>
+                                                <span style={textStyle}>{question.id}. {question.title}</span>
+                                            </div>
+                                            {/* <div className="quesDesc" style={descStyle}>{question.description}</div> */}
+                                            {
+                                                <Link to='/questionSolve'>
+                                                    <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
+                                                </Link>
+                                                // <Link to='/questionSolve/{question.id}'>
+                                                //     <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
+                                                // </Link>
+                                            }
+                                        </li>
+                                    </div>
+                                </ul>
+                            ))}
+                        </li>
                     </div>
-                    <Link to="/questionSolve">
-                        <button className="statusBtn" style={solveBtnStyle}>Solve This</button>
-                    </Link>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>1.2 Question 3</span>
-                </div>
-                <div>
-
-                    <div className="quesDesc" style={descStyle}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                    </div>
-                    <button className="statusBtn" style={lockBtnStyle}>Locked</button>
-                </div>*/}
-                        </div>
-                    </>
-                ))}
-            </ul>
-            {/*<div className="chapterList">
-                <div className="chapters" style={chapterStyle}>
-                    <img src={arrowIcon} style={iconStyle}></img>
-                    <span style={textStyle}>1. Chapter 1</span>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>1.1 Question 1</span>
-                </div>
-                <div className="description">
-                    <div className="quesDesc" style={descStyle}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                    </div>
-                    <button className="statusBtn" style={completedBtnStyle}>Completed</button>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>1.2 Question 2</span>
-                </div>
-                <div>
-                    <div className="quesDesc" style={descStyle}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                    </div>
-                    <Link to="/questionSolve">
-                        <button className="statusBtn" style={solveBtnStyle}>Solve This</button>
-                    </Link>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>1.2 Question 3</span>
-                </div>
-                <div>
-
-                    <div className="quesDesc" style={descStyle}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                    </div>
-                    <button className="statusBtn" style={lockBtnStyle}>Locked</button>
-                </div>
-            </div>
-
-            <div className="chapterList">
-                <div className="chapters" style={chapterStyle}>
-                    <img src={arrowIcon} style={iconStyle}></img>
-                    <span style={textStyle}>2. Chapter 2</span>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>2.1 Question 1</span>
-                </div>
-                <div className="quesDesc" style={descStyle}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                </div>
-                <button className="statusBtn">Button</button>
-            </div>
-
-            <div className="chapterList">
-                <div className="chapters" style={chapterStyle}>
-                    <img src={arrowIcon} style={iconStyle}></img>
-                    <span style={textStyle}>3. Chapter 3</span>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>3.1 Question 1</span>
-                </div>
-                <div className="quesDesc" style={descStyle}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                </div>
-                <button className="statusBtn">Button</button>
-
-            </div>
-
-            <div className="chapterList">
-                <div className="chapters" style={chapterStyle}>
-                    <img src={arrowIcon} style={iconStyle}></img>
-                    <span style={textStyle}>4. Chapter 4</span>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>4.1 Question 1</span>
-                </div>
-                <div className="quesDesc" style={descStyle}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                </div>
-                <button className="statusBtn">Button</button>
-            </div>
-
-            <div className="chapterList">
-                <div className="chapters" style={chapterStyle}>
-                    <img src={arrowIcon} style={iconStyle}></img>
-                    <span style={textStyle}>5. Chapter 5</span>
-                </div>
-
-                <div className="questions" style={questionStyle}>
-                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                    <span style={textStyle}>5.1 Question 1</span>
-                </div>
-                <div className="quesDesc" style={descStyle}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sequi cum eveniet placeat assumenda provident porro ea quasi quibusdam expedita. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ratione.
-                </div>
-                <button className="statusBtn">Button</button>
-
-                </div> */ }
+                </ul>
+            ))}
         </div>
     )
 
