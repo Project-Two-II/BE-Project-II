@@ -11,7 +11,8 @@ function QuestionSolve({my_api}) {
   let { state } = useLocation();
   return (
     <div className="body">
-      <Question state={state.title}/>
+      <Question />
+      {/* <Question state={state.title}/> */}
       <Editor defaultLang = "cpp" api = {my_api} />
     </div>
   );
