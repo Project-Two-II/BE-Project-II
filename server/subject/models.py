@@ -22,8 +22,7 @@ class Subject(models.Model):
     """
     code_no = models.CharField(unique=True, max_length=10)
     title = models.CharField(unique=True, max_length=150)
-    # owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="subjects")
-    teachers = models.ManyToManyField(User, related_name="teachers")
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="subjects")
     description = models.TextField()
     thumbnail = models.ImageField(default=DEFAULT_SUB_THUMB, upload_to=upload_to_subject_thumbnails, blank=True)
 
