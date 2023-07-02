@@ -13,16 +13,6 @@ def upload_to_subject_thumbnails(instance, filename):
     return f"subject_thumbnails/{instance.code_no}/{filename}"
 
 
-class SubjectGroup(Group):
-    """
-    Custom Group class for Subject Group
-    Inherits from Django's built-in Group class
-    """
-
-    class Meta:
-        proxy = True
-
-
 class Subject(models.Model):
     """
     This is database table for Subject.
@@ -32,8 +22,7 @@ class Subject(models.Model):
     """
     code_no = models.CharField(unique=True, max_length=10)
     title = models.CharField(unique=True, max_length=150)
-    teachers = models.ManyToManyField(User, related_name="teachers")
-    students = models.OneToOneField(SubjectGroup, on_delete=models.CASCADE, null=True, blank=True, related_name="students")
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="subjects")
     description = models.TextField()
     thumbnail = models.ImageField(default=DEFAULT_SUB_THUMB, upload_to=upload_to_subject_thumbnails, blank=True)
 
@@ -42,6 +31,19 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SubjectGroup(Group):
+    """
+    Custom Group class for Subject Group
+    Inherits from Django's built-in Group class
+    One subject can have one group, and
+    """
+    subject = models.OneToOneField(Subject, on_delete=models.CASCADE, related_name="group")
+    users = models.ManyToManyField(User, blank=True)
+
+    class Meta:
+        db_table = "SubjectGroup_elabx"
 
 
 class Chapter(models.Model):
