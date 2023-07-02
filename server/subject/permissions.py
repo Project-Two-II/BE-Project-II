@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission
 from rest_framework.generics import get_object_or_404
 
-from .models import Subject
+from .models import Subject, SubjectGroup
 
 
 class SubjectAccessPermission(BasePermission):
@@ -22,14 +22,21 @@ class SubjectAccessPermission(BasePermission):
         if request.method == "GET":
             if request.user.is_student():
                 # Allow student with associated group to access subject
-                return request.user.groups.filter(id=subject.students.id).exists()
+                return SubjectGroup.objects.filter(subject=subject_id, users=request.user).exists()
             elif request.user.is_teacher():
                 # Allow subject's associated teachers to access the subject
-                return request.user in subject.teachers.all()
+                return (request.user is subject.owner) or (request.user in SubjectGroup.users.filter(subject))
 
-        # Permission for PUT and DELETE methods
-        elif request.method in ["PUT", "DELETE"]:
+        # Permission for PUT method
+        elif request.method == "PUT":
             if request.user.is_teacher():
                 # Allow subject's associated teachers to Update and Delete
-                return request.user in subject.teachers.all()
+                return (request.user is subject.owner) or (request.user in SubjectGroup.users.filter(subject))
+
+        # Only subject owner can delete
+        elif request.method == "DELETE":
+            if request.user.is_teacher():
+                return request.user is subject.owner
+
         return False
+
