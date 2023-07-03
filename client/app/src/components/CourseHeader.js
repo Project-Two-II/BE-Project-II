@@ -1,5 +1,4 @@
 import React from 'react'
-import '../style.css'
 
 const headerStyle = {
     height: "18vh",
@@ -14,9 +13,10 @@ const headerStyle = {
     fontSize: "3rem",
     textDecoration: "underline"
   }
-function CourseHeader() {
+function CourseHeader({props}) {
   return (
     <div style={headerStyle} className="courseHeader">
+        {/* <span style={spanStyle}>{props.state}</span> */}
         <span style={spanStyle}>C++ LAB</span>
       </div>
   )

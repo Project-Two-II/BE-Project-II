@@ -10,8 +10,7 @@ function Question(props) {
       <div className=" ques questionTitle">Hello World</div>
       <div className="ques quesDesc">this is a desc</div>
         <Markdown />
-      {/* <div className="ques quesTest"></div> */}
-      <Link to='/'>
+      <Link to='/Syllabus'>
         <button className=" btn backBtn">back</button>
       </Link>
     </div>

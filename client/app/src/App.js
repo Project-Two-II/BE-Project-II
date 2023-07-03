@@ -9,7 +9,7 @@ import QuestionSolve from './components/questionSolve.js';
 import CourseHeader from './components/CourseHeader';
 import Syllabus from './components/Syllabus'
 import { Route, Routes } from "react-router-dom"
-import HomePage from './homePage';
+import HomePage from './components/HomePage';
 
 const App = () => {
 
@@ -19,12 +19,12 @@ const App = () => {
     <div className="App">
       <Header />
       <Routes>
-        <Route index element={<Syllabus />}/>
-        <Route path="/questionSolve/" element={<QuestionSolve my_api={api}/>}/>
+        <Route index element={<HomePage />}/>
+        <Route path="/Syllabus" element={<Syllabus />} />
+        <Route path="/questionSolve" element={<QuestionSolve my_api={api}/>}/>
         {/* <Route path="/questionSolve/:id" element={<QuestionSolve my_api={api}/>}/> */}
-        <Route path='/' element={<Syllabus />}/>
+        <Route path='/Syllabus' element={<Syllabus />}/>
       </Routes>
-      {/* <HomePage /> */}
       <Footer/>
     </div>
   );

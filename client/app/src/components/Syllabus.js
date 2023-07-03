@@ -3,7 +3,7 @@ import '../App.css'
 import arrowIcon from '../media/arrowicon.png'
 import { Link } from 'react-router-dom'
 import { QuestionSolve } from './questionSolve'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLocation } from 'react';
 import CourseHeader from './CourseHeader'
 
 const iconStyle = {
@@ -58,6 +58,8 @@ const lockBtnStyle = {
 
 
 function Syllabus() {
+    // let { location } = useLocation();
+
     const [course, setCourse] = useState([]);
     function getCourse() {
         fetch("http://localhost:8000/api/subjects/1/")
@@ -96,9 +98,10 @@ function Syllabus() {
     useEffect(() => {
         getQuestions()
     }, []);
-
+     
     return (
         <div className="main" style={mainStyle}>
+            {/* <CourseHeader state={location.title}/> */}
             <CourseHeader />
             {chapterList.map(chapter =>
             (
@@ -118,9 +121,8 @@ function Syllabus() {
                                                 <img src={arrowIcon} style={iconStyleSmall}></img>
                                                 <span style={textStyle}>{question.id}. {question.title}</span>
                                             </div>
-                                            {/* <div className="quesDesc" style={descStyle}>{question.description}</div> */}
                                             {
-                                                <Link to='/questionSolve'>
+                                                <Link to='/questionSolve/'>
                                                     <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
                                                 </Link>
                                                 // <Link to='/questionSolve/{question.id}'>
