@@ -1,7 +1,9 @@
-from django.contrib.auth import authenticate
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 
 from .models import User, Profile
+from .backends import EmailBackend
+from .validators import CustomPasswordValidator
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -12,7 +14,10 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        user = authenticate(**attrs)
+        # print(attrs)
+        email_backend = EmailBackend()
+        user = email_backend.authenticate(email=attrs["email"], password=attrs["password"])
+        # print(user)
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect credentials.")
@@ -28,7 +33,15 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        user = User(
+            email=validated_data["email"],
+            username=validated_data["username"],
+            role=validated_data.get("role", 0)
+        )
+        password_validator = CustomPasswordValidator()
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
 
 
 class UserSerializer(serializers.ModelSerializer):
