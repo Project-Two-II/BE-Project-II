@@ -19,12 +19,13 @@ class BaseSetup(TestCase):
         self.access_token = AccessToken.for_user(self.user)
 
 
-class SubjectSetup(TestCase):
+class SubjectSetup(BaseSetup):
     def setUp(self):
         super().setUp()
         self.subject = Subject.objects.create(
             code_no="CMP 215",
             title="OOP in CPP",
+            owner=self.user,
             description="Object oriented programming in cpp",
         )
 
