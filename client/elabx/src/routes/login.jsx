@@ -29,29 +29,29 @@ const Login = () => {
   };
 
   return (
-    <div class="BoxContainer">
-        <div class="FormJumbotron">
-            <h1 class = "col-wh main-heading">ELABX</h1>
-            <p class = "col-wh">By:Team ARBA</p>
+    <div className="BoxContainer">
+        <div className="FormJumbotron">
+            <h1 className= "col-wh main-heading">ELABX</h1>
+            <p className= "col-wh">By:Team ARBA</p>
         </div>
   
-        <div class="FormContainer">
-            <div class="Headline">
-                <p class = "Heading">Login To Continue.</p>
+        <div className="FormContainer">
+            <div className="Headline">
+                <p className= "Heading">Login To Continue.</p>
             </div>
             <div>
-                <p class="Message"></p>
+                <p className="Message"></p>
             </div>
             <Form>
                 <p></p>
-                <div class="InputField">
+                <div className="InputField">
                     <input type = "text" placeholder = "Email"  name = "email" value={email} onChange={handleEmailChange}/>
                 </div>
-                <div class="InputField">
+                <div className="InputField">
                     <input type = "password" placeholder = "Password" name = "password" value={password} onChange={handlePasswordChange}/>
                 </div>
   
-                <button class="SubmitButton" onClick={handleFormSubmission}>Login</button>
+                <button className="SubmitButton" onClick={handleFormSubmission}>Login</button>
                 <Link to={"/register"}>Create a new account</Link>
             </Form>
             <br/>

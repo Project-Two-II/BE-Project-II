@@ -1,8 +1,10 @@
 import {React, useState, useEffect} from 'react'
 import EditorWindow from "@monaco-editor/react";
 
+import WorkerAPI from '../shared_web.js'
 
-function Editor({defaultLang, api}) {
+
+const Editor = () => {
 
   const [code, setCode] = useState("")
 
@@ -12,7 +14,10 @@ function Editor({defaultLang, api}) {
 
   const RunClickHandler = (e) => {
     e.preventDefault();
-    api.compileLinkRun(finalCode);
+    console.log("Button Clicked");
+    console.log("Creating a new Worker");
+    let API = new WorkerAPI();
+    API.compileLinkRun(code);
   }
 
   return (
@@ -26,7 +31,7 @@ function Editor({defaultLang, api}) {
         value = {code}
         onChange={handleCodeChange}
     />
-    <textarea className="editorFooter" id = "output" placeholder='Output'></textarea>
+    <textarea className="editorFooter" id = "output" placeholder='Output' rows={8}></textarea>
     </>
   )
 }
