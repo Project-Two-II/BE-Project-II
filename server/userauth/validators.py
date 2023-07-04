@@ -5,6 +5,8 @@ import re
 
 class CustomPasswordValidator:
     def validate(self, password, user=None):
+        if password is None:
+            raise ValidationError(_("The password can not be empty."))
         if len(password) < 8:
             raise ValidationError(_("The password must be at least 8 characters long."))
         if not re.search(r"[a-z]", password):
@@ -16,6 +18,17 @@ class CustomPasswordValidator:
         if not re.search(r"[!@#$%^&*()_+|{}:;']", password):
             raise ValidationError(_("The password must contain at least one special letter."))
 
+        return password
+
     def get_help_text(self):
         return _("Your password must contain at least 8 characters including one uppercase character, "
                  "one lowercase character, one digit and one special character.")
+
+
+def handle_password_validation(password):
+    try:
+        password_validator = CustomPasswordValidator()
+        password_validator.validate(password)
+        return None  # Return None if password validation succeeds
+    except ValidationError as e:
+        return str(e)
