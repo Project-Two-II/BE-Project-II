@@ -1,42 +1,9 @@
 import json
-import jwt
 from django.urls import reverse
-from rest_framework.test import APITestCase
 from rest_framework import status
-from faker import Faker
-
-from ELabX import settings
 from userauth.models import User
 
-
-def get_user_data():
-    fake = Faker()
-    name = fake.name()
-    email = fake.email()
-    data = {
-        "first_name": name.split(" ")[0],
-        "last_name": name.split(" ")[1],
-        "email": email,
-        "username": email.split("@")[0],
-        "role": 0,
-        "password": fake.password()
-    }
-    return data
-
-
-def verify_jwt_token(token):
-    return jwt.decode(token, algorithms=["HS256"], key=settings.SECRET_KEY, verify=True)
-
-
-class BaseAPITestCase(APITestCase):
-    def setUp(self):
-        self.register_url = reverse("userauth:create-user")
-
-    def register_user(self):
-        data = get_user_data()
-        response = self.client.post(self.register_url, data=data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        return data, response
+from .setup import BaseAPITestCase, get_user_data, verify_jwt_token
 
 
 class RegistrationAPITests(BaseAPITestCase):
@@ -128,47 +95,42 @@ class RegistrationAPITests(BaseAPITestCase):
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    # def test_create_account_with_invalid_password(self):
-    #     data = get_user_data()
-    #     data["password"] = "Pa63dsg$db4"
-    #     response = self.client.post(self.register_url, data=data, format="json")
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-
-class LoginAPITests(BaseAPITestCase):
-    def setUp(self) -> None:
-        self.register_url = reverse("userauth:create-user")
-        self.login_url = reverse("userauth:login-user")
-        self.user_info_url = reverse("userauth:user-info")
-
-    def test_no_get_method_for_register(self):
-        response = self.client.get(self.login_url, format="json")
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_login_account(self):
-        # First register a user
+    def test_create_account_with_less_password_character(self):
         data = get_user_data()
+        data["password"] = "Pass"
         response = self.client.post(self.register_url, data=data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content).get("error"),
+                         "['The password must be at least 8 characters long.']")
 
-        login_response = self.client.post(self.login_url,
-                                          data={"email": data["email"], "password": data["password"]}, format="json")
-        # print(login_response.data)
-        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(login_response.data.get("email"), data["email"])
-        return data, login_response
+    def test_create_account_with_no_lowercase_password_character(self):
+        data = get_user_data()
+        data["password"] = "PPB%$#123ITDY"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content).get("error"),
+                         "['The password must contain at least one lowercase letter.']")
 
-    def test_verify_jwt_token_after_login(self):
-        data, login_response = self.test_login_account()
-        access_token = json.loads(login_response.content).get("tokens")["access"]
-        decoded_access_token = verify_jwt_token(access_token)
-        self.assertEqual(decoded_access_token["user_id"], 1)
+    def test_create_account_with_no_uppercase_password_character(self):
+        data = get_user_data()
+        data["password"] = "password123$#"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content).get("error"),
+                         "['The password must contain at least one uppercase letter.']")
 
-    def test_logged_user_info(self):
-        data, login_response = self.test_login_account()
-        access_token = login_response.data.get("tokens")["access"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
+    def test_create_account_with_no_integer_password_character(self):
+        data = get_user_data()
+        data["password"] = "passwordGD$#"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content).get("error"),
+                         "['The password must contain at least one digit.']")
 
-        user_info_response = self.client.get(self.user_info_url)
-        self.assertEqual(user_info_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(user_info_response.data.get("email"), data["email"])
+    def test_create_account_with_no_special_character_password_character(self):
+        data = get_user_data()
+        data["password"] = "password123PS"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content).get("error"),
+                         "['The password must contain at least one special letter.']")
