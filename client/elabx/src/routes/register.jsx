@@ -49,7 +49,7 @@ const Register = () => {
 
     <div className="FormJumbotron">
         <h1 className= "col-wh main-heading">ELABX</h1>
-        <p classname= "col-wh" >Set your own Learning Path</p>
+        <p className= "col-wh" >Set your own Learning Path</p>
     </div>
   
     <div className="FormContainer">
