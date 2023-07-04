@@ -32,3 +32,13 @@ def handle_password_validation(password):
         return None  # Return None if password validation succeeds
     except ValidationError as e:
         return str(e)
+
+
+def validate_email_address(email_address):
+    """Validates an email address."""
+    if email_address is None:
+        return False
+    email_regex = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+.[a-zA-Z]+$')
+    if not email_regex.match(email_address):
+        return False
+    return True
