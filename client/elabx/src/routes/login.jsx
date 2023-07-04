@@ -3,9 +3,13 @@ import {Form, Link} from 'react-router-dom';
 
 import '../login.css'
 
+const errMessage = {
+  color: "red"
+}
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -15,17 +19,15 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
   const handleFormSubmission = (e) => {
     e.preventDefault();
 
-    // Perform login logic here
-    if (email && password) {
-      // Login successful
-      console.log('Login successful!');
-    } else {
-      // Invalid login credentials
-      console.log('Please provide your email and password.');
-    }
+    if(email.length === 0 || password.length === 0 || confirmPassword === 0)
+      setMessage('All fields are required');
   };
 
   return (
@@ -43,7 +45,7 @@ const Login = () => {
                 <p className="Message"></p>
             </div>
             <Form>
-                <p></p>
+                <p style={errMessage}>{message}</p>
                 <div className="InputField">
                     <input type = "text" placeholder = "Email"  name = "email" value={email} onChange={handleEmailChange}/>
                 </div>

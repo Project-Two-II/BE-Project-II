@@ -1,10 +1,13 @@
 import {React, useState, useEffect} from 'react'
 import EditorWindow from "@monaco-editor/react";
 
+import WorkerAPI from '../shared_web.js'
+
+
 const initialHeader = "#include <iostream>\n";
 
 
-function Editor({defaultLang, api}) {
+function Editor({defaultLang}) {
 
   const [code, setCode] = useState("")
   const [testCode, setTestCode] = useState("");
@@ -24,8 +27,9 @@ function Editor({defaultLang, api}) {
   
   const RunClickHandler = (e) => {
     e.preventDefault();
-    let finalCode = initialHeader + code + testCode;
-    api.compileLinkRun(finalCode);
+    let finalCode = initialHeader + code;
+    let API = new WorkerAPI();
+    API.compileLinkRun(finalCode);
   }
 
   useEffect(() => {
