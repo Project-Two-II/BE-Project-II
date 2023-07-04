@@ -45,9 +45,7 @@ function Editor({defaultLang, api}) {
               theme="vs-dark"
               value = {code}
               onChange={handleCodeChange}
-            />
-            <textarea className="editorFooter" placeholder='Message...'>
-            </textarea>
+            />  
             <textarea className="editorFooter" id = "output" placeholder='Output'>
             </textarea>
           </div>
