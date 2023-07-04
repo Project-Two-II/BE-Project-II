@@ -1,5 +1,4 @@
 import json
-from django.urls import reverse
 from rest_framework import status
 from userauth.models import User
 
@@ -57,7 +56,7 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         return data, response
 
-    def test_users_with_same_email(self):
+    def test_no_users_with_same_email(self):
         data, _ = self.test_create_account_only_using_email_username_and_password()
         response = self.client.post(self.register_url,
                                     data={
@@ -67,7 +66,7 @@ class RegistrationAPITests(BaseAPITestCase):
                                     }, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_users_with_same_username(self):
+    def test_no_users_with_same_username(self):
         data, _ = self.test_create_account_only_using_email_username_and_password()
         response = self.client.post(self.register_url,
                                     data={
@@ -89,13 +88,13 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(dict(User.ROLE_CHOICES).get(json.loads(response.content).get("role")), "Teacher")
 
-    def test_create_account_with_blank_password(self):
+    def test_no_create_account_with_blank_password(self):
         data = get_user_data()
         data["password"] = " "
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_create_account_with_less_password_character(self):
+    def test_no_create_account_with_less_password_character(self):
         data = get_user_data()
         data["password"] = "Pass"
         response = self.client.post(self.register_url, data=data, format="json")
@@ -103,7 +102,7 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(json.loads(response.content).get("error"),
                          "['The password must be at least 8 characters long.']")
 
-    def test_create_account_with_no_lowercase_password_character(self):
+    def test_no_create_account_with_no_lowercase_password_character(self):
         data = get_user_data()
         data["password"] = "PPB%$#123ITDY"
         response = self.client.post(self.register_url, data=data, format="json")
@@ -111,7 +110,7 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(json.loads(response.content).get("error"),
                          "['The password must contain at least one lowercase letter.']")
 
-    def test_create_account_with_no_uppercase_password_character(self):
+    def test_no_create_account_with_no_uppercase_password_character(self):
         data = get_user_data()
         data["password"] = "password123$#"
         response = self.client.post(self.register_url, data=data, format="json")
@@ -119,7 +118,7 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(json.loads(response.content).get("error"),
                          "['The password must contain at least one uppercase letter.']")
 
-    def test_create_account_with_no_integer_password_character(self):
+    def test_no_create_account_with_no_integer_password_character(self):
         data = get_user_data()
         data["password"] = "passwordGD$#"
         response = self.client.post(self.register_url, data=data, format="json")
@@ -127,10 +126,35 @@ class RegistrationAPITests(BaseAPITestCase):
         self.assertEqual(json.loads(response.content).get("error"),
                          "['The password must contain at least one digit.']")
 
-    def test_create_account_with_no_special_character_password_character(self):
+    def test_no_create_account_with_no_special_password_character(self):
         data = get_user_data()
         data["password"] = "password123PS"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(json.loads(response.content).get("error"),
                          "['The password must contain at least one special letter.']")
+
+    def test_no_create_account_with_invalid_email(self):
+        data = get_user_data()
+        data["email"] = "123email.com"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data["email"] = "email@com"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data["email"] = "@hash.com"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_account_with_full_length_email(self):
+        data = get_user_data()
+        data["email"] = "example.1234@email.com.np"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        data = get_user_data()
+        data["email"] = "user.191445@ncit.edu.np"
+        response = self.client.post(self.register_url, data=data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
