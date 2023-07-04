@@ -1,7 +1,7 @@
-from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 from .models import User, Profile
+from .backends import EmailBackend
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -12,7 +12,10 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        user = authenticate(**attrs)
+        # print(attrs)
+        email_backend = EmailBackend()
+        user = email_backend.authenticate(email=attrs["email"], password=attrs["password"])
+        # print(user)
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect credentials.")

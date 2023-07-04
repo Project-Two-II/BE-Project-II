@@ -7,6 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Profile
+from .validators import handle_password_validation, validate_email_address
 from .serializers import (
     UserSerializer,
     ProfileSerializer,
@@ -62,6 +63,13 @@ class UserRegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        email_address = request.data.get("email")
+        if not validate_email_address(email_address):
+            return Response({"error": "Email is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+        password = request.data.get("password")
+        password_error = handle_password_validation(password=password)
+        if password_error:
+            return Response({"error": password_error}, status=status.HTTP_400_BAD_REQUEST)
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()

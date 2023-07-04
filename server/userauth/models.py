@@ -19,7 +19,7 @@ class User(AbstractUser):
         (0, "Student"),
         (1, "Teacher")
     )
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=0)
+    role = models.IntegerField(choices=ROLE_CHOICES, default=0)
 
     objects = UserManager()
 
