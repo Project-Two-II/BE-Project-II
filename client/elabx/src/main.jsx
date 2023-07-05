@@ -7,8 +7,12 @@ import Editor from './routes/Editor';
 import Syllabus from './routes/Syllabus'
 import HomePage from './routes/HomePage'
 import QuestionSolve from './routes/questionSolve.jsx'
-import Header from './Components/header.jsx'
-import Footer from './Components/footer.jsx'
+
+
+import "bootstrap/dist/css/bootstrap.css";
+import "remixicon/fonts/remixicon.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import {
   createBrowserRouter,
@@ -49,8 +53,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Header />
     <RouterProvider router={router}/>
-    <Footer />
   </React.StrictMode>,
 )

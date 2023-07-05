@@ -1,22 +1,24 @@
-import {Link} from 'react-router-dom'
+import Header from './Components/Header/Header'
+import HeroSection from './Components/Hero-Section/HeroSection'
+import FreeCourse from './Components/Free-course-section/FreeCourse'
+import Courses from './Components/Courses-section/Courses'
+import Features from './Components/Feature-section/Features'
+import AboutUs from './Components/About-us/AboutUs'
+import Footer from './Components/Footer/Footer'
+
+import './root.css'
+
 
 export default function Root() {
     return (
       <>
-        <div>
-            <h1>This is our Landing Page</h1>
-            <Link to={"/login"}>Login</Link>
-            <br/>
-            <Link to={"/register"}>Create a new Account</Link>
-            <br />
-            <Link to={"/homepage"}>Go to Homepage</Link>
-            <br />
-
-            <p>
-               Go to Course: <Link to={"/course/cpp"}>C++</Link>
-            </p>
-        </div>
-        <div id="detail"></div>
-      </>
+       <Header />
+       <HeroSection />
+       <FreeCourse />
+       <Courses />
+       <Features />
+       <AboutUs />
+       <Footer />
+     </>
     );
   }
