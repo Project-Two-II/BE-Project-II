@@ -13,7 +13,7 @@ class BaseSetup(TestCase):
         self.user = User.objects.create_user(
             email="testuser@elabx.com",
             username="test_user",
-            role="student",
+            role=0,
             password="test_password"
         )
         self.access_token = AccessToken.for_user(self.user)

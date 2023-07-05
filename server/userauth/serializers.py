@@ -12,10 +12,9 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        # print(attrs)
         email_backend = EmailBackend()
-        user = email_backend.authenticate(email=attrs["email"], password=attrs["password"])
-        # print(user)
+        user = email_backend.authenticate(request=None, username=attrs["email"], password=attrs["password"])
+
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect credentials.")

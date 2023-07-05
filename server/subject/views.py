@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from userauth.models import User
 from userauth.serializers import UserSerializer
-from .permissions import SubjectAccessPermission
+from .permissions import SubjectListAccessPermission, SubjectDetailAccessPermission
 from .models import Subject, Chapter, Question, Test, SubjectGroup
 from .serializers import (
     SubjectSerializer,
@@ -18,7 +18,7 @@ from .serializers import (
 
 
 class SubjectGroupAPIView(APIView):
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get(self, request, *args, **kwargs):
         # Get group and students from request
@@ -49,7 +49,7 @@ class TestApiView(APIView):
     """
     CRUD for test of a question
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -109,7 +109,7 @@ class QuestionListApiView(APIView):
     """
     Return list of all the question under that chapter
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -132,7 +132,7 @@ class QuestionDetailApiView(APIView):
     """
     Return the detail of a question
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -181,7 +181,7 @@ class ChapterListApiView(APIView):
     """
     It shows the list of all available chapters under that subject
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         chapters = Chapter.objects.filter(subject=subject_id)
@@ -201,7 +201,7 @@ class ChapterDetailApiView(APIView):
     """
     Shows details of a chapter.
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id):
         try:
@@ -249,22 +249,18 @@ class SubjectListApiView(APIView):
     Any Teacher can send POST request,
     and associated user can send GET request
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectListAccessPermission)
 
     def get(self, request, *args, **kwargs):
         subjects = Subject.objects.all()
-        serializer = SubjectSerializer(subjects, many=True, context={"request": request})
+        serializer = SubjectSerializer(subjects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        serializer = SubjectSerializer(data=request.data, context={"request": request})
+        request.data["owner"] = self.request.user.id
+        serializer = SubjectSerializer(data=request.data)
         if serializer.is_valid():
-            subject = serializer.save()
-
-            # make requested user a teacher of this subject
-            subject.teachers.add(request.user)
-
-            # return response
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -275,7 +271,7 @@ class SubjectDetailApiView(APIView):
     Student and teachers associated with the subject can access Subject
     Moreover Teachers associated with subject can Update and Delete the subject
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id):
         try:
