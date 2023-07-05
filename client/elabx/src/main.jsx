@@ -8,6 +8,10 @@ import Syllabus from './routes/Syllabus'
 import HomePage from './routes/HomePage'
 import QuestionSolve from './routes/questionSolve.jsx'
 
+import AddQuestion from './Components/AddQuestion.jsx'
+import CreateChapter from './Components/CreateChapter.jsx'
+import CreateCourse from './Components/CreateCourse.jsx'
+
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -47,6 +51,18 @@ const router = createBrowserRouter([
   {
     path: "/questionsolve",
     element: <QuestionSolve />
+  },
+  {
+    path: "/addquestion",
+    element: <AddQuestion />
+  },
+  {
+    path: "/createchapter",
+    element: <CreateChapter />
+  },
+  {
+    path: "/createcourse",
+    element: <CreateCourse />
   },
   
 ]);
