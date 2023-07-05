@@ -33,10 +33,10 @@ class User(AbstractUser):
         return self.email
 
     def is_teacher(self):
-        return self.role == "Teacher"
+        return self.role == 1
 
     def is_student(self):
-        return self.role == "Student"
+        return self.role == 0
 
 
 class Profile(models.Model):
