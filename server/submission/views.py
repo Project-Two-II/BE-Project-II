@@ -5,7 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 
 from subject.models import Chapter, Question
-from subject.permissions import SubjectAccessPermission
+from subject.permissions import SubjectDetailAccessPermission
 from .models import Submission, Result, Review
 from .serializers import (
     SubmissionSerializer,
@@ -18,7 +18,7 @@ class SubmissionAPIView(APIView):
     """
     API endpoint for Solution to a question related activities
     """
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get(self, request, *args, **kwargs):
         submissions = Submission.objects.all()
@@ -52,7 +52,7 @@ class SubmissionAPIView(APIView):
 
 
 class ResultAPIView(APIView):
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
     def get(self, request, *args, **kwargs):
         results = Result.objects.all()
@@ -80,10 +80,10 @@ class ResultAPIView(APIView):
 class ReviewListCreateAPIView(ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
 
 class ReviewRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated, SubjectAccessPermission)
+    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
