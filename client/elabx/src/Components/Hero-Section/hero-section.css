@@ -1,0 +1,40 @@
+.hero__content h2 {
+  font-weight: 600;
+  line-height: 55px;
+}
+
+.hero__content {
+  padding-top: 80px;
+}
+.search input {
+  border: none;
+  outline: none;
+  padding: 7px 10%;
+  background-color: rgb(6, 6, 39);
+}
+@keyframes glowing {
+  0% {
+    background-color: #b4ee9d;
+    box-shadow: 0 0 3px #99ec68;
+  }
+  50% {
+    background-color: #8ff75f;
+    box-shadow: 0 0 10px #72e763;
+  }
+  100% {
+    background-color: #0f7a33;
+    box-shadow: 0 0 3px #0a6e28;
+  }
+}
+
+
+
+.Register{
+  background-color: rgb(73, 133, 61);
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  font-size: 22px;
+  animation: glowing 1300ms infinite;
+  
+}
