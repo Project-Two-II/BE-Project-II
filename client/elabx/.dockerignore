@@ -2,7 +2,7 @@
 
 build
 node_modules
-
+dist
 
 # Exclude docker related files
 
