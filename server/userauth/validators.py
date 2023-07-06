@@ -2,6 +2,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 import re
 
+from .models import User
+
 
 class CustomPasswordValidator:
     def validate(self, password, user=None):
@@ -9,6 +11,8 @@ class CustomPasswordValidator:
             raise ValidationError(_("The password can not be empty."))
         if len(password) < 8:
             raise ValidationError(_("The password must be at least 8 characters long."))
+        if len(password) > 20:
+            raise ValidationError(_("The password must be at most 20 characters long."))
         if not re.search(r"[a-z]", password):
             raise ValidationError(_("The password must contain at least one lowercase letter."))
         if not re.search(r"[A-Z]", password):
@@ -31,7 +35,7 @@ def handle_password_validation(password):
         password_validator.validate(password)
         return None  # Return None if password validation succeeds
     except ValidationError as e:
-        return str(e)
+        return str(e)[2:-2]
 
 
 def validate_email_address(email_address):
@@ -42,3 +46,20 @@ def validate_email_address(email_address):
     if not email_regex.match(email_address):
         return False
     return True
+
+
+class CustomUserExistenceValidator:
+    def validate(self, email, username):
+        if User.objects.filter(email=email).exists():
+            raise ValidationError(_("A user with this email address already exists."))
+        if User.objects.filter(username=username).exists():
+            raise ValidationError(_("A user with that username already exists."))
+
+
+def handle_user_error(email, username):
+    try:
+        validator = CustomUserExistenceValidator()
+        validator.validate(email, username)
+        return None
+    except ValidationError as e:
+        return str(e)[2:-2]
