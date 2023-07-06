@@ -15,7 +15,7 @@ class CustomPasswordValidator:
             raise ValidationError(_("The password must contain at least one uppercase letter."))
         if not re.search(r"\d", password):
             raise ValidationError(_("The password must contain at least one digit."))
-        if not re.search(r"[!@#$%^&*()_+|{}:;']", password):
+        if not re.search(r"[?!@#$%^&*(){}\-\[\]~:;'\"./\\_]", password):
             raise ValidationError(_("The password must contain at least one special letter."))
 
         return password
