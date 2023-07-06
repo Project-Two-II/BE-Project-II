@@ -20,29 +20,35 @@ from .serializers import (
 class SubjectGroupAPIView(APIView):
     permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, subject_id, *args, **kwargs):
         # Get group and students from request
-        group = SubjectGroup.objects.get(id=kwargs["pk"])
-        students = group.students.all()
-
-        data = {
-            "group": SubjectGroupSerializer(group).data,
-            "students": UserSerializer(students, many=True).data
-        }
-
-        return Response(data=data, status=status.HTTP_200_OK)
-
-    def post(self, request, *args, **kwargs):
-        # get group and user from request
-        group = SubjectGroup.objects.get(id=kwargs["pk"])
-        student = User.objects.get(id=request.data["user_id"])
-
-        # Add user in that group
-        group.students.add(student)
-        group.save()
-
+        group = get_object_or_404(SubjectGroup, subject=subject_id)
         serializer = SubjectGroupSerializer(group)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, subject_id, *args, **kwargs):
+        subject = get_object_or_404(Subject, id=subject_id)
+        data = request.data
+        data["subject"] = subject.id
+        serializer = SubjectGroupSerializer(data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, subject_id, *args, **kwargs):
+        group = get_object_or_404(SubjectGroup, subject=subject_id)
+        user = get_object_or_404(User, id=request.data["user"])
+        group.users.add(user)
+        serializer = SubjectGroupSerializer(group)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, subject_id, *args, **kwargs):
+        group = get_object_or_404(SubjectGroup, subject=subject_id)
+        user = get_object_or_404(User, id=request.data["user"])
+        group.users.remove(user)
+        serializer = SubjectGroupSerializer(group)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
 class TestApiView(APIView):
@@ -286,7 +292,7 @@ class SubjectDetailApiView(APIView):
                 {"detail": "Subject does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        serializer = SubjectSerializer(subject, context={"request": request})
+        serializer = SubjectSerializer(subject)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, subject_id, *args, **kwargs):
@@ -296,7 +302,7 @@ class SubjectDetailApiView(APIView):
                 {"detail": "Subject does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
-        serializer = SubjectSerializer(subject, data=request.data, partial=True, context={"request": request})
+        serializer = SubjectSerializer(subject, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

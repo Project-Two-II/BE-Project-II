@@ -31,6 +31,10 @@ class SubjectDetailAccessPermission(BasePermission):
         elif request.method == "POST":
             # Allow any teacher to send POST request
             return self.has_object_permission(request, view)
+        elif request.method in ["PUT", "DELETE"]:
+            if request.user.is_student() or request.user.is_teacher():
+                # Allow student to access Subject if they are in associated group
+                return self.has_object_permission(request, view)
         return False
 
     def has_object_permission(self, request, view, obj=None):
