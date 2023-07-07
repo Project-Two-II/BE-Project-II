@@ -44,24 +44,16 @@ class LoginAPITests(BaseAPITestCase):
         self.assertEqual(user_info_response.data.get("email"), data["email"])
         self.assertEqual(user_info_response.data.get("first_name"), data["first_name"])
 
-    def login_with_invalid_credentials(self):
-        self.client = APIClient()
-        self.user = User.objects.create_user(
-            email="testuser@elabx.com",
-            username="test_user",
-            role=0,
-            password="test_password"
-        )
+    def test_login_with_invalid_credentials(self):
+        data, response = self.register_user()
         login_response = self.client.post(self.login_url,
-                                          data={"email": "something@gmail.com",
-                                                "password": "test_password"}, format="json")
+                                          data={"email": "email@gmail.com",
+                                                "password": data["password"]}, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_400_BAD_REQUEST)
-        print(login_response.data)
-        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid email address.")
+        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid credentials.")
 
         login_response = self.client.post(self.login_url,
-                                          data={"email": "testuser@elabx.com",
+                                          data={"email": data["email"],
                                                 "password": "r13$Tpassword"}, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_400_BAD_REQUEST)
-        print(login_response.data)
-        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid Password.")
+        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid credentials.")

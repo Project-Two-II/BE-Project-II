@@ -52,7 +52,8 @@ class UserLoginAPIView(APIView):
                 "access": str(token.access_token)
             }
             return Response(data, status=status.HTTP_200_OK)
-        print(serializer.errors)
+        if "non_field_errors" in dict(serializer.errors):
+            return Response({"error": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
