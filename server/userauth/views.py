@@ -7,7 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Profile
-from .validators import handle_password_validation, validate_email_address
+from .validators import handle_password_validation, validate_email_address, handle_user_error
 from .serializers import (
     UserSerializer,
     ProfileSerializer,
@@ -52,6 +52,8 @@ class UserLoginAPIView(APIView):
                 "access": str(token.access_token)
             }
             return Response(data, status=status.HTTP_200_OK)
+        if "non_field_errors" in dict(serializer.errors):
+            return Response({"error": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -65,11 +67,15 @@ class UserRegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
         email_address = request.data.get("email")
         if not validate_email_address(email_address):
-            return Response({"error": "Email is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Email is not valid."}, status=status.HTTP_400_BAD_REQUEST)
         password = request.data.get("password")
         password_error = handle_password_validation(password=password)
         if password_error:
             return Response({"error": password_error}, status=status.HTTP_400_BAD_REQUEST)
+        username = request.data.get("username")
+        user_error = handle_user_error(email_address, username)
+        if user_error:
+            return Response({"error": user_error}, status=status.HTTP_400_BAD_REQUEST)
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
