@@ -13,7 +13,7 @@ const header_style = {
 const elabx_style = {
     position: "relative",
     left: "100px",
-    top: "-9px",
+    top: "13px",
     fontSize: "2rem"
 }
 const logo_style = {
@@ -27,7 +27,6 @@ function Header() {
         <header style={header_style}>
             <span className="elabx" style={elabx_style}>ELabX</span>
             <img className="userProfile-logo" src={userlogo} alt="image" style={logo_style}></img>
-            <img></img>
         </header>
     );
 }

@@ -7,11 +7,11 @@ import Editor from './routes/Editor';
 import Syllabus from './routes/Syllabus'
 import HomePage from './routes/HomePage'
 import QuestionSolve from './routes/questionSolve.jsx'
-
+import Profile from './routes/profile'
 import AddQuestion from './Components/AddQuestion.jsx'
 import CreateChapter from './Components/CreateChapter.jsx'
 import CreateCourse from './Components/CreateCourse.jsx'
-
+import ProfileEdit from './routes/editProfile'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -64,6 +64,14 @@ const router = createBrowserRouter([
     path: "/createcourse",
     element: <CreateCourse />
   },
+  {
+    path: "/profile",
+    element: <Profile />
+  },
+  {
+    path:"/editprofile",
+    element: <ProfileEdit />
+  }
   
 ]);
 
