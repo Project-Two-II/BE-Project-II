@@ -1,28 +1,13 @@
-# BUILD STAGE
-# =====================
+FROM python:3.11-alpine
 
-FROM python:3.9-alpine AS builder
+WORKDIR /usr/src/app
+ENV PYTHONUNBUFFERED=1
 
-# Set the DOCKER_BUILDKIT variable to 1
-ARG DOCKER_BUILDKIT=1
-WORKDIR /app
 COPY requirements.txt ./
-RUN apk add --no-cache \
-    build-base \
-    libressl-dev \
-    libffi-dev \
-    && pip install --no-cache-dir --user -r requirements.txt \
-    && rm -rf /root/.cache/pip
 
+RUN apk update && \
+    apk add --no-cache mariadb-connector-c-dev build-base
 
-# PRODUCATION STAGE
-#=====================
+RUN pip install --no-cache-dir --user -r requirements.txt
 
-FROM python:3.9-alpine
-
-WORKDIR /app
-COPY --from=builder /root/.local /root/.local
 COPY . .
-ENV PATH=/root/.local/bin:$PATH
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

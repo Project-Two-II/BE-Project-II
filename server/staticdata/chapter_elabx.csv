@@ -1,0 +1,3 @@
+id,title,description,subject
+1,Thinking Object Oriented,"OOP promotes modular and organized code, making it easier to understand, maintain, and scale software systems. It encourages concepts like modularity, reusability, and separation of concerns, leading to more efficient and structured development practices. OOP is widely used in many programming languages, including C++, Java, Python, and C#.",1
+2,Classes and Methods,"In object-oriented programming (OOP), a class is a blueprint or template that defines the structure, behavior, and properties of objects. It serves as a blueprint for creating instances of objects, which are specific occurrences of the class.",1
