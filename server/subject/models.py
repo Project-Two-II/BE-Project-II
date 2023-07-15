@@ -71,6 +71,7 @@ class Question(models.Model):
     """
     title = models.CharField(max_length=225, unique=True)
     description = models.TextField()
+    boilerplate = models.CharField(max_length=255)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="questions")
 
     class Meta:
