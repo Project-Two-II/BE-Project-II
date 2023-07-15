@@ -9,7 +9,7 @@ class RegistrationAPITests(BaseAPITestCase):
     def test_no_get_method_for_register(self):
         response = self.client.get(self.register_url, format="json")
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.data["detail"], "GET method is not allowed.")
+        self.assertEqual(response.data["error"], "GET method is not allowed.")
 
     def test_create_account(self):
         data, response = self.register_user()
