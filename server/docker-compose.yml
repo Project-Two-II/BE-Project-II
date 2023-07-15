@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: mysql:8.0-debian
+    image: mysql:latest
     container_name: "elabx_db"
     restart: always
 
