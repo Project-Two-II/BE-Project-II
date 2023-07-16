@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
 
 from userauth.models import User
 from .permissions import SubjectListAccessPermission, SubjectDetailAccessPermission
@@ -261,7 +262,17 @@ class SubjectListApiView(APIView):
     permission_classes = (IsAuthenticated, SubjectListAccessPermission)
 
     def get(self, request, *args, **kwargs):
-        subjects = Subject.objects.all()
+        # If user searching for subject return searched result
+        search_subject = request.GET.get("search")
+        if search_subject:
+            subjects = Subject.objects.filter(
+                Q(code_no__icontains=search_subject) or
+                Q(title__icontains=search_subject) or
+                Q(description__icontains=search_subject))
+        else:
+            # If not searched return default subjects
+            subjects = Subject.objects.all()
+
         serializer = SubjectSerializer(subjects, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
