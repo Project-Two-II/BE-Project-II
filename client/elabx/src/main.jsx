@@ -12,6 +12,7 @@ import AddQuestion from './Components/AddQuestion.jsx'
 import CreateChapter from './Components/CreateChapter.jsx'
 import CreateCourse from './Components/CreateCourse.jsx'
 import ProfileEdit from './routes/editProfile'
+import CodeReview from './routes/codeReview'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path:"/editprofile",
     element: <ProfileEdit />
+  },
+  {
+    path: "/codereview",
+    element: <CodeReview />
   }
   
 ]);
