@@ -173,9 +173,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    "EXCEPTION_HANDLER": "userauth.handlers.custom_exception_handler"
+    "EXCEPTION_HANDLER": "userauth.handlers.custom_exception_handler",
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
     # 'DEFAULT_PERMISSION_CLASSES': [],
-    # 'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 # Configure JWT settings

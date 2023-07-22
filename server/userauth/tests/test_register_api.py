@@ -9,7 +9,7 @@ class RegistrationAPITests(BaseAPITestCase):
     def test_no_get_method_for_register(self):
         response = self.client.get(self.register_url, format="json")
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(response.data["error"], "GET method is not allowed.")
+        self.assertEqual(response.data["detail"], "GET method is not allowed.")
 
     def test_create_account(self):
         data, response = self.register_user()
@@ -28,7 +28,7 @@ class RegistrationAPITests(BaseAPITestCase):
         response = self.client.post(self.register_url,
                                     data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "Email is not valid.")
+        self.assertEqual(response.data["detail"], "Email is not valid.")
 
     def test_no_create_account_without_password(self):
         data = get_user_data()
@@ -36,7 +36,7 @@ class RegistrationAPITests(BaseAPITestCase):
         response = self.client.post(self.register_url,
                                     data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "The password can not be empty.")
+        self.assertEqual(response.data["detail"], "The password can not be empty.")
 
     def test_create_account_only_using_email_username_and_password(self):
         data = get_user_data()
@@ -58,7 +58,7 @@ class RegistrationAPITests(BaseAPITestCase):
                                         "password": data["password"]
                                     }, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"), "A user with this email address already exists.")
+        self.assertEqual(json.loads(response.content).get("detail"), "A user with this email address already exists.")
 
     def test_no_users_with_same_username(self):
         data, _ = self.test_create_account_only_using_email_username_and_password()
@@ -69,13 +69,13 @@ class RegistrationAPITests(BaseAPITestCase):
                                         "password": data["password"]
                                     }, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"), "A user with that username already exists.")
+        self.assertEqual(json.loads(response.content).get("detail"), "A user with that username already exists.")
 
     def test_no_users_with_same_email_and_username(self):
         data, _ = self.test_create_account_only_using_email_username_and_password()
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"), "A user with this email address already exists.")
+        self.assertEqual(json.loads(response.content).get("detail"), "A user with this email address already exists.")
 
     def test_default_user_is_student(self):
         data, response = self.test_create_account_only_using_email_username_and_password()
@@ -94,7 +94,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = " "
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must be at least 8 characters long.")
 
     def test_no_create_account_with_less_password_character(self):
@@ -102,7 +102,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "Pass"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must be at least 8 characters long.")
 
     def test_no_create_account_with_more_password_character(self):
@@ -110,7 +110,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "PasssuoYFDCUTGJ56231@$81651_9^%#*1"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must be at most 20 characters long.")
 
     def test_no_create_account_with_no_lowercase_password_character(self):
@@ -118,7 +118,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "PPB%$#123ITDY"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must contain at least one lowercase letter.")
 
     def test_no_create_account_with_no_uppercase_password_character(self):
@@ -126,7 +126,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "password123$#"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must contain at least one uppercase letter.")
 
     def test_no_create_account_with_no_integer_password_character(self):
@@ -134,7 +134,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "passwordGD$#"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must contain at least one digit.")
 
     def test_no_create_account_with_no_special_password_character(self):
@@ -142,7 +142,7 @@ class RegistrationAPITests(BaseAPITestCase):
         data["password"] = "password123PS"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "The password must contain at least one special letter.")
 
     def test_no_create_account_with_invalid_email(self):
@@ -150,17 +150,17 @@ class RegistrationAPITests(BaseAPITestCase):
         data["email"] = "123email.com"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "Email is not valid.")
+        self.assertEqual(response.data["detail"], "Email is not valid.")
 
         data["email"] = "email@com"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "Email is not valid.")
+        self.assertEqual(response.data["detail"], "Email is not valid.")
 
         data["email"] = "@hash.com"
         response = self.client.post(self.register_url, data=data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"], "Email is not valid.")
+        self.assertEqual(response.data["detail"], "Email is not valid.")
 
     def test_create_account_with_full_length_email(self):
         data = get_user_data()

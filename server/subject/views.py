@@ -70,7 +70,7 @@ class TestApiView(APIView):
         test = self.get_object(subject_id, chapter_id, question_id)
         if not test:
             return Response(
-                {"error": "Test of given question does not exists."},
+                {"detail": "Test of given question does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -91,7 +91,7 @@ class TestApiView(APIView):
         test = self.get_object(subject_id, chapter_id, question_id)
         if not test:
             return Response(
-                {"error": "Test of the given question does not exist."},
+                {"detail": "Test of the given question does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         serializer = TestSerializer(test, data=request.data, partial=True)
@@ -104,7 +104,7 @@ class TestApiView(APIView):
         test = self.get_object(subject_id, chapter_id, question_id).test
         if not test:
             return Response(
-                {"error": "Test of the given question does not exist."},
+                {"detail": "Test of the given question does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         test.delete()
@@ -154,7 +154,7 @@ class QuestionDetailApiView(APIView):
         question = self.get_object(subject_id, chapter_id, question_id)
         if not question:
             return Response(
-                {"error": "Question does not exists."},
+                {"detail": "Question does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -165,7 +165,7 @@ class QuestionDetailApiView(APIView):
         question = self.get_object(subject_id, chapter_id, question_id)
         if not question:
             return Response(
-                {"error": "Question does not exist."},
+                {"detail": "Question does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         serializer = QuestionSerializer(question, data=request.data, partial=True)
@@ -178,7 +178,7 @@ class QuestionDetailApiView(APIView):
         question = self.get_object(subject_id, chapter_id, question_id)
         if not question:
             return Response(
-                {"error": "Question does not exist."},
+                {"detail": "Question does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         question.delete()
@@ -223,7 +223,7 @@ class ChapterDetailApiView(APIView):
         chapter = self.get_object(subject_id, chapter_id)
         if not chapter:
             return Response(
-                {"error": "Chapter does not exists."},
+                {"detail": "Chapter does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
         serializer = ChapterSerializer(chapter)
@@ -233,7 +233,7 @@ class ChapterDetailApiView(APIView):
         chapter = self.get_object(subject_id, chapter_id)
         if not chapter:
             return Response(
-                {"error": "Chapter does not exist."},
+                {"detail": "Chapter does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         serializer = ChapterSerializer(chapter, data=request.data, partial=True)
@@ -246,7 +246,7 @@ class ChapterDetailApiView(APIView):
         chapter = self.get_object(subject_id, chapter_id)
         if not chapter:
             return Response(
-                {"error": "Chapter does not exist."},
+                {"detail": "Chapter does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         chapter.delete()
@@ -303,7 +303,7 @@ class SubjectDetailApiView(APIView):
         subject = self.get_object(subject_id)
         if not subject:
             return Response(
-                {"error": "Subject does not exists."},
+                {"detail": "Subject does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
         serializer = SubjectSerializer(subject)
@@ -313,7 +313,7 @@ class SubjectDetailApiView(APIView):
         subject = self.get_object(subject_id)
         if not subject:
             return Response(
-                {"error": "Subject does not exist."},
+                {"detail": "Subject does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         serializer = SubjectSerializer(subject, data=request.data, partial=True)
@@ -326,7 +326,7 @@ class SubjectDetailApiView(APIView):
         subject = self.get_object(subject_id)
         if not subject:
             return Response(
-                {"error": "Subject does not exist."},
+                {"detail": "Subject does not exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
         subject.delete()
