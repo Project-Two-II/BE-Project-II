@@ -13,8 +13,37 @@ from .serializers import (
     ProfileSerializer,
     UserLoginSerializer,
     UserRegistrationSerializer,
-    ProfileAvatarSerializer
+    ProfileAvatarSerializer,
+    ChangePasswordSerializer
 )
+
+
+class ChangePasswordAPIView(APIView):
+    """
+    API endpoint to change password
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, *args, **kwargs):
+        user = self.request.user
+        payload = request.data.copy()
+        new_password = payload.get("new_password")
+        password_error = handle_password_validation(password=new_password)
+        if password_error:
+            return Response({"detail": password_error}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = ChangePasswordSerializer(data=payload)
+        if serializer.is_valid():
+            if not user.check_password(serializer.data.get("old_password")):
+                return Response({
+                    "detail": "Wrong password."
+                }, status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(serializer.data.get("new_password"))
+            user.save()
+            return Response({
+                "detail": "Password updated successfully."
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogoutAPIView(APIView):

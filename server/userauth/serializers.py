@@ -4,6 +4,14 @@ from .models import User, Profile
 from .backends import EmailBackend
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    The serializer to change password.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True, write_only=True)
+
+
 class UserLoginSerializer(serializers.Serializer):
     """
     Serializer class to serialize Login fields, and authenticate user
