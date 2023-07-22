@@ -5,11 +5,11 @@ from rest_framework.response import Response
 
 def custom_exception_handler(exc, context):
     if isinstance(exc, MethodNotAllowed) and context["request"].method == "GET":
-        return Response({"error": "GET method is not allowed."},
+        return Response({"detail": "GET method is not allowed."},
                         status=exc.status_code)
 
     if isinstance(exc, NotAuthenticated):
-        return Response({"error": "Authentication credentials were not provided."},
+        return Response({"detail": "Authentication credentials were not provided."},
                         status=exc.status_code)
 
     # For all other exceptions, fallback to the default exception handler

@@ -17,7 +17,7 @@ class LoginAPITests(BaseAPITestCase):
     def test_no_get_method_for_login(self):
         response = self.client.get(self.login_url, format="json")
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        self.assertEqual(json.loads(response.content).get("error"), "GET method is not allowed.")
+        self.assertEqual(json.loads(response.content).get("detail"), "GET method is not allowed.")
 
     def test_login_account(self):
         data, response = self.register_user()
@@ -50,10 +50,10 @@ class LoginAPITests(BaseAPITestCase):
                                           data={"email": "email@gmail.com",
                                                 "password": data["password"]}, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid credentials.")
+        self.assertEqual(json.loads(login_response.content).get("detail"), "Invalid credentials.")
 
         login_response = self.client.post(self.login_url,
                                           data={"email": data["email"],
                                                 "password": "r13$Tpassword"}, format="json")
         self.assertEqual(login_response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(json.loads(login_response.content).get("error"), "Invalid credentials.")
+        self.assertEqual(json.loads(login_response.content).get("detail"), "Invalid credentials.")

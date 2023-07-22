@@ -14,7 +14,7 @@ class SubjectListAPITests(SetupAPITestCase):
     def test_no_access_subject_list_without_authentication(self):
         response = self.client.get(self.subject_list_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(json.loads(response.content).get("error"),
+        self.assertEqual(json.loads(response.content).get("detail"),
                          "Authentication credentials were not provided.")
 
     def test_student_can_not_create_subject(self):

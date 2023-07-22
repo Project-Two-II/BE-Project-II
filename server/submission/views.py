@@ -35,7 +35,7 @@ class SubmissionAPIView(APIView):
             chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
             question = Question.objects.get(id=question_id, chapter=chapter.id)
         except Chapter.DoesNotExist or Question.DoesNotExist:
-            return Response({"error": "Invalid Subject, Chapter or Question"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Invalid Subject, Chapter or Question"}, status=status.HTTP_400_BAD_REQUEST)
 
         # assign question and user
         data["question"] = question.id
@@ -66,7 +66,7 @@ class ResultAPIView(APIView):
             question = Question.objects.get(id=question_id, chapter=chapter.id)
             submission = Submission.objects.get(question=question.id, id=submission_id)
         except Submission.DoesNotExist:
-            return Response({"error": "Invalid Submission or Subject"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Invalid Submission or Subject"}, status=status.HTTP_400_BAD_REQUEST)
 
         payload["submission"] = submission.id
 
@@ -95,7 +95,7 @@ class ReviewListCreateAPIView(APIView):
             question = Question.objects.get(id=question_id, chapter=chapter.id)
             submission = Submission.objects.get(id=submission_id, question=question.id)
         except Submission.DoesNotExist or Question.DoesNotExist or Chapter.DoesNotExist:
-            return Response({"error": "Invalid Subject or Chapter or Question or Submission"},
+            return Response({"detail": "Invalid Subject or Chapter or Question or Submission"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         payload["submission"] = submission.id
