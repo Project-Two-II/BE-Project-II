@@ -9,6 +9,7 @@ from .views import (
     UserAvatarAPIView,
     UserAPIView,
     ChangePasswordAPIView,
+    VerifyEmailAPIView,
 )
 
 app_name = "userauth"
@@ -22,4 +23,5 @@ urlpatterns = [
     path("logout/", UserLogoutAPIView.as_view(), name="logout-user"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
     path("change-password/", ChangePasswordAPIView.as_view(), name="change-password"),
+    path("verify-email/", VerifyEmailAPIView.as_view(), name="verify-email"),
 ]

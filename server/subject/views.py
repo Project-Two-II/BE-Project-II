@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 
 from userauth.models import User
+from userauth.permissions import IsVerified
 from .permissions import SubjectListAccessPermission, SubjectDetailAccessPermission
 from .models import Subject, Chapter, Question, Test, SubjectGroup
 from .serializers import (
@@ -18,7 +19,7 @@ from .serializers import (
 
 
 class SubjectGroupAPIView(APIView):
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         # Get group and students from request
@@ -55,7 +56,7 @@ class TestApiView(APIView):
     """
     CRUD for test of a question
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -115,7 +116,7 @@ class QuestionListApiView(APIView):
     """
     Return list of all the question under that chapter
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -140,7 +141,7 @@ class QuestionDetailApiView(APIView):
     """
     Return the detail of a question
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -189,7 +190,7 @@ class ChapterListApiView(APIView):
     """
     It shows the list of all available chapters under that subject
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         chapters = Chapter.objects.filter(subject=subject_id)
@@ -211,7 +212,7 @@ class ChapterDetailApiView(APIView):
     """
     Shows details of a chapter.
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id, chapter_id):
         try:
@@ -259,7 +260,7 @@ class SubjectListApiView(APIView):
     Any Teacher can send POST request,
     and associated user can send GET request
     """
-    permission_classes = (IsAuthenticated, SubjectListAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
 
     def get(self, request, *args, **kwargs):
         # If user searching for subject return searched result
@@ -291,7 +292,7 @@ class SubjectDetailApiView(APIView):
     Student and teachers associated with the subject can access Subject
     Moreover Teachers associated with subject can Update and Delete the subject
     """
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get_object(self, subject_id):
         try:

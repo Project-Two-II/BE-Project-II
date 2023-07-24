@@ -20,6 +20,7 @@ class User(AbstractUser):
         (1, "Teacher")
     )
     role = models.IntegerField(choices=ROLE_CHOICES, default=0)
+    is_verified = models.BooleanField(default=False)
 
     objects = UserManager()
 

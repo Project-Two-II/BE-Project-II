@@ -4,6 +4,17 @@ from .models import User, Profile
 from .backends import EmailBackend
 
 
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for email verification
+    """
+    token = serializers.CharField(max_length=555)
+
+    class Meta:
+        model = User
+        fields = ["token"]
+
+
 class ChangePasswordSerializer(serializers.Serializer):
     """
     The serializer to change password.
