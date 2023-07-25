@@ -1,8 +1,11 @@
 import jwt
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import smart_bytes, smart_str, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -22,7 +25,71 @@ from .serializers import (
     ProfileAvatarSerializer,
     ChangePasswordSerializer,
     EmailVerificationSerializer,
+    RequestPasswordResetEmailSerializer,
+    SetNewPasswordSerializer,
 )
+
+
+class SetNewPasswordAPIView(GenericAPIView):
+    serializer_class = SetNewPasswordSerializer
+
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({"detail": "Password reset success"}, status=status.HTTP_200_OK)
+
+
+class PasswordResetTokenCheckAPIView(GenericAPIView):
+    serializer_class = SetNewPasswordSerializer
+
+    def get(self, request, uidb64, token):
+
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response({"detail": "Token is not valid, please request a new one"},
+                                status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Token is not valid, please request a new one", "uidb64": uidb64, "token": token},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        except DjangoUnicodeDecodeError as identifier:
+            if not PasswordResetTokenGenerator().check_token(user):
+                return Response({'error': 'Token is not valid, please request a new one'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+
+class RequestPasswordResetEmailAPIView(GenericAPIView):
+    serializer_class = RequestPasswordResetEmailSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        email = request.data.get("email", '')
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+            current_site = get_current_site(
+                request=request).domain
+            relative_link = reverse(
+                "password-reset-confirm", kwargs={'uidb64': uidb64, 'token': token})
+
+            abs_url = "http://" + current_site + relative_link
+            email_body = "Hello, \n Use link below to reset your password \n" + abs_url
+            data = {"email_body": email_body, "to_email": user.email,
+                    "email_subject": "Reset your password"}
+            Util.send_mail(data)
+            return Response(
+                {"detail": "We have sent you a link to reset your password"},
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            {"detail": "User with given email does not exists."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class ChangePasswordAPIView(APIView):
