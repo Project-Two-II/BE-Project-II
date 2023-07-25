@@ -7,7 +7,12 @@ from .views import (
     UserRegistrationAPIView,
     UserLogoutAPIView,
     UserAvatarAPIView,
-    UserAPIView
+    UserAPIView,
+    ChangePasswordAPIView,
+    VerifyEmailAPIView,
+    RequestPasswordResetEmailAPIView,
+    PasswordResetTokenCheckAPIView,
+    SetNewPasswordAPIView,
 )
 
 app_name = "userauth"
@@ -20,4 +25,11 @@ urlpatterns = [
     path("login/", UserLoginAPIView.as_view(), name="login-user"),
     path("logout/", UserLogoutAPIView.as_view(), name="logout-user"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("change-password/", ChangePasswordAPIView.as_view(), name="change-password"),
+    path("verify-email/", VerifyEmailAPIView.as_view(), name="verify-email"),
+    path("request-password-reset/",
+         RequestPasswordResetEmailAPIView.as_view(), name="request-password-reset"),
+    path("password-reset/<uidb64>/<token>/",
+         PasswordResetTokenCheckAPIView.as_view(), name="password-reset-confirm"),
+    path("set-new-password/", SetNewPasswordAPIView.as_view(), name="password-reset-complete"),
 ]

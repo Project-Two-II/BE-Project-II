@@ -5,6 +5,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 
 from subject.models import Chapter, Question
+from userauth.permissions import IsVerified
 from subject.permissions import SubjectDetailAccessPermission
 from .models import Submission, Result, Review
 from .serializers import (
@@ -18,7 +19,7 @@ class SubmissionAPIView(APIView):
     """
     API endpoint for Solution to a question related activities
     """
-    # permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
         chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
@@ -49,7 +50,7 @@ class SubmissionAPIView(APIView):
 
 
 class ResultAPIView(APIView):
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
         chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
@@ -78,7 +79,7 @@ class ResultAPIView(APIView):
 
 
 class ReviewListCreateAPIView(APIView):
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
     def get(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
         chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
@@ -111,4 +112,4 @@ class ReviewListCreateAPIView(APIView):
 class ReviewRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
