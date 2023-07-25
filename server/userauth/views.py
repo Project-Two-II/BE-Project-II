@@ -5,7 +5,7 @@ from django.utils.encoding import smart_bytes, smart_str, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView, GenericAPIView
+from rest_framework.generics import RetrieveAPIView, GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -27,22 +27,30 @@ from .serializers import (
     EmailVerificationSerializer,
     RequestPasswordResetEmailSerializer,
     SetNewPasswordSerializer,
+    UserLogoutSerializer
 )
 
 
 class SetNewPasswordAPIView(GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = SetNewPasswordSerializer
 
     def patch(self, request):
+        payload = request.data.copy()
+        new_password = payload.get("password")
+        password_error = handle_password_validation(password=new_password)
+        if password_error:
+            return Response({"detail": password_error}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({"detail": "Password reset success"}, status=status.HTTP_200_OK)
 
 
 class PasswordResetTokenCheckAPIView(GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = SetNewPasswordSerializer
 
-    def get(self, request, uidb64, token):
+    def get(self, request, uidb64, token, *args, **kwargs):
 
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
@@ -51,7 +59,7 @@ class PasswordResetTokenCheckAPIView(GenericAPIView):
             if not PasswordResetTokenGenerator().check_token(user, token):
                 return Response({"detail": "Token is not valid, please request a new one"},
                                 status=status.HTTP_400_BAD_REQUEST)
-            return Response({"detail": "Token is not valid, please request a new one", "uidb64": uidb64, "token": token},
+            return Response({"detail": "Now you can set new password", "uidb64": uidb64, "token": token},
                             status=status.HTTP_400_BAD_REQUEST)
 
         except DjangoUnicodeDecodeError as identifier:
@@ -61,6 +69,7 @@ class PasswordResetTokenCheckAPIView(GenericAPIView):
 
 
 class RequestPasswordResetEmailAPIView(GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = RequestPasswordResetEmailSerializer
 
     def post(self, request):
@@ -75,7 +84,7 @@ class RequestPasswordResetEmailAPIView(GenericAPIView):
             current_site = get_current_site(
                 request=request).domain
             relative_link = reverse(
-                "password-reset-confirm", kwargs={'uidb64': uidb64, 'token': token})
+                "userauth:password-reset-confirm", kwargs={'uidb64': uidb64, 'token': token})
 
             abs_url = "http://" + current_site + relative_link
             email_body = "Hello, \n Use link below to reset your password \n" + abs_url
@@ -112,7 +121,7 @@ class ChangePasswordAPIView(APIView):
                 return Response({
                     "detail": "Wrong password."
                 }, status=status.HTTP_400_BAD_REQUEST)
-            user.set_password(serializer.data.get("new_password"))
+            user.set_password(new_password)
             user.save()
             return Response({
                 "detail": "Password updated successfully."
@@ -124,17 +133,17 @@ class UserLogoutAPIView(APIView):
     """
     API endpoint to log out the users
     """
-    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated, IsVerified)
 
     def post(self, request, *args, **kwargs):
-        try:
-            refresh_token = request.data["refresh"]
+        serializer = UserLogoutSerializer(data=request.data)
+        if serializer.is_valid():
+            refresh_token = serializer.data["refresh"]
             token = RefreshToken(refresh_token)
+            print(token)
             token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(e, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Logout successfully."}, status=status.HTTP_205_RESET_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLoginAPIView(APIView):
@@ -164,12 +173,15 @@ class UserLoginAPIView(APIView):
 
 
 class VerifyEmailAPIView(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (AllowAny,)
+
     def get(self, request):
         token = request.GET.get("token")
-        serializer = EmailVerificationSerializer(data=token)
+        serializer = EmailVerificationSerializer(data={"token": token})
         if serializer.is_valid():
             try:
-                payload = jwt.decode(token, settings.SECRET_KEY)
+                payload = jwt.decode(token, algorithms=["HS256"], key=settings.SECRET_KEY, verify=True)
                 user = User.objects.get(id=payload["user_id"])
                 if not user.is_verified:
                     user.is_verified = True
@@ -229,25 +241,42 @@ class UserRegistrationAPIView(APIView):
             payload = {
                 "email_body": email_body,
                 "email_subject": "Verify your Email",
+                "to_email": email_address,
             }
-            Util.send_mail(data=payload)
-
-            return Response(data, status=status.HTTP_201_CREATED)
+            if not Util.send_mail(data=payload):
+                user.delete()
+                return Response({"detail": "Unable to send verification email."},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"detail": "Check your email to verify account."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserAPIView(RetrieveAPIView):
+class UserAPIView(APIView):
     """
     Get and Update User information
     """
     permission_classes = (IsAuthenticated, IsVerified)
-    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
 
+    def get(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-class UserProfileAPIView(RetrieveAPIView):
+    def put(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = UserSerializer(data=request.data, partial=True)
+        if serializer.is_valid():
+            user.first_name = serializer.data["first_name"]
+            user.last_name = serializer.data["last_name"]
+            user.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserProfileAPIView(RetrieveUpdateAPIView):
     """
     GET nad UPDATE user profile
     """
@@ -259,13 +288,12 @@ class UserProfileAPIView(RetrieveAPIView):
         return self.request.user.profile
 
 
-class UserAvatarAPIView(RetrieveAPIView):
+class UserAvatarAPIView(RetrieveUpdateAPIView):
     """
-    GET and DELETE user avatar
+    GET and UPDATE user avatar
     """
     permission_classes = (IsAuthenticated, IsVerified)
     serializer_class = ProfileAvatarSerializer
-    queryset = Profile.objects.all()
 
     def get_object(self):
         return self.request.user.profile

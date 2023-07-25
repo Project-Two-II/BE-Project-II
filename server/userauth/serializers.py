@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 
 from .models import User, Profile
-from .backends import EmailBackend
+from .backends import CustomModelBackend
 
 
 class SetNewPasswordSerializer(serializers.Serializer):
@@ -66,6 +66,17 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True, write_only=True)
 
 
+class UserLogoutSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user logout
+    """
+    refresh = serializers.CharField(max_length=555)
+
+    class Meta:
+        model = User
+        fields = ["refresh"]
+
+
 class UserLoginSerializer(serializers.Serializer):
     """
     Serializer class to serialize Login fields, and authenticate user
@@ -74,7 +85,7 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
-        email_backend = EmailBackend()
+        email_backend = CustomModelBackend()
         user = email_backend.authenticate(request=None, username=attrs["email"], password=attrs["password"])
 
         if user and user.is_active:
@@ -118,9 +129,9 @@ class ProfileSerializer(UserSerializer):
     Serializer class to serialize Profile model
     Avatar and user lies under profile
     """
-    user = UserSerializer(many=False)
     avatar = ProfileAvatarSerializer(many=False)
+    bio = serializers.CharField(max_length=255)
 
     class Meta:
         model = Profile
-        fields = ("bio",)
+        fields = ("avatar", "bio")
