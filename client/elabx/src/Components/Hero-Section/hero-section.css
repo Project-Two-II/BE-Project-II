@@ -14,23 +14,23 @@
 }
 @keyframes glowing {
   0% {
-    background-color: #b4ee9d;
-    box-shadow: 0 0 3px #99ec68;
+    background-color: #0d0236;
+    box-shadow: 0 0 3px #460fa0;
   }
   50% {
-    background-color: #8ff75f;
-    box-shadow: 0 0 10px #72e763;
+    background-color: #34106e;
+    box-shadow: 0 0 10px #2415a7;
   }
   100% {
-    background-color: #0f7a33;
-    box-shadow: 0 0 3px #0a6e28;
+    background-color: #111b74;
+    box-shadow: 0 0 3px #2c0685;
   }
 }
 
 
 
 .Register{
-  background-color: rgb(73, 133, 61);
+  background-color: rgb(28, 6, 63);
   padding: 5px;
   color: white;
   border-radius: 5px;

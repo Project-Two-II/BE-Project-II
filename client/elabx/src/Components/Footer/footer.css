@@ -1,5 +1,5 @@
 .footer {
-  background: rgba(173, 245, 201, 0.664);
+  background: rgba(16, 24, 136, 0.473);
 }
 
 .follows span a {
@@ -16,6 +16,6 @@
 
 .link__list a {
   text-decoration: none;
-  color: #b3f8dc;
+  color: #e9eeec;
   font-weight: 500;
 }

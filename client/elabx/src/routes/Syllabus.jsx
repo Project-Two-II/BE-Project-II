@@ -1,9 +1,14 @@
 import React from 'react'
-import '../App.css'
+import { useSelector} from 'react-redux'
+
+
 import arrowIcon from '../media/arrowicon.png'
-import { Link } from 'react-router-dom'
-import { useEffect, useState, useLocation } from 'react';
+import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState} from 'react';
 import CourseHeader from '../Components/CourseHeader.jsx'
+
+import '../App.css'
+
 
 const iconStyle = {
     width: "5%",
@@ -57,11 +62,23 @@ const lockBtnStyle = {
 
 
 function Syllabus() {
-    // let { location } = useLocation();
+
+    const param = useParams();
+    const chapterId = param.id;
+    console.log("ChapterID:" + chapterId)
+    const token = useSelector((state) =>  state.cred.token);
+    const fetchOption = {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " +  token
+        },
+      }
 
     const [course, setCourse] = useState([]);
     function getCourse() {
-        fetch("http://localhost:8000/api/subjects/1/")
+        
+        fetch(`http://localhost:8000/api/subjects/${chapterId}`, fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 setCourse(data)
@@ -74,9 +91,10 @@ function Syllabus() {
 
     const [chapterList, setChapterList] = useState([]);
     function getChapters() {
-        fetch("http://localhost:8000/api/subjects/1/chapters/")
+        fetch(`http://localhost:8000/api/subjects/${chapterId}/chapters/`,fetchOption)
             .then(resp => resp.json())
             .then(data => {
+                console.log(data)
                 setChapterList(data)
             })
             .catch(err => console.log(err))
@@ -87,7 +105,7 @@ function Syllabus() {
 
     const [questionList, setQuestionList] = useState([]);
     function getQuestions() {
-        fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/")
+        fetch(`http://localhost:8000/api/subjects/${chapterId}/chapters/${chapterId}/questions/`,fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 setQuestionList(data)
@@ -102,7 +120,7 @@ function Syllabus() {
         <div className="main" style={mainStyle}>
             {/* <CourseHeader state={location.title}/> */}
             <CourseHeader />
-            {chapterList.map(chapter =>
+            {chapterList.map((chapter) =>
             (
                 <ul>
                     <div className="chapterList">
@@ -111,7 +129,7 @@ function Syllabus() {
                                 <img src={arrowIcon} style={iconStyle}></img>
                                 <span style={textStyle}>{chapter.id}. {chapter.title}</span>
                             </div>
-                            {questionList.map(question =>
+                            {questionList.map((question) =>
                             (
                                 <ul>
                                     <div className="questionList">

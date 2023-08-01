@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import store from './store'
+import { Provider } from 'react-redux'
+
 import Root from './root.jsx'
 import Login from './routes/login'
 import Register from './routes/register'
@@ -12,6 +15,7 @@ import AddQuestion from './Components/AddQuestion.jsx'
 import CreateChapter from './Components/CreateChapter.jsx'
 import CreateCourse from './Components/CreateCourse.jsx'
 import ProfileEdit from './routes/editProfile'
+import CodeReview from './routes/codeReview'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -41,7 +45,7 @@ const router = createBrowserRouter([
     element: <Editor />
   },
   {
-    path: "/syllabus",
+    path: "/syllabus/:id",
     element: <Syllabus />
   },
   {
@@ -71,12 +75,18 @@ const router = createBrowserRouter([
   {
     path:"/editprofile",
     element: <ProfileEdit />
+  },
+  {
+    path: "/codereview",
+    element: <CodeReview />
   }
   
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+
+  <Provider store={store}>
     <RouterProvider router={router}/>
-  </React.StrictMode>,
+  </Provider>
+ 
 )

@@ -1,5 +1,5 @@
 .course-card{
-    background-image: url('../media/cpplogo.png');
+    /* background-image: url('../media/cpplogo.png'); */
     background-size: contain;
     background-repeat: no-repeat;
 }

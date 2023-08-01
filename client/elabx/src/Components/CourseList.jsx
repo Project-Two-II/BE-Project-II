@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard.jsx';
 
 const course_list_style = {
@@ -9,13 +8,27 @@ const course_list_style = {
     gridGap : "40px",
 }
 
-function CourseList() {
+
+function CourseList({token}) {
   const [course, setCourse] = useState([]);
 
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " +  token
+    },
+
+  }
+  
   function getCourse() {
-    fetch("http://localhost:8000/api/subjects/")
-      .then(resp => resp.json())
+    fetch("http://localhost:8000/api/subjects/", fetchOption)
+      .then((resp) => {
+        console.log(resp.status)
+        return resp.json()
+      })
       .then(data => {
+        console.log(data)
         setCourse(data)
       })
       .catch(err => console.log(err))
@@ -30,9 +43,8 @@ function CourseList() {
     <div className='course-list' style={course_list_style}>
       {course.map(course => (
           // <Link to={{pathname: '/Syllabus.js', state: course.id}}>
-          <Link to="/syllabus">
             <CourseCard key={course.id} course={course} />
-          </Link>
+          
       ))}
     </div>
   )
