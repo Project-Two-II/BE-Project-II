@@ -28,7 +28,7 @@ function CourseList() {
 
   return (
     <div className='course-list' style={course_list_style}>
-      {course.map((course) => (
+      {course.map(course => (
           // <Link to={{pathname: '/Syllabus.js', state: course.id}}>
           <Link to="/syllabus">
             <CourseCard key={course.id} course={course} />
