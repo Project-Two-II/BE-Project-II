@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector} from 'react-redux'
+
+
 import CourseList from '../Components/CourseList.jsx';
 
 const headerStyle = {
@@ -20,13 +23,17 @@ const course_list_style = {
 
 
 function HomePage() {
+
+  //const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
+  const token = useSelector((state) =>  state.cred.token);
+  //const role = 0
   return (
     <>
       <div style={headerStyle} className="courseHeader">
         <span style={spanStyle}>Your Labs</span>
       </div>
       <div className="courseList" style={course_list_style}>
-        <CourseList />
+        <CourseList token={token}/>
       </div>
     </>
   );

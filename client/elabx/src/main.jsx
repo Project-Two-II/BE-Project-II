@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import store from './store'
+import { Provider } from 'react-redux'
+
 import Root from './root.jsx'
 import Login from './routes/login'
 import Register from './routes/register'
@@ -42,7 +45,7 @@ const router = createBrowserRouter([
     element: <Editor />
   },
   {
-    path: "/syllabus",
+    path: "/syllabus/:id",
     element: <Syllabus />
   },
   {
@@ -81,7 +84,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+
+  <Provider store={store}>
     <RouterProvider router={router}/>
-  </React.StrictMode>,
+  </Provider>
+ 
 )

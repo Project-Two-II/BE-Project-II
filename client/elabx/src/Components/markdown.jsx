@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useState, useEffect } from 'react'
+import { useSelector} from 'react-redux'
+
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
@@ -27,11 +29,24 @@ const renderers = {
 };
 
 function Markdown() {
+
+  const token = useSelector((state) =>  state.cred.token);
+
+  
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer  " +  token
+    },
+  }
+
   const [description, setDescription] = useState([])
   function getDescription() {
-    fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/")
+    fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/", fetchOption)
       .then(resp => resp.json())
       .then(data => {
+        console.log(data)
         setDescription(data)
       })
       .catch(err => console.log(err))

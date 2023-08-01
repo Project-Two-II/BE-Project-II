@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './course.css'
 
 const course_card_style = {
@@ -18,10 +20,13 @@ const style={
   padding: "10px"
 }
 const CourseCard = ({ course }) => {
+  const routeTo = "/syllabus/" + course.id
   return (
       <div className="course-card" style={course_card_style}>
         <h2 style={style}>{course.code_no}</h2>
-        <h3 style={style}>{course.title}</h3>
+        <Link to = {routeTo}>
+          <h3 style={style}>{course.title}</h3>
+        </Link>
         <hr className="progressBar" style={progress_bar_style}></hr>
       </div>
   );
