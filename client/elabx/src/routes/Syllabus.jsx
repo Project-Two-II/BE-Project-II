@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
 
-
 import arrowIcon from '../media/arrowicon.png'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState} from 'react';
@@ -66,7 +65,7 @@ function Syllabus() {
     const param = useParams();
     const chapterId = param.id;
     console.log("ChapterID:" + chapterId)
-    const token = useSelector((state) =>  state.cred.token);
+    const token = useSelector((state) =>  state.token);
     const fetchOption = {
         method: "GET",
         headers: {
@@ -139,7 +138,7 @@ function Syllabus() {
                                                 <span style={textStyle}>{question.id}. {question.title}</span>
                                             </div>
                                             {
-                                                <Link to='/questionsolve'>
+                                                <Link to={`/syllabus/${chapter.id}/questionsolve/${question.id}`}>
                                                     <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
                                                 </Link>
                                                 // <Link to='/questionSolve/{question.id}'>

@@ -25,7 +25,7 @@ const course_list_style = {
 function HomePage() {
 
   //const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
-  const token = useSelector((state) =>  state.cred.token);
+  const token = useSelector((state) =>  state.token);
   //const role = 0
   return (
     <>

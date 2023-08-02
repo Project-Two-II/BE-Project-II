@@ -4,7 +4,7 @@ import userlogo from '../media/people.svg';
 
 
 const header_style = {
-    backgroundColor: "#0d1122",
+  backgroundColor: "#0d1122",
   width: "100%",
   height: "12vh",
   position: "static",
@@ -17,7 +17,7 @@ const elabx_style = {
     fontSize: "2rem"
 }
 const logo_style = {
-    width: "4%",
+  width: "4%",
   position: "relative",
   top: "8px",
   left: "1100px"
