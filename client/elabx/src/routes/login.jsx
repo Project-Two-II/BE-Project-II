@@ -75,6 +75,7 @@ const Login = () => {
           // todo: redirect
           setHasError(false);
           console.log("Redirecting...")
+          console.log(data)
           dispatch(setCred({isLoggedIn: true, token: data.tokens.access, role: 0}))
           //console.log(data.tokens.access);
           navigate("/homepage")

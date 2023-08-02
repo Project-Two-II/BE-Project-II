@@ -1,11 +1,25 @@
 import './userprofile.css'
 import userlogo from '../../media/people.svg';
 import { Link } from 'react-router-dom'
+import CourseList from '../CourseList.jsx';
+
 
 const logo_style = {
     width: "50%",
     margin: "auto"
 }
+const headerStyle = {
+    height: "15vh",
+    position: "static",
+  }
+  const spanStyle = {
+    color: "#1F2334",
+    position: "relative",
+    top: "35px",
+    left: "200px",
+    fontSize: "2.5rem",
+    textDecoration: "underline"
+  }
 
 const UserProfile = () => {
     return (
@@ -68,6 +82,12 @@ const UserProfile = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div style={headerStyle} className="courseHeader">
+                <span style={spanStyle}>Your Courses</span>
+            </div>
+            <div class="course-container">
+                {/* <CourseList /> */}
             </div>
         </>
     )
