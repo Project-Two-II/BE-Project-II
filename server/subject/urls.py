@@ -8,7 +8,8 @@ from .views import (
     QuestionListApiView,
     QuestionDetailApiView,
     TestApiView,
-    SubjectGroupAPIView
+    SubjectGroupAPIView,
+    MySubjectAPIView,
 )
 
 app_name = "subject"
@@ -30,4 +31,6 @@ urlpatterns = [
          TestApiView.as_view(), name="question-test"),
     path("<int:subject_id>/group/",
          SubjectGroupAPIView.as_view(), name="subject-group"),
+    path("mysubjects/",
+         MySubjectAPIView.as_view(), name="my-subjects"),
 ]

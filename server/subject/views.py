@@ -18,6 +18,24 @@ from .serializers import (
 )
 
 
+class MySubjectAPIView(APIView):
+    """
+    Return the list of all the subjects either user enrolled or created
+    """
+    permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
+
+    def grt_current_user(self):
+        return self.request.user
+
+    def get(self, *args, **kwargs):
+        user = self.grt_current_user()
+        subjects = [group.subject for group in SubjectGroup.objects.filter(users=user)]
+        # subject = Subject.objects.filter(owner=user.id)
+
+        serializer = SubjectSerializer(subjects, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
 class SubjectGroupAPIView(APIView):
     permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
 
