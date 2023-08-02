@@ -1,28 +1,41 @@
 .formContainer{
+    
     display: flex;
     width: 50%;
     padding: 5px;
+    width: 50%;
+    height: 100%;
+   
 }
 .ipContainer{
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: auto;
+    
 }
 .add{
     display: flex;
     flex-direction: column;
     height: 100vh;
     row-gap: 20px;
+    background-color:#1F2331;
+    
+
 }
 #description{
     resize: none;
     min-height: 50%;
     padding: 20px;
     font-size: 20px;
+    background-color: white;
+
+
 }
 #title{
     padding:12px;
     font-size: 20px;
+    width: 50%;
 }
 
 #author{
@@ -43,6 +56,7 @@
     cursor: pointer;
     font-size: 25px;
     border: none;
+
 }
 .btn:hover{
     border: 2px solid white;
