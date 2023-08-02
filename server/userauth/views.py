@@ -162,6 +162,7 @@ class UserLoginAPIView(APIView):
                 return Response({"detail": "Please verify your account."}, status=status.HTTP_400_BAD_REQUEST)
             token = RefreshToken.for_user(user)
             data = serializer.data
+            data["role"] = user.role
             data["tokens"] = {
                 "refresh": str(token),
                 "access": str(token.access_token)
