@@ -124,14 +124,15 @@ class ProfileAvatarSerializer(serializers.ModelSerializer):
         fields = ("avatar",)
 
 
-class ProfileSerializer(UserSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     """
     Serializer class to serialize Profile model
     Avatar and user lies under profile
     """
-    avatar = ProfileAvatarSerializer(many=False)
+    user = UserSerializer(many=False)
+    # avatar = ProfileAvatarSerializer(many=False)
     bio = serializers.CharField(max_length=255)
 
     class Meta:
         model = Profile
-        fields = ("avatar", "bio")
+        fields = ("user", "bio", "avatar")
