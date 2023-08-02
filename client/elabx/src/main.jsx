@@ -11,6 +11,7 @@ import Syllabus from './routes/Syllabus'
 import HomePage from './routes/HomePage'
 import QuestionSolve from './routes/questionSolve.jsx'
 import Profile from './routes/profile'
+import Teacher from './routes/teacher'
 import AddQuestion from './Components/AddQuestion.jsx'
 import CreateChapter from './Components/CreateChapter.jsx'
 import CreateCourse from './Components/CreateCourse.jsx'
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
   {
     path: "/codereview",
     element: <CodeReview />
+  },
+  {
+    path: "/teacher",
+    element: <Teacher />
   }
   
 ]);

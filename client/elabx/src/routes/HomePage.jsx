@@ -25,7 +25,7 @@ const course_list_style = {
 function HomePage() {
 
   //const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
-  const token = useSelector((state) =>  state.cred.token);
+  // const token = useSelector((state) =>  state.cred.token);
   //const role = 0
   return (
     <>
@@ -33,10 +33,26 @@ function HomePage() {
         <span style={spanStyle}>Your Labs</span>
       </div>
       <div className="courseList" style={course_list_style}>
-        <CourseList token={token}/>
+        <CourseList />
       </div>
     </>
   );
 };
+// function HomePage() {
+
+//   //const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
+//   const token = useSelector((state) =>  state.cred.token);
+//   //const role = 0
+//   return (
+//     <>
+//       <div style={headerStyle} className="courseHeader">
+//         <span style={spanStyle}>Your Labs</span>
+//       </div>
+//       <div className="courseList" style={course_list_style}>
+//         <CourseList token={token}/>
+//       </div>
+//     </>
+//   );
+// };
 
 export default HomePage;

@@ -16,8 +16,6 @@ const UserProfileEdit = () => {
                         <p className="user-info">Change Profile Picture</p>
                         <input className="user-info" type="file"></input>
                     <br />
-                    <input className="input user-info user-name" placeholder="John Doe">
-                    </input>
                     <span className="user-info user-role">Student</span>
                     <span className="user-info user-details">BECE VI Day</span>
                 </div>
@@ -37,15 +35,15 @@ const UserProfileEdit = () => {
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Email</h6>
                                     </div>
-                                    <input class="input col-sm-9 text-secondary" required placeholder="john.191000@ncit.edu.np">
-                                    </input>
+                                    <div class="col-sm-9 text-secondary">john.191000@ncit.edu.np
+                                    </div>
                                 </div>
                                 <hr />
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Phone</h6>
                                     </div>
-                                    <input class="input col-sm-9 text-secondary" required placeholder="9861239772">
+                                    <input class="input col-sm-9 text-secondary" required placeholder="9861000000">
                                     </input>
                                 </div>
                                 <hr />
