@@ -18,6 +18,7 @@ import ProfileEdit from './routes/editProfile'
 import CodeReview from './routes/codeReview'
 import CreateQuestion from './Components/AddQuestion.jsx'
 import CreateTest from './Components/CreateTest.jsx'
+import AddStudent from './Components/AddStudent.jsx'
 
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
   {
     path:"/createtest",
     element: <CreateTest/>
+  },
+  {
+    path:"/addstudent",
+    element:<AddStudent/>
   }
 
   

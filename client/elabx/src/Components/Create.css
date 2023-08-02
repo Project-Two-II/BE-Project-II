@@ -51,19 +51,21 @@ body {
 }
 
 .ipContainer button {
-  padding: 10px 10px;
-  margin-top: 10px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 12px;
   color: #fff;
-  background-color: #000;
+  background-color: rgb(26, 26, 73);
   cursor: pointer;
-  margin:20px;
+  margin:10px;
+  align-items: center;
 }
 
 .ipContainer button:hover {
-  background-color: #111;
+  font-weight: bolder ;
+  background-color: rgb(10, 25, 31);
+  color:#fff;
 }
 
 

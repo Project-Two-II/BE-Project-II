@@ -2,100 +2,105 @@
 import React, { useState, useEffect } from 'react';
 import './Create.css';
 
-const CreateChapter = () => {
-  const [chapters, setChapters] = useState([{ id: 1, name: '', description: '' }]);
+const CreateSubject = () => {
+  const [subject, setSubject] = useState('C');
+  const [subjects, setSubjects] = useState([{ id: 1, name: '', description: '' }]);
 
   useEffect(() => {
-    if (chapters.length === 0) {
-      
-      setChapters([{ id: 1, name: '', description: '' }]);
+    if (subjects.length === 0) {
+      setSubjects([{ id: 1, name: '', description: '' }]);
     }
-  }, [chapters]);
+  }, [subjects]);
 
-  const handleChapterNameChange = (index, e) => {
-    const newChapters = [...chapters];
-    newChapters[index].name = e.target.value;
-    setChapters(newChapters);
+  const handleSubjectChange = (e) => {
+    setSubject(e.target.value);
   };
 
-  const handleChapterDescriptionChange = (index, e) => {
-    const newChapters = [...chapters];
-    newChapters[index].description = e.target.value;
-    setChapters(newChapters);
+  const handleSubjectNameChange = (index, e) => {
+    const newSubjects = [...subjects];
+    newSubjects[index].name = e.target.value;
+    setSubjects(newSubjects);
   };
 
-  const handleAddChapter = () => {
-    const newChapters = [...chapters];
-    const newId = newChapters.length + 1;
-    newChapters.push({ id: newId, name: '', description: '' });
-    setChapters(newChapters);
+  const handleSubjectDescriptionChange = (index, e) => {
+    const newSubjects = [...subjects];
+    newSubjects[index].description = e.target.value;
+    setSubjects(newSubjects);
   };
 
-  const handleRemoveChapter = (index) => {
-    const newChapters = [...chapters];
-    newChapters.splice(index, 1);
-    setChapters(newChapters);
+  const handleAddSubject = () => {
+    const newSubjects = [...subjects];
+    const newId = newSubjects.length + 1;
+    newSubjects.push({ id: newId, name: '', description: '' });
+    setSubjects(newSubjects);
+  };
+
+  const handleRemoveSubject = (index) => {
+    const newSubjects = [...subjects];
+    newSubjects.splice(index, 1);
+    setSubjects(newSubjects);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const isConfirmed = window.confirm(`Are you sure you want to create the chapters?`);
+
+    const isConfirmed = window.confirm(`Are you sure you want to create the subjects for: ${subject}?`);
     if (isConfirmed) {
-      
-      console.log('Submitted Chapters:');
-      chapters.forEach((chapter) => {
-        console.log(`Chapter ${chapter.id} - Name: ${chapter.name}, Description: ${chapter.description}`);
+      console.log(`Submitted Subject: ${subject}`);
+      console.log('Submitted Subjects:');
+      subjects.forEach((subject) => {
+        console.log(`Subject ${subject.id} - Name: ${subject.name}, Description: ${subject.description}`);
       });
-      
-      setChapters([{ id: 1, name: '', description: '' }]);
+
+      setSubjects([{ id: 1, name: '', description: '' }]);
     }
   };
 
   return (
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
-        {chapters.map((chapter, index) => (
-          <div key={chapter.id} className="chapterGroup">
+      <div className="inputGroup">
+  <label htmlFor="subject">Select Subject Name:</label>
+</div>
+<div className="inputGroup">
+  <select name="subject" id="subject" value={subject} onChange={handleSubjectChange} required>
+    <option value="">Select a subject</option>
+    <option value="C">C</option>
+    <option value="C++">C++</option>
+  </select>
+</div>
+
+        {subjects.map((subject, index) => (
+          <div key={subject.id} className="subjectGroup">
             <div className="inputGroup">
-              <label htmlFor={`chapterName${chapter.id}`}>Chapter Name:</label>
+              <label htmlFor={`subjectName${subject.id}`}>Subject Name:</label>
               <input
-                name={`chapterName${chapter.id}`}
-                id={`chapterName${chapter.id}`}
-                value={chapter.name}
-                onChange={(e) => handleChapterNameChange(index, e)}
+                name={`subjectName${subject.id}`}
+                id={`subjectName${subject.id}`}
+                value={subject.name}
+                onChange={(e) => handleSubjectNameChange(index, e)}
                 required
-                placeholder="Enter Chapter Name"
+                placeholder="Enter Subject Name"
               />
             </div>
 
             <div className="inputGroup">
-              <label htmlFor={`chapterDescription${chapter.id}`}>Chapter Description:</label>
+              <label htmlFor={`subjectDescription${subject.id}`}>Subject Description:</label>
               <textarea
-                name={`chapterDescription${chapter.id}`}
-                id={`chapterDescription${chapter.id}`}
-                value={chapter.description}
-                onChange={(e) => handleChapterDescriptionChange(index, e)}
+                name={`subjectDescription${subject.id}`}
+                id={`subjectDescription${subject.id}`}
+                value={subject.description}
+                onChange={(e) => handleSubjectDescriptionChange(index, e)}
                 required
-                placeholder="Enter Chapter Description"
+                placeholder="Enter Subject Description"
               />
             </div>
-
-            {chapters.length > 1 && (
-              <button type="button" className="removeBtn" onClick={() => handleRemoveChapter(index)}>
-                Remove Chapter
-              </button>
-            )}
           </div>
         ))}
 
         <div className="buttonGroup">
-          <button type="button" className="addBtn" onClick={handleAddChapter}>
-            Add Chapter
-          </button>
-
           <button className="btn createBtn" type="submit">
-            Create Chapters
+            Add
           </button>
         </div>
       </form>
@@ -103,4 +108,4 @@ const CreateChapter = () => {
   );
 };
 
-export default CreateChapter;
+export default CreateSubject;
