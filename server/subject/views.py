@@ -147,7 +147,7 @@ class QuestionDetailApiView(APIView):
         try:
             subject = get_object_or_404(Subject, id=subject_id)
             chapter = get_object_or_404(subject.chapters, id=chapter_id)
-            return chapter.questions.filter(id=question_id)
+            return chapter.questions.get(id=question_id)
         except Question.DoesNotExist:
             return None
 
