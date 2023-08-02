@@ -20,8 +20,8 @@ class Subject(models.Model):
     There is a group associated with the subject which we called students.
     When we delete Subject related Group of students will be removed.
     """
-    code_no = models.CharField(unique=True, max_length=10)
-    title = models.CharField(unique=True, max_length=150)
+    code_no = models.CharField(max_length=10)
+    title = models.CharField(max_length=150)
     owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name="subjects")
     description = models.TextField()
     thumbnail = models.ImageField(default=DEFAULT_SUB_THUMB, upload_to=upload_to_subject_thumbnails, blank=True)
@@ -52,7 +52,7 @@ class Chapter(models.Model):
     One subject can have multiple chapters.
     If the subject is deleted, all the chapters will delete.
     """
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name="chapters")
 
@@ -69,7 +69,7 @@ class Question(models.Model):
     One chapter can have multiple questions.
     If the chapter is deleted, all the questions will delete.
     """
-    title = models.CharField(max_length=225, unique=True)
+    title = models.CharField(max_length=225)
     description = models.TextField()
     boilerplate = models.CharField(max_length=255)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="questions")
