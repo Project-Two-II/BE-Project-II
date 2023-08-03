@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Form, Link} from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,8 +13,7 @@ const errMessageStyle = {
 
 
 const Login = () => {
-  const navigate = useNavigate();
-
+   const navigate = useNavigate();
 
    const isLoggedIn = useSelector((state) => state.isLoggedIn)
    if(isLoggedIn) navigate("/home")
@@ -27,7 +26,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [hasError, setHasError] = useState(false)
-
 
 
   const handleEmailChange = (e) => {
@@ -45,6 +43,7 @@ const Login = () => {
     if(email.length === 0 || password.length === 0 ){
       setHasError(true)
       setErrMessage('All fields are required');
+      return;
     }
       const fetchOption = {
         method: "POST",
@@ -57,10 +56,7 @@ const Login = () => {
       fetch("http://localhost:8000/api/userauth/login/", fetchOption)
       .then((resp) => {
         if(resp.status == 400){
-          console.log("400 bad req")
-          console.log("HasError: " + hasError)
           setHasError(true);
-          console.log("HasError: " + hasError)
           return resp.json()
         }
         else {
@@ -70,22 +66,16 @@ const Login = () => {
       })
       .then(async (data) => {
         if(hasError){
-          console.log("Has Error")
           setErrMessage(data.detail)
-          setHasError(false)
         } else{
           const isLoggedIn = true
-         
-          setHasError(false);
-          console.log("Redirecting...")
-          console.log(data.tokens.refresh)
           dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role, refreshToken: data.tokens.refresh}))
-          
           navigate("/home")
         }
       })
       .catch(err => console.log(err))
   };
+
 
 
   return (

@@ -62,7 +62,7 @@ const CreateChapter = () => {
           <div key={chapter.id} className="chapterGroup">
             <div className="inputGroup">
               <label htmlFor={`chapterName${chapter.id}`}>Chapter Name:</label>
-              <input
+                <input
                 name={`chapterName${chapter.id}`}
                 id={`chapterName${chapter.id}`}
                 value={chapter.name}

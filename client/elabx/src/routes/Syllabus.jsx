@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useSelector } from 'react-redux'
 
 import arrowIcon from '../media/arrowicon.png'
@@ -79,6 +80,8 @@ const enroll_btn_style = {
     right: "270px",
     width: "max-content"
   }
+
+const queryClient = new QueryClient()
   
   function useQuery() {
     const { search } = useLocation();
@@ -103,7 +106,6 @@ function Syllabus({ course }) {
             "Authorization": "Bearer " + token
         },
     }
-
     // const [course, setCourse] = useState([]);
     // function getCourse() {
 
@@ -118,7 +120,7 @@ function Syllabus({ course }) {
     //     getCourse()
     // }, [])
 
-    const [chapterList, setChapterList] = useState([]);
+
     function getChapters() {
         fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
             .then(resp => resp.json())
@@ -128,9 +130,6 @@ function Syllabus({ course }) {
             })
             .catch(err => console.log(err))
     }
-    useEffect(() => {
-        getChapters()
-    }, []);
 
     // const [questionList, setQuestionList] = useState([]);
     // function getQuestions() {
@@ -144,6 +143,17 @@ function Syllabus({ course }) {
     // useEffect(() => {
     //     getQuestions()
     // }, []);
+    function getQuestions() {
+        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
+            .then(resp => resp.json())
+            .then(data => {
+                setQuestionList(data)
+            })
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        getQuestions()
+    }, []);
 
     return (
         <>

@@ -146,7 +146,7 @@ const router = createBrowserRouter([
     path:"/teacherenrollment",
     element:<TeacherEnrollment/>
   }
-  
+
 ]);
 
 

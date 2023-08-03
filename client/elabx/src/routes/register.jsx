@@ -57,9 +57,14 @@ const Register = () => {
 
     if (password != confirmPassword) {
       setErrMessage('Passwords do not match');
+      setOkMessage('');
+      return;
     }
-    if (email.length === 0 || password.length === 0 || confirmPassword === 0)
+    if (email.length === 0 || password.length === 0 || confirmPassword === 0){
       setErrMessage('All fields are required');
+      setOkMessage('');
+      return;
+    }
     
     const fetchOption = {
         method: "POST",
@@ -76,28 +81,24 @@ const Register = () => {
       fetch("http://localhost:8000/api/userauth/register/", fetchOption)
       .then((resp) => {
         if(resp.status == 400){
-          console.log("400 bad req")
           setHasError(true);
-          console.log(hasError)
+          setOkMessage('');
           return resp.json()
         }
         else {
-          setHasError(false)
           return resp.json()
         }
       })
       .then((data) => {
         if(hasError){
-          console.log("Has Error")
           setErrMessage(data.detail)
+          setOkMessage('');
           setHasError(false)
         } else{
-          console.log("Has Error")
           setOkMessage(data.detail)
+          setErrMessage('');
           setHasError(false);
         }
-        console.log(data);
-        console.log(data.detail)
       })
       .catch(err => console.log(err))
   };

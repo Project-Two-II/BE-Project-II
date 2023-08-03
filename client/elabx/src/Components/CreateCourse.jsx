@@ -54,6 +54,7 @@ const CreateCourse = () => {
 
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     setThumbnail(file);
   }
 
