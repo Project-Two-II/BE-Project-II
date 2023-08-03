@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AddStudent from '../Components/AddStudent'
 import './TeacherCourseDetails.css';
 
 const TeacherCourseDetails = () => {
@@ -77,6 +78,9 @@ const TeacherCourseDetails = () => {
             ))}
           </ul>
         </div>
+      )}
+       {showAddStudent && (
+        <AddStudent/>
       )}
       <div className="edit-button-container">
         <button className="edit-button">Edit</button>
