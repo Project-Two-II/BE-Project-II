@@ -111,9 +111,9 @@ function Syllabus() {
             })
             .catch(err => console.log(err))
     }
-    // useEffect(() => {
-    //     getQuestions()
-    // }, []);
+    useEffect(() => {
+        getQuestions()
+    }, []);
      
     return (
         <div className="main" style={mainStyle}>

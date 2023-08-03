@@ -13,8 +13,11 @@ const errMessageStyle = {
 
 
 const Login = () => {
+  const navigate = useNavigate();
 
-  // const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
+
+   const isLoggedIn = useSelector((state) => state.isLoggedIn)
+   if(isLoggedIn) navigate("/homepage")
   // const token = useSelector((state) => state.cred.token);
   // const role = 0
 
@@ -25,7 +28,6 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState('');
   const [hasError, setHasError] = useState(false)
 
-  const navigate = useNavigate();
 
 
   const handleEmailChange = (e) => {

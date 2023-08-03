@@ -1,12 +1,48 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import './UserInput.css';
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 const CreateCourse = () => {
+
+  const navigate = useNavigate();
+
+  const isLoggedIn = useSelector((state) =>  state.isLoggedIn);
+  const role = useSelector((state) => state.role)
+  const token = useSelector((state) => state.token)
+  console.log(token)
+
+  //code_no, title, description, thumbnail
+
+  if(!isLoggedIn){
+    navigate("/login")
+    return
+  } else if(!role){
+    navigate("/homepage")
+    return
+  }
+
   const [courseSubject, setCourseSubject] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [desc, setDesc] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
+  const [message, setMessage] = useState('')
+
+  const fetchOption = {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " +  token
+    },
+    body: JSON.stringify({
+      "code_no": courseCode,
+      "title": courseSubject,
+      "description": desc,
+      // "thumbnail": thumbnail
+    })
+ }
 
   const handleSubjectChange = (e) => {
     setCourseSubject(e.target.value);
@@ -25,8 +61,25 @@ const CreateCourse = () => {
     setThumbnail(file);
   }
 
+  const handleCourseSubmission = (e) => {
+    e.preventDefault();
+    setMessage(' ');
+
+   fetch("http://localhost:8000/api/subjects/", fetchOption)
+   .then((resp) => {
+    return resp.json()
+  })
+  .then((data) => {
+    console.log(data);
+    setMessage(data.detail);
+  })
+  .catch(err => console.log(err))
+
+  }
+
   return (
     <div className="formContainer">
+      <p>{message}</p>
       <form className="ipContainer">
         <div className="inputGroup">
           <label htmlFor="subject">Course Title:</label>
@@ -78,7 +131,7 @@ const CreateCourse = () => {
           />
         </div>
 
-        <button id="submit" className="btn" type="submit">
+        <button id="submit" className="btn" type="submit" onClick={handleCourseSubmission}>
           Create
         </button>
       </form>
