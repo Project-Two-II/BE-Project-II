@@ -1,10 +1,10 @@
-name: Server side CI
+name: Server side CI/CD
 
 on:
   push:
-    branches: [ "server" ]
+    branches: [ "new-server" ]
   pull_request:
-    branches: [ "server" ]
+    branches: [ "new-server" ]
   workflow_dispatch:
 
 jobs:
@@ -46,3 +46,13 @@ jobs:
     - name: Run Tests
       run: |
         echo "Not able to run"
+        
+    - name: Docker Build & Push Action
+      uses: mr-smithers-excellent/docker-build-push@v6.2
+      with:
+       dockerfile: ./server/Dockerfile
+       directory: ./server
+       image: ${{ secrets.DOCKER_USERNAME }}/elabx-server
+       registry: docker.io
+       username: ${{ secrets.DOCKER_USERNAME }}
+       password: ${{ secrets.DOCKER_PASSWORD }}
