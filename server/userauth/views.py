@@ -1,4 +1,6 @@
 import jwt
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import smart_bytes, smart_str, DjangoUnicodeDecodeError
@@ -139,11 +141,23 @@ class UserLogoutAPIView(APIView):
         serializer = UserLogoutSerializer(data=request.data)
         if serializer.is_valid():
             refresh_token = serializer.data["refresh"]
-            token = RefreshToken(refresh_token)
-            print(token)
-            token.blacklist()
-            return Response({"detail": "Logout successfully."}, status=status.HTTP_205_RESET_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                access_token = request.auth
+                print(access_token)
+                access_token.payload['logout'] = True
+                access_token.set_exp(from_time=timezone.now(), lifetime=timedelta(seconds=10))
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+                return Response(data={"detail": "Logout successfully.", "access": f"{access_token}"},
+                                status=status.HTTP_204_NO_CONTENT)
+
+            except Exception as e:
+                print(e)
+                return Response(data={"detail": "Invalid Refresh Token."},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data=serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLoginAPIView(APIView):
