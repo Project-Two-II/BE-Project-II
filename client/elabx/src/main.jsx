@@ -9,11 +9,12 @@ import Login from './routes/login'
 import Register from './routes/register'
 import Editor from './routes/Editor';
 import Syllabus from './routes/Syllabus'
-import HomePage from './routes/HomePage'
+import Home from './routes/home'
 import QuestionSolve from './routes/questionSolve.jsx'
 import Profile from './routes/profile'
 import Teacher from './routes/teacher'
-// import AddQuestion from './Components/AddQuestion.jsx'
+import Logout from './routes/logout'
+
 import CreateChapter from './Components/CreateChapter.jsx'
 import CreateCourse from './Components/CreateCourse.jsx'
 import ProfileEdit from './routes/editProfile'
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
+    
   },
   {
     path: "/login",
@@ -54,8 +56,8 @@ const router = createBrowserRouter([
     element: <Syllabus />
   },
   {
-    path: "/homepage",
-    element: <HomePage />
+    path: "/home",
+    element: <Home />
   },
   {
     path: "/syllabus/:courseId/questionsolve/:questionId",
@@ -97,21 +99,20 @@ const router = createBrowserRouter([
   {
     path:"/addstudent",
     element:<AddStudent/>
+  },
+  {
+    path:"/logout",
+    element: <Logout />
   }
-
   
 ]);
 
-const Loading = () =>{
-  return(
-    <p>Loading ...</p>
-  )
-}
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
-    <PersistGate loading={<Loading/>} persistor={mypersistor}>
+    <PersistGate persistor={mypersistor}>
     <RouterProvider router={router}/>
     </PersistGate>
    

@@ -157,3 +157,11 @@ hr{
   width: 90%;
   margin: auto;
 }
+.route-link-style{
+  text-decoration: none;
+  color: white;
+}
+.dropdown-option:hover{
+  background-color: white;
+  color: black;
+}

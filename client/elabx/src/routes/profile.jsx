@@ -6,7 +6,10 @@ function Profile() {
     return (
         <>
             <Header />
+            <div>
             <UserProfile />
+
+            </div>
             <Footer />
         </>
     )

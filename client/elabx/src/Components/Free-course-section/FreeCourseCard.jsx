@@ -1,7 +1,7 @@
 import React from "react";
 
 const FreeCourseCard = (props) => {
-  const { imgUrl, title, students, rating } = props.item;
+  const { imgUrl, title} = props.item;
 
   return (
     <div className="single__free__course">

@@ -6,12 +6,14 @@ export const credSlice = createSlice({
     isLoggedIn: false,
     role:null,
     token: '',
+    refreshToken: ''
   },
   reducers: {
     setCred: (state, action) => {
         state.isLoggedIn = action.payload.isLoggedIn
         state.token = action.payload.token
         state.role = action.payload.role
+        state.refreshToken = action.payload.refreshToken
     },
     
   },

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
 import Question from '../Components/Question.jsx';
 import Editor from '../Components/Editor.jsx'
 import CourseHeader from '../Components/CourseHeader'

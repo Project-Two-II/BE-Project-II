@@ -121,7 +121,7 @@ function Syllabus() {
             <CourseHeader />
             {chapterList.map((chapter) =>
             (
-                <ul>
+                <ul key={chapter.id}>
                     <div className="chapterList">
                         <li>
                             <div className="chapters" style={chapterStyle}>
@@ -130,7 +130,7 @@ function Syllabus() {
                             </div>
                             {questionList.map((question) =>
                             (
-                                <ul>
+                                <ul key={chapter.id}>
                                     <div className="questionList">
                                         <li>
                                             <div className="questions" style={questionStyle}>

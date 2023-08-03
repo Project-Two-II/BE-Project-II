@@ -16,10 +16,3 @@ const persistedReducer = persistReducer(persistConfig, credReducer)
   let mypersistor = persistStore(store)
 
   export {store, mypersistor}
-
-
-// export default configureStore({
-//   reducer: {
-//     cred: credReducer
-//    },
-// })

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import {Form, Link, Navigate} from 'react-router-dom';
+import {Form, Link} from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
  import { setCred } from '../features/info'
 
 import { useNavigate } from "react-router-dom";
@@ -14,9 +14,6 @@ const errMessageStyle = {
 
 const Login = () => {
 
-  // const isLoggedIn = useSelector((state) => state.cred.isLoggedIn)
-  // const token = useSelector((state) => state.cred.token);
-  // const role = 0
 
   const dispatch = useDispatch()
 
@@ -73,13 +70,13 @@ const Login = () => {
           setHasError(false)
         } else{
           const isLoggedIn = true
-          // todo: redirect
+         
           setHasError(false);
           console.log("Redirecting...")
-          console.log(data)
-          dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role}))
-          //console.log(data.tokens.access);
-          navigate("/homepage")
+          console.log(data.tokens.refresh)
+          dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role, refreshToken: data.tokens.refresh}))
+          
+          navigate("/home")
         }
       })
       .catch(err => console.log(err))
