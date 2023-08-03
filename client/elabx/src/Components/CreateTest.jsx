@@ -1,61 +1,52 @@
 import React, { useState } from 'react';
-
-import './Create.css';
-
+import './UserInput.css';
+import '../App.css';
 
 const CreateTest = () => {
-  const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([]);
+  const [testTitle, setTestTitle] = useState("");
+  const [testDescription, setTestDescription] = useState("");
+  const [selectedQuestion, setSelectedQuestion] = useState("printHelloWorld");
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+  const handleTestTitleChange = (e) => {
+    setTestTitle(e.target.value);
   }
 
-  const handleQuestionChange = (e, index) => {
-    const newQuestions = [...questions];
-    newQuestions[index] = { ...newQuestions[index], question: e.target.value };
-    setQuestions(newQuestions);
+  const handleTestDescriptionChange = (e) => {
+    setTestDescription(e.target.value);
   }
 
-  const handleAnswerChange = (e, index) => {
-    const newQuestions = [...questions];
-    newQuestions[index] = { ...newQuestions[index], answer: e.target.value };
-    setQuestions(newQuestions);
-  }
-
-  const handleAddQuestion = () => {
-    setQuestions([...questions, { question: '', answer: '' }]);
-  }
-
-  const handleRemoveQuestion = (index) => {
-    const newQuestions = [...questions];
-    newQuestions.splice(index, 1);
-    setQuestions(newQuestions);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Do something with the submitted test data
-    console.log(`Submitted test: ${title}, questions: ${JSON.stringify(questions)}`);
-    // Clear the form
-    setTitle('');
-    setQuestions([]);
+  const handleQuestionChange = (e) => {
+    setSelectedQuestion(e.target.value);
   }
 
   return (
     <div className="formContainer">
-      <form className="ipContainer" onSubmit={handleSubmit}>
-        <label htmlFor="title">Test Title:</label>
-        <input name="title" id="title" value={title} onChange={handleTitleChange} required />
-        {questions.map((question, index) => (
-          <div key={index}>
-            <label htmlFor={`question${index}`}>Question:</label>
-            <textarea name={`answer${index}`} id={`answer${index}`} value={question.answer} onChange={(e) => handleAnswerChange(e, index)} required></textarea>
-            <button type="button" onClick={() => handleRemoveQuestion(index)}>Remove Question</button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddQuestion}>Add Question</button>
-        <button id="submit" className="btn" type="submit">Create</button>
+      <form className="ipContainer">
+        <div className="inputGroup">
+          <label htmlFor="question">Question:</label></div>
+
+         <div> <select name="question" id="question" value={selectedQuestion} onChange={handleQuestionChange} required>
+            <option value="printHelloWorld">Print Hello World</option>
+            <option value="sumOfTwoNumbers">Sum of 2 Numbers</option>
+          </select>
+        </div>
+
+        
+        <div className="inputGroup">
+          <label htmlFor="testDescription">Source Code:</label>
+          <textarea
+            name="testDescription"
+            id="testDescription"
+            value={testDescription}
+            onChange={handleTestDescriptionChange}
+            required
+            placeholder="Enter source code description"
+          ></textarea>
+        </div>
+
+        <button id="submit" className="btn" type="submit">
+          Add
+        </button>
       </form>
     </div>
   );

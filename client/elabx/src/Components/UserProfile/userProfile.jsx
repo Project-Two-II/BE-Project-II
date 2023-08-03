@@ -61,47 +61,47 @@ const UserProfile = () => {
                 <span className="user-info user-details">BECE VI Day</span>
             </div>
             <div className="user-card user-card-1">
-                <div class="col-md-10">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Name</h6>
+                <div className="col-md-10">
+                    <div className="card mb-3">
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <h6 className="mb-0">Name</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div className="col-sm-9 text-secondary">
                                 {profile.first_name + (' ') + profile.last_name}
                                 </div>
                             </div>
                             <hr />
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
+                            <div clasNames="row">
+                                <div className="col-sm-3">
+                                    <h6 className="mb-0">Email</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div className="col-sm-9 text-secondary">
                                     {profile.email}
                                 </div>
                             </div>
                             <hr />
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <h6 className="mb-0">Phone</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div className="col-sm-9 text-secondary">
                                     9861000000
                                 </div>
                             </div>
                             <hr />
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Address</h6>
+                            <div className="row">
+                                <div className="col-sm-3">
+                                    <h6 className="mb-0">Address</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div className="col-sm-9 text-secondary">
                                     Balkumari, Lalitpur
                                 </div>
                             </div>
                             <hr />
-                            <div class="row">
-                                <div class="col-sm-12">
+                            <div className="row">
+                                <div className="col-sm-12">
                                     <Link to='/editprofile'>
                                         <button className="btn btn-info">Edit</button>
                                     </Link>
@@ -115,7 +115,7 @@ const UserProfile = () => {
         <div style={headerStyle} className="courseHeader">
             <span style={spanStyle}>Your Courses</span>
         </div>
-        <div class="course-container">
+        <div className="course-container">
             {/* <CourseList /> */}
         </div>
         </>
