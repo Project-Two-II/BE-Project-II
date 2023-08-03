@@ -21,7 +21,25 @@ function CourseList({token}) {
 
   }
   
-  function getCourse() {
+  // function getCourse() {
+  //   fetch("http://localhost:8000/api/subjects/", fetchOption)
+  //     .then((resp) => {
+  //       console.log(resp.status)
+  //       return resp.json()
+  //     })
+  //     .then(data => {
+  //       console.log(data)
+  //       setCourse(data)
+  //     })
+  //     .catch(err => console.log(err))
+  //   }
+  //   console.log(course)
+
+  // useEffect(() => {
+  //   getCourse()
+  // }, [])
+
+
     fetch("http://localhost:8000/api/subjects/", fetchOption)
       .then((resp) => {
         console.log(resp.status)
@@ -32,12 +50,7 @@ function CourseList({token}) {
         setCourse(data)
       })
       .catch(err => console.log(err))
-    }
     console.log(course)
-
-  useEffect(() => {
-    getCourse()
-  }, [])
 
   return (
     <div className='course-list' style={course_list_style}>

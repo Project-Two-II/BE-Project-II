@@ -72,11 +72,12 @@ const Login = () => {
           setErrMessage(data.detail)
           setHasError(false)
         } else{
+          const isLoggedIn = true
           // todo: redirect
           setHasError(false);
           console.log("Redirecting...")
           console.log(data)
-          dispatch(setCred({isLoggedIn: true, token: data.tokens.access, role: 0}))
+          dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role}))
           //console.log(data.tokens.access);
           navigate("/homepage")
         }

@@ -23,22 +23,25 @@ const logo_style = {
     top: "8px",
     left: "1100px"
 }
-const btn_style ={
-    padding: "7px",
-    position: "absolute",
-    right: "230px",
-    top: "17px",
+const btn_style = {
     fontSize: "1.3rem",
     backgroundColor: "gray",
-    borderRadius: "4px"
+    borderRadius: "4px",
+    width: "4%",
+    position: "relative",
+    top: "8px",
+    left: "1100px"
 }
 function Header() {
     return (
         <header style={header_style}>
             <span className="elabx" style={elabx_style}>ELabX</span>
-            <span classname="create-btn" style={btn_style}>Create Subject</span>
+            <span className="create-btn" style={btn_style}>Create Subject</span>
             <Link to="/profile">
                 <img className="userProfile-logo" src={userlogo} alt="image" style={logo_style}></img>
+            </Link>
+            <Link to="/logout">
+                <span className="logout-btn" style={btn_style}>Logout</span>
             </Link>
         </header>
     );

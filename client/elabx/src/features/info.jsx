@@ -9,7 +9,7 @@ export const credSlice = createSlice({
   },
   reducers: {
     setCred: (state, action) => {
-        state.isLoggedIn = true
+        state.isLoggedIn = action.payload.isLoggedIn
         state.token = action.payload.token
         state.role = action.payload.role
     },

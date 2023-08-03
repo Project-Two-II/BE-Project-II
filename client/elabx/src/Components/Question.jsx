@@ -3,15 +3,14 @@ import '../App.css';
 import { Link } from 'react-router-dom'
 import Markdown from './markdown.jsx'
 
-function Question(props) {
+function Question({courseId, chapterId}) {
+  console.log("QuestionID: " + chapterId )
   return (
     <div className="question">
-      <div className=" ques questionTitle">Hello World</div>
-      <div className="ques quesDesc">this is a desc</div>
-        <Markdown />
-      <Link to='/Syllabus'>
+        <Markdown courseId = {courseId} questionId = {chapterId}/>
+       <Link to={`/Syllabus/${courseId}`}>
         <button className=" btn backBtn">back</button>
-      </Link>
+       </Link>
     </div>
   )
 }

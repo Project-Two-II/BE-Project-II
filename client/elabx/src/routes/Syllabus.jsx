@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
 
-
 import arrowIcon from '../media/arrowicon.png'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState} from 'react';
@@ -64,9 +63,9 @@ const lockBtnStyle = {
 function Syllabus() {
 
     const param = useParams();
-    const chapterId = param.id;
-    console.log("ChapterID:" + chapterId)
-    const token = useSelector((state) =>  state.cred.token);
+    const courseId = param.id;
+    console.log("courseId:" + courseId)
+    const token = useSelector((state) =>  state.token);
     const fetchOption = {
         method: "GET",
         headers: {
@@ -78,7 +77,7 @@ function Syllabus() {
     const [course, setCourse] = useState([]);
     function getCourse() {
         
-        fetch(`http://localhost:8000/api/subjects/${chapterId}`, fetchOption)
+        fetch(`http://localhost:8000/api/subjects/${courseId}`, fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 setCourse(data)
@@ -91,7 +90,7 @@ function Syllabus() {
 
     const [chapterList, setChapterList] = useState([]);
     function getChapters() {
-        fetch(`http://localhost:8000/api/subjects/${chapterId}/chapters/`,fetchOption)
+        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`,fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 console.log(data)
@@ -105,16 +104,16 @@ function Syllabus() {
 
     const [questionList, setQuestionList] = useState([]);
     function getQuestions() {
-        fetch(`http://localhost:8000/api/subjects/${chapterId}/chapters/${chapterId}/questions/`,fetchOption)
+        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`,fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 setQuestionList(data)
             })
             .catch(err => console.log(err))
     }
-    useEffect(() => {
-        getQuestions()
-    }, []);
+    // useEffect(() => {
+    //     getQuestions()
+    // }, []);
      
     return (
         <div className="main" style={mainStyle}>
@@ -139,7 +138,7 @@ function Syllabus() {
                                                 <span style={textStyle}>{question.id}. {question.title}</span>
                                             </div>
                                             {
-                                                <Link to='/questionsolve'>
+                                                <Link to={`/syllabus/${chapter.id}/questionsolve/${question.id}`}>
                                                     <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
                                                 </Link>
                                                 // <Link to='/questionSolve/{question.id}'>

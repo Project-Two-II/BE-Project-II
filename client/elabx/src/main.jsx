@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import store from './store'
+import { store, mypersistor } from './store'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Root from './root.jsx'
 import Login from './routes/login'
@@ -19,7 +20,6 @@ import ProfileEdit from './routes/editProfile'
 import CodeReview from './routes/codeReview'
 import CreateQuestion from './Components/AddQuestion.jsx'
 import CreateTest from './Components/CreateTest.jsx'
-
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
     element: <HomePage />
   },
   {
-    path: "/questionsolve",
+    path: "/syllabus/:courseId/questionsolve/:questionId",
     element: <QuestionSolve />
   },
   
@@ -97,10 +97,19 @@ const router = createBrowserRouter([
   
 ]);
 
+const Loading = () =>{
+  return(
+    <p>Loading ...</p>
+  )
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
+    <PersistGate loading={<Loading/>} persistor={mypersistor}>
     <RouterProvider router={router}/>
+    </PersistGate>
+   
   </Provider>
  
 )
