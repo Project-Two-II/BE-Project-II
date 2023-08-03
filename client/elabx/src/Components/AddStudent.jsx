@@ -28,15 +28,7 @@ const AddStudent = () => {
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
       <div className="inputGroup">
-  <label htmlFor="subject">Select Subject Name:</label>
-</div>
-<div className="inputGroup">
-  <select name="subject" id="subject" value={subject} onChange={handleSubjectChange} required>
-    <option value="">Select a subject</option>
-    <option value="C">C</option>
-    <option value="C++">C++</option>
-  </select>
-</div>
+    </div>
 
 
         <div className="inputGroup">

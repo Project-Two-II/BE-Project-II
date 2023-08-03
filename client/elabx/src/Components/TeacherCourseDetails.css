@@ -14,7 +14,7 @@
   .details-container,
   .add-student-container,
   .create-chapter-container {
-    border: 1px solid rgb(26, 26, 73;
+    border: 1px solid rgb(26, 26, 73);
     padding: 15px;
     margin-bottom: 20px;
     justify-content: right;
@@ -50,7 +50,7 @@
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color:rgb(26, 26, 73;
+    background-color:rgb(26, 26, 73);
     color: #fff;
     cursor: pointer;
     margin-right: 10px;
@@ -62,7 +62,7 @@
   }
   
  .edit-button {
-    background-color:rgb(26, 26, 73;
+    background-color:rgb(26, 26, 73);
     color: #fff;
     border: none;
     padding: 10px 20px;

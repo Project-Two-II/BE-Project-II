@@ -50,13 +50,6 @@ const CreateQuestion = () => {
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
         <div className="inputGroup">
-          <label htmlFor="chapter">Select Chapter Name:</label>
-          <select name="chapter" id="chapter" value={chapter} onChange={handleChapterChange} required>
-            <option value="">Select a chapter title</option>
-            {chapterTitles.map((title, index) => (
-              <option key={index} value={title}>{title}</option>
-            ))}
-          </select>
         </div>
         {questions.map((question, index) => (
           <div key={question.id} className="inputGroup">
