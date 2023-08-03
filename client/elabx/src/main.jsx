@@ -21,6 +21,8 @@ import CodeReview from './routes/codeReview'
 import CreateQuestion from './Components/AddQuestion.jsx'
 import CreateTest from './Components/CreateTest.jsx'
 import AddStudent from './Components/AddStudent.jsx'
+import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
+import ErrorPage from './routes/ErrorPage.jsx'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -97,6 +99,14 @@ const router = createBrowserRouter([
   {
     path:"/addstudent",
     element:<AddStudent/>
+  },
+  {
+    path:"/teachercoursedetails",
+    element:<TeacherCourseDetails/>
+  },
+  {
+    path:"/errorpage",
+    element:<ErrorPage/>
   }
 
   
