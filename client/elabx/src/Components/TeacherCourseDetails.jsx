@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import AddStudent from '../Components/AddStudent'
+import CreateChapter from '../Components/CreateChapter'
 import './TeacherCourseDetails.css';
 
 const TeacherCourseDetails = () => {
   const [showDetails, setShowDetails] = useState(false);
-  const [showViewChapter, setShowViewChapter] = useState(false);
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [showCreateChapter, setShowCreateChapter] = useState(false);
- 
 
   const fetchCourseDetails = () => {
     const courseDetails = {
@@ -23,28 +22,18 @@ const TeacherCourseDetails = () => {
     setShowDetails(true);
     setShowAddStudent(false);
     setShowCreateChapter(false);
-    setShowViewChapter(false);
   };
 
   const handleAddStudent = () => {
     setShowDetails(false);
     setShowAddStudent(true);
     setShowCreateChapter(false);
-    setShowViewChapter(false);
   };
 
   const handleCreateChapter = () => {
     setShowDetails(false);
     setShowAddStudent(false);
     setShowCreateChapter(true);
-    setShowViewChapter(false);
-  };
-
-  const handleViewChapter = () => {
-    setShowDetails(false);
-    setShowAddStudent(false);
-    setShowCreateChapter(false);
-    setShowViewChapter(true);
   };
 
   const courseDetails = fetchCourseDetails();
@@ -54,10 +43,8 @@ const TeacherCourseDetails = () => {
       <h2>{courseDetails.courseName} - {courseDetails.courseCode}</h2>
       <div className="button-container">
         <button onClick={handleViewDetails}>View Details</button>
-        <button onClick={handleViewChapter}>View Chapters</button>
         <button onClick={handleAddStudent}>Add Student</button>
         <button onClick={handleCreateChapter}>Add Chapter</button>
-       
       </div>
       {showDetails && (
         <div className="details-container">
@@ -69,19 +56,23 @@ const TeacherCourseDetails = () => {
         </div>
       )}
       
-      {showViewChapter && (
-        <div className="view-chapter-container">
-          <h3>Chapter Name</h3>
-          <ul>
-            {courseDetails.chapters.map((chapter, index) => (
-              <li key={index}>{chapter}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-       {showAddStudent && (
+      <div className="view-chapter-container">
+        <h3>Chapter Name</h3>
+        <ul>
+          {courseDetails.chapters.map((chapter, index) => (
+            <li key={index}>{chapter}</li>
+          ))}
+        </ul>
+      </div>
+
+      {showAddStudent && (
         <AddStudent/>
       )}
+
+      {showCreateChapter && (
+        <CreateChapter/>
+      )}
+
       <div className="edit-button-container">
         <button className="edit-button">Edit</button>
       </div>

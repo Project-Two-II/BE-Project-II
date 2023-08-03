@@ -75,7 +75,7 @@ const CreateQuestion = () => {
           </div>
         ))}
 
-        {/* Boilerplate Text Box */}
+        
         <div className="inputGroup">
           <label htmlFor="boilerplateText">Boilerplate Text:</label>
           <textarea
