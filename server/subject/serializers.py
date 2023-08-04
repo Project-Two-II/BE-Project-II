@@ -5,8 +5,19 @@ from .models import (
     Chapter,
     Question,
     Test,
-    SubjectGroup
+    SubjectGroup,
+    SubjectEnrollment,
 )
+
+
+class SubjectEnrollmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for SubjectEnrollment model
+    """
+
+    class Meta:
+        model = SubjectEnrollment
+        fields = "__all__"
 
 
 class SubjectGroupSerializer(serializers.ModelSerializer):
@@ -20,7 +31,7 @@ class SubjectGroupSerializer(serializers.ModelSerializer):
 
 class TestSerializer(serializers.ModelSerializer):
     """
-    Serializer for Test of an Question
+    Serializer for Test of a Question
     """
     class Meta:
         model = Test

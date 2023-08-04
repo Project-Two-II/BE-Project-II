@@ -10,6 +10,8 @@ from .views import (
     TestApiView,
     SubjectGroupAPIView,
     MySubjectAPIView,
+    AddEnrollmentKeyAPIView,
+    SelfEnrollmentAPIView,
 )
 
 app_name = "subject"
@@ -33,4 +35,8 @@ urlpatterns = [
          SubjectGroupAPIView.as_view(), name="subject-group"),
     path("mysubjects/",
          MySubjectAPIView.as_view(), name="my-subjects"),
+    path("<int:subject_id>/add-enrollment-key/",
+         AddEnrollmentKeyAPIView.as_view(), name="add-enrollment-key"),
+    path("<int:subject_id>/enroll/",
+         SelfEnrollmentAPIView.as_view(), name="enroll"),
 ]

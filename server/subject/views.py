@@ -4,18 +4,83 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 
 from userauth.models import User
 from userauth.permissions import IsVerified
 from .permissions import SubjectListAccessPermission, SubjectDetailAccessPermission
-from .models import Subject, Chapter, Question, Test, SubjectGroup
+from .models import Subject, Chapter, Question, Test, SubjectGroup, SubjectEnrollment
 from .serializers import (
     SubjectSerializer,
     ChapterSerializer,
     QuestionSerializer,
     TestSerializer,
-    SubjectGroupSerializer
+    SubjectGroupSerializer,
+    SubjectEnrollmentSerializer,
 )
+
+
+class AddEnrollmentKeyAPIView(APIView):
+    """
+    API view for adding enrollment key to particular subject
+    """
+    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+
+    def grt_current_user(self):
+        return self.request.user
+
+    def post(self, request, subject_id, *args, **kwargs):
+        subject = get_object_or_404(Subject, id=subject_id)
+        payload = request.data.copy()
+        payload["subject"] = subject.id
+        serializer = SubjectEnrollmentSerializer(data=payload)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={"detail": "Enrollment key added successfully.",
+                                  "subject": subject.title,
+                                  "key": serializer.data.get("key")},
+                            status=status.HTTP_201_CREATED)
+        if "subject" in serializer.errors:
+            return Response(data={"detail": "Enrollment key for that subject already exists."},
+                            status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(data={"detail": "Requested fields are invalid."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SelfEnrollmentAPIView(APIView):
+    """
+    It handles the self enrollment stuff.
+    """
+    permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
+
+    def get_current_user(self):
+        return self.request.user
+
+    def enroll_user(self, requested_key, subject):
+        user = self.get_current_user()
+        actual_key = get_object_or_404(SubjectEnrollment, subject=subject).key
+        if SubjectGroup.objects.get(subject=subject) in [SubjectGroup.objects.get(users=user)]:
+            raise ValueError("You are already enrolled.")
+        if not actual_key:
+            raise ValueError("Self enrollment is not available.")
+        if requested_key == actual_key:
+            SubjectGroup.objects.get(subject=subject).users.add(user)
+        else:
+            raise ValidationError("Key is invalid.")
+
+    def post(self, request, subject_id, *args, **kwargs):
+        subject = get_object_or_404(Subject, id=subject_id)
+        key = request.data.get("key")
+        try:
+            self.enroll_user(key, subject)
+            return Response(data={"detail": "Successfully enrolled.", "subject": subject.title, "key": key},
+                            status=status.HTTP_200_OK)
+        except ValueError as e:
+            return Response(data={"detail": str(e)},
+                            status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response(data={"detail": str(e)[2:-2]},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class MySubjectAPIView(APIView):

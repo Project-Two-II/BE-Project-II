@@ -33,6 +33,17 @@ class Subject(models.Model):
         return self.title
 
 
+class SubjectEnrollment(models.Model):
+    """
+    This is model for self enrollment. It stores enrollment key to particular subject
+    """
+    subject = models.OneToOneField(Subject, on_delete=models.CASCADE, related_name="enrollment")
+    key = models.CharField(max_length=15, blank=False, null=False)
+
+    class Meta:
+        db_table = "SubjectEnrollment_elabx"
+
+
 class SubjectGroup(Group):
     """
     Custom Group class for Subject Group
