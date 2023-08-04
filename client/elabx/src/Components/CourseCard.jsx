@@ -8,7 +8,7 @@ const course_card_style = {
   backgroundColor: "#ffffff",
   borderRadius: "5px",
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-  padding: "20px"
+  padding: "10px",
 }
 const progress_bar_style = {
   border: "1px solid #1F2334",

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Create.css';
 
 const CreateQuestion = () => {
+  const navigate = useNavigate()
   const [chapter, setChapter] = useState('');
   const [questions, setQuestions] = useState([{ id: 1, text: '' }]);
   const chapterTitles = ['Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Other'];
@@ -44,19 +46,13 @@ const CreateQuestion = () => {
       setQuestions([{ id: 1, text: '' }]);
       setBoilerplateText('');
     }
+    navigate("/syllabus/1")
   }
 
   return (
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
         <div className="inputGroup">
-          <label htmlFor="chapter">Select Chapter Name:</label>
-          <select name="chapter" id="chapter" value={chapter} onChange={handleChapterChange} required>
-            <option value="">Select a chapter title</option>
-            {chapterTitles.map((title, index) => (
-              <option key={index} value={title}>{title}</option>
-            ))}
-          </select>
         </div>
         {questions.map((question, index) => (
           <div key={question.id} className="inputGroup">
@@ -75,7 +71,7 @@ const CreateQuestion = () => {
           </div>
         ))}
 
-        {/* Boilerplate Text Box */}
+        
         <div className="inputGroup">
           <label htmlFor="boilerplateText">Boilerplate Text:</label>
           <textarea
@@ -86,7 +82,6 @@ const CreateQuestion = () => {
             required
           />
         </div>
-
         <button className="btn" type="submit">Add</button>
       </form>
     </div>

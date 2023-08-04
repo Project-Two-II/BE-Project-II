@@ -6,6 +6,8 @@ import WorkerAPI from '../shared_web.js'
 
 const Editor = () => {
 
+  let API = new WorkerAPI();
+
   const [code, setCode] = useState("")
 
   const handleCodeChange = (code) => {
@@ -14,9 +16,6 @@ const Editor = () => {
 
   const RunClickHandler = (e) => {
     e.preventDefault();
-    console.log("Button Clicked");
-    console.log("Creating a new Worker");
-    let API = new WorkerAPI();
     API.compileLinkRun(code);
   }
 

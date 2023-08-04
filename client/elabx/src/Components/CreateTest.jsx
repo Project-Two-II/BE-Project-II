@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './UserInput.css';
 import '../App.css';
+import './Create.css';
+
 
 const CreateTest = () => {
   const [testTitle, setTestTitle] = useState("");
@@ -22,17 +24,7 @@ const CreateTest = () => {
   return (
     <div className="formContainer">
       <form className="ipContainer">
-        <div className="inputGroup">
-          <label htmlFor="question">Question:</label></div>
-
-         <div> <select name="question" id="question" value={selectedQuestion} onChange={handleQuestionChange} required>
-            <option value="printHelloWorld">Print Hello World</option>
-            <option value="sumOfTwoNumbers">Sum of 2 Numbers</option>
-          </select>
-        </div>
-
-        
-        <div className="inputGroup">
+          <div className="inputGroup">
           <label htmlFor="testDescription">Source Code:</label>
           <textarea
             name="testDescription"
@@ -40,7 +32,7 @@ const CreateTest = () => {
             value={testDescription}
             onChange={handleTestDescriptionChange}
             required
-            placeholder="Enter source code description"
+            placeholder="Enter source code"
           ></textarea>
         </div>
 

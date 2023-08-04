@@ -41,12 +41,11 @@ function Markdown({courseId, questionId}) {
     },
   }
 
-  const [description, setDescription] = useState([])
+  const [description, setDescription] = useState('')
   function getDescription() {
     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${courseId}/questions/${questionId}/`, fetchOption)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data.description)
         setDescription(data.description)
       })
       .catch(err => console.log(err))
@@ -56,13 +55,10 @@ function Markdown({courseId, questionId}) {
   }, []);
   
   
-const list = description.map(desc => desc.description)
-const markdownContent = list[0];
-
   return (
     <div style={markdownStyle}>
       <ReactMarkdown plugins={[remarkGfm]} renderers={renderers}>
-        {markdownContent}
+        {description}
       </ReactMarkdown>
     </div>
   );

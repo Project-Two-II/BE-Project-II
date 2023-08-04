@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import './Create.css';
 
 const AddStudent = () => {
+  const navigate = useNavigate()
   const [subject, setSubject] = useState('c++');
   const [student, setStudent] = useState({ email: '' });
 
@@ -22,21 +24,14 @@ const AddStudent = () => {
     setSubject('c++');
     setStudent({ email: '' });
     alert("Student added successfully!");
+    navigate("/syllabus/1/")
   }
 
   return (
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
       <div className="inputGroup">
-  <label htmlFor="subject">Select Subject Name:</label>
-</div>
-<div className="inputGroup">
-  <select name="subject" id="subject" value={subject} onChange={handleSubjectChange} required>
-    <option value="">Select a subject</option>
-    <option value="C">C</option>
-    <option value="C++">C++</option>
-  </select>
-</div>
+    </div>
 
 
         <div className="inputGroup">

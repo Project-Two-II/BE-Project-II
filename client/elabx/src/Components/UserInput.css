@@ -1,19 +1,20 @@
+*{
+    margin: 0;
+}
 .formContainer{
-    
     display: flex;
-    width: 50%;
+    width: 100%;
     padding: 5px;
-    width: 50%;
     height: 100%;
-   
+    margin: auto;
 }
 .ipContainer{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
-    
 }
+/*
 .add{
     display: flex;
     flex-direction: column;
@@ -61,3 +62,4 @@
 .btn:hover{
     border: 2px solid white;
 }
+*/

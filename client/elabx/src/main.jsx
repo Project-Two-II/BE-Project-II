@@ -14,14 +14,21 @@ import QuestionSolve from './routes/questionSolve.jsx'
 import Profile from './routes/profile'
 import Teacher from './routes/teacher'
 import Logout from './routes/logout'
+import AddCourse from './routes/addcourse'
+import AddQuestion from './routes/addquestion'
+import Enroll from './routes/enroll'
 
 import CreateChapter from './Components/CreateChapter.jsx'
-import CreateCourse from './Components/CreateCourse.jsx'
+// import CreateCourse from './Components/CreateCourse.jsx'
 import ProfileEdit from './routes/editProfile'
 import CodeReview from './routes/codeReview'
-import CreateQuestion from './Components/AddQuestion.jsx'
+import CreateQuestion from './Components/CreateQuestion.jsx'
 import CreateTest from './Components/CreateTest.jsx'
 import AddStudent from './Components/AddStudent.jsx'
+import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
+import ErrorPage from './routes/ErrorPage.jsx'
+import ChapterDetails from './Components/ChapterDetails.jsx'
+import QuestionDetails from './Components/QuestionDetails.jsx'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -36,16 +43,16 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root/>,
-    
+    element: <Root />,
+
   },
   {
     path: "/login",
-    element: <Login/>
+    element: <Login />
   },
   {
     path: "/register",
-    element: <Register/>
+    element: <Register />
   },
   {
     path: "/editor",
@@ -63,21 +70,21 @@ const router = createBrowserRouter([
     path: "/syllabus/:courseId/questionsolve/:questionId",
     element: <QuestionSolve />
   },
-  
+
   {
     path: "/createchapter",
     element: <CreateChapter />
   },
-  {
-    path: "/createcourse",
-    element: <CreateCourse />
-  },
+  // {
+  //   path: "/createcourse",
+  //   element: <CreateCourse />
+  // },
   {
     path: "/profile",
     element: <Profile />
   },
   {
-    path:"/editprofile",
+    path: "/editprofile",
     element: <ProfileEdit />
   },
   {
@@ -88,23 +95,51 @@ const router = createBrowserRouter([
     path: "/teacher",
     element: <Teacher />
   },
+  // {
+  //   path: "/addquestion",
+  //   element: <CreateQuestion />
+  // },
+  {
+    path: "/createtest",
+    element: <CreateTest />
+  },
+  // {
+  //   path: "/addstudent",
+  //   element: <AddStudent />
+  // },
+  {
+    path: "/logout",
+    element: <Logout />
+  },
+  {
+    path: "/teachercoursedetails",
+    element: <TeacherCourseDetails />
+  },
+  {
+    path: "/errorpage",
+    element: <ErrorPage />
+  },
+  {
+    path: "/ChapterDetails",
+    element: <ChapterDetails />
+  },
+  {
+    path: "/QuestionDetails",
+    element: <QuestionDetails />
+  },
+  {
+    path: "/addcourse",
+    element: <AddCourse />
+  },
   {
     path: "/addquestion",
-    element: <CreateQuestion/>
+    element: <AddQuestion />
   },
   {
-    path:"/createtest",
-    element: <CreateTest/>
-  },
-  {
-    path:"/addstudent",
-    element:<AddStudent/>
-  },
-  {
-    path:"/logout",
-    element: <Logout />
+    path: "/enroll",
+    element: <Enroll />
   }
-  
+
 ]);
 
 
@@ -113,9 +148,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
     <PersistGate persistor={mypersistor}>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </PersistGate>
-   
+
   </Provider>
- 
+
 )

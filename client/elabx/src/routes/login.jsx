@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Form, Link} from 'react-router-dom';
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
  import { setCred } from '../features/info'
 
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,13 @@ const errMessageStyle = {
 
 
 const Login = () => {
+  const navigate = useNavigate();
 
+
+   const isLoggedIn = useSelector((state) => state.isLoggedIn)
+   if(isLoggedIn) navigate("/home")
+  // const token = useSelector((state) => state.cred.token);
+  // const role = 0
 
   const dispatch = useDispatch()
 
@@ -22,7 +28,6 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState('');
   const [hasError, setHasError] = useState(false)
 
-  const navigate = useNavigate();
 
 
   const handleEmailChange = (e) => {
