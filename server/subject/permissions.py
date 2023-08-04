@@ -9,6 +9,7 @@ class SubjectListAccessPermission(BasePermission):
     It defines user permission to access Subject List.
     Any teacher can create a subject but student only can see subject lists
     """
+
     def has_permission(self, request, view):
         if request.method == "GET":
             # Allow any user to send GET request
@@ -64,3 +65,48 @@ class SubjectDetailAccessPermission(BasePermission):
                 return request.user == subject.owner
 
         return False
+
+
+class ChapterAccessPermission(SubjectDetailAccessPermission):
+    pass
+
+
+class QuestionAccessPermission(SubjectDetailAccessPermission):
+    pass
+
+
+class TestAccessPermission(SubjectDetailAccessPermission):
+    pass
+
+
+class SubjectGroupAccessPermission(SubjectDetailAccessPermission):
+    pass
+
+
+class MySubjectAccessPermission(SubjectListAccessPermission):
+    pass
+
+
+class SelfEnrollmentPermission(BasePermission):
+    """
+    Permission for self enrollment
+    """
+    def has_permission(self, request, view):
+        if request.method == "POST":
+            return request.user.is_teacher() or request.user.is_student()
+        return False
+
+
+class EnrollmentKeyAccessPermission(BasePermission):
+    """
+    Define permission to add enrollment key in particular subject
+    """
+    def has_permission(self, request, view):
+        subject_id = view.kwargs.get("subject_id")
+        subject = get_object_or_404(Subject, id=subject_id)
+
+        if request.method in ["GET", "POST"]:
+            if request.user.is_teacher():
+                # Allow subject's associated teachers to view and create
+                return (request.user == subject.owner) or \
+                    (SubjectGroup.objects.filter(subject=subject, users=request.user).exists())

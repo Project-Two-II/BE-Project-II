@@ -8,8 +8,18 @@ from django.core.exceptions import ValidationError
 
 from userauth.models import User
 from userauth.permissions import IsVerified
-from .permissions import SubjectListAccessPermission, SubjectDetailAccessPermission
 from .models import Subject, Chapter, Question, Test, SubjectGroup, SubjectEnrollment
+from .permissions import (
+    SubjectListAccessPermission,
+    SubjectDetailAccessPermission,
+    ChapterAccessPermission,
+    QuestionAccessPermission,
+    TestAccessPermission,
+    SubjectGroupAccessPermission,
+    MySubjectAccessPermission,
+    SelfEnrollmentPermission,
+    EnrollmentKeyAccessPermission,
+)
 from .serializers import (
     SubjectSerializer,
     ChapterSerializer,
@@ -24,10 +34,16 @@ class AddEnrollmentKeyAPIView(APIView):
     """
     API view for adding enrollment key to particular subject
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, EnrollmentKeyAccessPermission)
 
     def grt_current_user(self):
         return self.request.user
+
+    def get(self, request, subject_id, *args, **kwargs):
+        subject = get_object_or_404(Subject, id=subject_id)
+        enrolment = get_object_or_404(SubjectEnrollment, subject=subject)
+        serializer = SubjectEnrollmentSerializer(enrolment)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, subject_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -51,7 +67,7 @@ class SelfEnrollmentAPIView(APIView):
     """
     It handles the self enrollment stuff.
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SelfEnrollmentPermission)
 
     def get_current_user(self):
         return self.request.user
@@ -87,7 +103,7 @@ class MySubjectAPIView(APIView):
     """
     Return the list of all the subjects either user enrolled or created
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, MySubjectAccessPermission)
 
     def grt_current_user(self):
         return self.request.user
@@ -102,7 +118,7 @@ class MySubjectAPIView(APIView):
 
 
 class SubjectGroupAPIView(APIView):
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, SubjectGroupAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         # Get group and students from request
@@ -139,7 +155,7 @@ class TestApiView(APIView):
     """
     CRUD for test of a question
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, TestAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -199,7 +215,7 @@ class QuestionListApiView(APIView):
     """
     Return list of all the question under that chapter
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, QuestionAccessPermission)
 
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -224,7 +240,7 @@ class QuestionDetailApiView(APIView):
     """
     Return the detail of a question
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, QuestionAccessPermission)
 
     def get_object(self, subject_id, chapter_id, question_id):
         try:
@@ -273,7 +289,7 @@ class ChapterListApiView(APIView):
     """
     It shows the list of all available chapters under that subject
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, ChapterAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
         chapters = Chapter.objects.filter(subject=subject_id)
@@ -295,7 +311,7 @@ class ChapterDetailApiView(APIView):
     """
     Shows details of a chapter.
     """
-    permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    permission_classes = (IsAuthenticated, IsVerified, ChapterAccessPermission)
 
     def get_object(self, subject_id, chapter_id):
         try:
