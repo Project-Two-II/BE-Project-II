@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AddStudent from '../Components/AddStudent'
-import CreateChapter from '../Components/CreateChapter'
-import CreateCourse from '../Components/CreateCourse'
+import AddStudent from '../Components/AddStudent';
+import CreateChapter from '../Components/CreateChapter';
+import CreateCourse from '../Components/CreateCourse';
 import './TeacherCourseDetails.css';
 
 const TeacherCourseDetails = () => {
@@ -10,15 +10,13 @@ const TeacherCourseDetails = () => {
   const [showCreateChapter, setShowCreateChapter] = useState(false);
   const [showCreateCourse, setShowCreateCourse] = useState(false);
 
-
   const fetchCourseDetails = () => {
     const courseDetails = {
-      courseName: 'Programing in C',
-      CourseDescription: 'This  provides an Description of course.',
+      courseName: 'Programming in C',
+      CourseDescription: 'This provides a Description of the course.',
       courseCode: 'CMP101',
       students: ['John Doe', 'Jane Smith', 'Michael Johnson'],
       chapters: ['Introduction', 'Structure Programming Language', 'Function', 'Structure'],
-     
     };
     return courseDetails;
   };
@@ -27,21 +25,20 @@ const TeacherCourseDetails = () => {
     setShowDetails(true);
     setShowAddStudent(false);
     setShowCreateChapter(false);
-    setShowCreateCourse(false)
+    setShowCreateCourse(false);
   };
 
   const handleAddStudent = () => {
     setShowDetails(false);
     setShowAddStudent(true);
     setShowCreateChapter(false);
-    setShowCreateCourse(false)
-
+    setShowCreateCourse(false);
   };
 
   const handleCreateChapter = () => {
     setShowDetails(false);
     setShowAddStudent(false);
-    setShowCreateCourse(false)
+    setShowCreateCourse(false);
     setShowCreateChapter(true);
   };
 
@@ -49,8 +46,8 @@ const TeacherCourseDetails = () => {
     setShowDetails(false);
     setShowAddStudent(false);
     setShowCreateChapter(false);
-    setShowCreateCourse(true)
-  }
+    setShowCreateCourse(true);
+  };
 
   const courseDetails = fetchCourseDetails();
 
@@ -61,9 +58,7 @@ const TeacherCourseDetails = () => {
         <button onClick={handleViewDetails}>course Details</button>
         <button onClick={handleAddStudent}>Add Student</button>
         <button onClick={handleCreateChapter}>Add Chapter</button>
-        <button onClick={handleCreateChapter}>Student Details</button>
-        <button className="edit-button" onClick={handleEditClick}>Edit</button>
-
+        <button onClick={handleEditClick}>Edit</button>
       </div>
       {showDetails && (
         <div className="details-container">
@@ -72,10 +67,9 @@ const TeacherCourseDetails = () => {
           <p>Course Code: {courseDetails.courseCode}</p>
           <p>Number of Students: {courseDetails.students.length}</p>
           <p>Number of Chapters: {courseDetails.chapters.length}</p>
-          
         </div>
       )}
-      
+
       <div className="view-chapter-container">
         <ul>
           {courseDetails.chapters.map((chapter, index) => (
@@ -84,17 +78,9 @@ const TeacherCourseDetails = () => {
         </ul>
       </div>
 
-      {showAddStudent && (
-        <AddStudent/>
-      )}
-
-      {showCreateChapter && (
-        <CreateChapter/>
-      )}
-
-      {showCreateCourse && (
-        <CreateCourse/>
-      )}
+      {showAddStudent && <AddStudent />}
+      {showCreateChapter && <CreateChapter />}
+      {showCreateCourse && <CreateCourse />}
     </div>
   );
 };

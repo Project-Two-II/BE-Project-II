@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import './TeacherCourseDetails.css';
 import CreateTest from './CreateTest';
+import AddQuestion from './AddQuestion';
 
 const QuestionDetails = ({ question }) => {
   const [showCreateTest, setShowCreateTest] = useState(false);
-  const [showEditQuestions, setShowEditQuestions] = useState(false);
+  const [showAddQuestion, setShowAddQuestion] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(null); // Add state for selected question description
 
   const handleAddTest = () => {
     setShowCreateTest(true);
-    setShowEditQuestions(false);
+    setShowAddQuestion(false);
   };
 
   const handleEditQuestions = () => {
     setShowCreateTest(false);
-    setShowEditQuestions(true);
+    setShowAddQuestion(true);
+  };
+
+  const handleQuestionClick = (question) => {
+    setSelectedQuestion(question);
   };
 
   return (
@@ -23,8 +29,12 @@ const QuestionDetails = ({ question }) => {
         <button onClick={handleAddTest}>Add Test</button>
         <button onClick={handleEditQuestions}>Edit</button>
       </div>
+      <p>{selectedQuestion}this is description of question</p> {/* Show selected question description */}
       {showCreateTest && (
         <CreateTest />
+      )}
+      {showAddQuestion && (
+        <AddQuestion />
       )}
     </div>
   );

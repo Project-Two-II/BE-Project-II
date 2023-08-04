@@ -29,6 +29,8 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
+import StudentEnrollment from './Components/StudentEnrollment'
+import TeacherEnrollment from './Components/TeacherEnrollment'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -136,10 +138,18 @@ const router = createBrowserRouter([
     element: <AddQuestion />
   },
   {
-    path: "/enroll",
-    element: <Enroll />
+    path:"/QuestionDetails",
+    element:<QuestionDetails/>
+  },
+  {
+    path:"/studentenrollment",
+    element:<StudentEnrollment/>
+  },
+  {
+    path:"/teacherenrollment",
+    element:<TeacherEnrollment/>
   }
-
+  
 ]);
 
 
