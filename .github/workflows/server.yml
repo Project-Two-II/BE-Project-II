@@ -2,9 +2,9 @@ name: Server side CI/CD
 
 on:
   push:
-    branches: [ "new-server" ]
+    branches: [ "server" ]
   pull_request:
-    branches: [ "new-server" ]
+    branches: [ "server" ]
   workflow_dispatch:
 
 jobs:
