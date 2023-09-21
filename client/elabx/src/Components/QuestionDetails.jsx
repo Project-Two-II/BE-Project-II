@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './TeacherCourseDetails.css';
 import CreateTest from './CreateTest';
-import AddQuestion from './AddQuestion';
+import CreateQuestion from './CreateQuestion';
 
 const QuestionDetails = ({ question }) => {
   const [showCreateTest, setShowCreateTest] = useState(false);

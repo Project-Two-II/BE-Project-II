@@ -31,6 +31,12 @@ const chapterStyle = {
     fontSize: "1.2rem",
     display: "flex"
 }
+const listStyle = {
+    height: "8vh",
+    width: "80%",
+    margin: "10px auto",
+    fontSize: "1.2rem",
+}
 const questionStyle = {
     height: "8vh",
     width: "70%",
@@ -40,11 +46,11 @@ const questionStyle = {
 }
 const descStyle = {
     height: "8vh",
-    width: "60%",
+    width: "70%",
     margin: "auto",
     fontSize: "1rem",
     display: "flex",
-    flexDirection: "column"
+    // flexDirection: "column"
 }
 const textStyle = {
     padding: '8px'
@@ -147,14 +153,16 @@ function Syllabus() {
                 <CourseHeader />
                 {chapterList.map((chapter) =>
                 (
-                    <ul key={chapter.id}>
-                        <div className="chapterList">
-                            <li>
-                                <div className="chapters" style={chapterStyle}>
-                                    <img src={arrowIcon} style={iconStyle}></img>
-                                    <span style={textStyle}>{chapter.id}. {chapter.title}</span>
+                    <ol key={chapter.id}>
+                            <li className="chapters" style={listStyle}>
+                                <div className="chapters" sytle={chapterStyle}>{chapter.id}. {chapter.title}
+                                    {/* <img src={arrowIcon} style={iconStyle}></img> */}
+                                    {/* <span style={textStyle}>{chapter.id}. {chapter.title}</span> */}
                                 </div>
-                                {questionList.map((question) =>
+                                <div className="chapter-description">
+                                    {chapter.description}
+                                </div>
+                                {/* {questionList.map((question) =>
                                 (
                                     <ul key={chapter.id}>
                                         <div className="questionList">
@@ -174,10 +182,9 @@ function Syllabus() {
                                             </li>
                                         </div>
                                     </ul>
-                                ))}
+                                ))} */}
                             </li>
-                        </div>
-                    </ul>
+                    </ol>
                 ))}
             </div>
             <Footer />
