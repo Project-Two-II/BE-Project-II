@@ -9,6 +9,7 @@ import Login from './routes/login'
 import Register from './routes/register'
 import Editor from './routes/Editor';
 import Syllabus from './routes/Syllabus'
+import Questions from './routes/Questions'
 import Home from './routes/home'
 import QuestionSolve from './routes/questionSolve.jsx'
 import Profile from './routes/profile'
@@ -22,9 +23,9 @@ import CreateChapter from './Components/CreateChapter.jsx'
 // import CreateCourse from './Components/CreateCourse.jsx'
 import ProfileEdit from './routes/editProfile'
 import CodeReview from './routes/codeReview'
-import CreateQuestion from './Components/CreateQuestion.jsx'
+// import CreateQuestion from './Components/CreateQuestion.jsx'
 import CreateTest from './Components/CreateTest.jsx'
-import AddStudent from './Components/AddStudent.jsx'
+// import AddStudent from './Components/AddStudent.jsx'
 import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
@@ -65,11 +66,15 @@ const router = createBrowserRouter([
     element: <Syllabus />
   },
   {
+    path: "/syllabus/:id/chapters/:id/questions",
+    element: <Questions />
+  },
+  {
     path: "/home",
     element: <Home />
   },
   {
-    path: "/syllabus/:courseId/questionsolve/:questionId",
+    path: "/questionsolve/:questionId",
     element: <QuestionSolve />
   },
 
@@ -77,10 +82,6 @@ const router = createBrowserRouter([
     path: "/addchapter",
     element: <CreateChapter />
   },
-  // {
-  //   path: "/createcourse",
-  //   element: <CreateCourse />
-  // },
   {
     path: "/profile",
     element: <Profile />
@@ -99,16 +100,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/addquestion",
-    element: <CreateQuestion />
+    element: <AddQuestion />
   },
   {
     path: "/createtest",
     element: <CreateTest />
   },
-  // {
-  //   path: "/addstudent",
-  //   element: <AddStudent />
-  // },
   {
     path: "/logout",
     element: <Logout />

@@ -34,7 +34,7 @@ const QuestionDetails = ({ question }) => {
         <CreateTest />
       )}
       {showAddQuestion && (
-        <AddQuestion />
+        <CreateQuestion />
       )}
     </div>
   );

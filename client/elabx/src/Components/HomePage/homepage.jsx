@@ -12,9 +12,6 @@ const headingStyle = {
   textDecoration: "underline",
   paddingLeft: "30px"
 }
-const course_list_style = {
-  backgroundColor: "#1F2334"
-}
 const btn_style = {
   color: "white",
   backgroundColor: "green",
@@ -36,11 +33,11 @@ function HomePage() {
       {isLoggedIn ? (
         <div className="home-container">
           <div className="headingStyle" style={headingStyle}>My Courses</div>
-          <div className="courseList" style={course_list_style}>
+          <div className="courseList">
             <CourseList token={token} />
           </div>
           <span className="headingStyle" style={headingStyle}>All Courses</span>
-          <div className="courseList" style={course_list_style}>
+          <div className="courseList">
             <CourseList token={token} />
           </div>
         </div>

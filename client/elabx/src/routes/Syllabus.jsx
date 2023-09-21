@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import arrowIcon from '../media/arrowicon.png'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import CourseHeader from '../Components/CourseHeader.jsx'
 import Header from '../Components/header'
@@ -18,23 +18,15 @@ const iconStyleSmall = {
     width: "5%",
     height: "70%"
 }
-const mainStyle = {
-    backgroundColor: "#1F2334",
-    display: "flex",
-    flexDirection: "column",
-    color: "white"
-}
 const chapterStyle = {
     height: "8vh",
     width: "80%",
     margin: "10px auto",
     fontSize: "1.2rem",
-    display: "flex"
 }
 const listStyle = {
-    height: "8vh",
     width: "80%",
-    margin: "10px auto",
+    margin: "auto",
     fontSize: "1.2rem",
 }
 const questionStyle = {
@@ -48,9 +40,17 @@ const descStyle = {
     height: "8vh",
     width: "70%",
     margin: "auto",
-    fontSize: "1rem",
-    display: "flex",
-    // flexDirection: "column"
+    fontSize: "1rem"
+}
+const headerStyle = {
+    height: "fit-content",
+    backgroundColor: "#1f2334",
+    color: "white",
+    fontSize: "2.3rem",
+    textDecoration: "underline",
+    marginBottom: "25px",
+    position: "relative",
+    right: "-150px"
 }
 const textStyle = {
     padding: '8px'
@@ -80,12 +80,21 @@ const enroll_btn_style = {
     width: "max-content"
   }
   
+  function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }  
 
-function Syllabus() {
+function Syllabus({ course }) {
+    // const routeTo = "/syllabus/" + course.id + `?title=${course.title}`
 
+    let query = useQuery();
     const param = useParams();
     const courseId = param.id;
+    const courseTitle = query.get("title");
     console.log("courseId:" + courseId)
+    console.log("courseTitle:" + courseTitle)
     const token = useSelector((state) => state.token);
     const fetchOption = {
         method: "GET",
@@ -95,26 +104,26 @@ function Syllabus() {
         },
     }
 
-    const [course, setCourse] = useState([]);
-    function getCourse() {
+    // const [course, setCourse] = useState([]);
+    // function getCourse() {
 
-        fetch(`http://localhost:8000/api/subjects/${courseId}`, fetchOption)
-            .then(resp => resp.json())
-            .then(data => {
-                setCourse(data)
-            })
-            .catch(err => console.log(err))
-    }
-    useEffect(() => {
-        getCourse()
-    }, [])
+    //     fetch(`http://localhost:8000/api/subjects/${courseId}`, fetchOption)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             setCourse(data)
+    //         })
+    //         .catch(err => console.log(err))
+    // }
+    // useEffect(() => {
+    //     getCourse()
+    // }, [])
 
     const [chapterList, setChapterList] = useState([]);
     function getChapters() {
         fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setChapterList(data)
             })
             .catch(err => console.log(err))
@@ -123,43 +132,42 @@ function Syllabus() {
         getChapters()
     }, []);
 
-    const [questionList, setQuestionList] = useState([]);
-    function getQuestions() {
-        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
-            .then(resp => resp.json())
-            .then(data => {
-                setQuestionList(data)
-            })
-            .catch(err => console.log(err))
-    }
-    useEffect(() => {
-        getQuestions()
-    }, []);
+    // const [questionList, setQuestionList] = useState([]);
+    // function getQuestions() {
+    //     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
+    //         .then(resp => resp.json())
+    //         .then(data => {
+    //             setQuestionList(data)
+    //         })
+    //         .catch(err => console.log(err))
+    // }
+    // useEffect(() => {
+    //     getQuestions()
+    // }, []);
 
     return (
         <>
             <Header />
-            <div className="main" style={mainStyle}>
+            <div className="main">
                 {/* <CourseHeader state={location.title}/> */} 
                 <Link to="/addchapter">
                     <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
-                {/* <Link to="/addquestion">
-                    <span className="btn create-btn" style={create_btn_style}>Add Question</span>
-                </Link> */}
                 <Link to="/enroll">
                     <span className="btn enroll-btn" style={enroll_btn_style}>Enroll Student</span>
                 </Link>
-                <CourseHeader />
+                {/* <CourseHeader /> */}
+                <div><span style={headerStyle}>{courseTitle}</span></div>
                 {chapterList.map((chapter) =>
                 (
                     <ol key={chapter.id}>
-                            <li className="chapters" style={listStyle}>
-                                <div className="chapters" sytle={chapterStyle}>{chapter.id}. {chapter.title}
+                        <Link to={`/syllabus/${courseId}/chapters/1/questions/`} className="route-link">
+                        {/* <Link to={routeTo} className="route-link"> */}
+                            <li className="chapter-list" style={listStyle}>
+                                <div className="chapters">{chapter.id}. {chapter.title}
                                     {/* <img src={arrowIcon} style={iconStyle}></img> */}
-                                    {/* <span style={textStyle}>{chapter.id}. {chapter.title}</span> */}
                                 </div>
-                                <div className="chapter-description">
+                                <div className="chapter-description" style={textStyle}>
                                     {chapter.description}
                                 </div>
                                 {/* {questionList.map((question) =>
@@ -184,6 +192,7 @@ function Syllabus() {
                                     </ul>
                                 ))} */}
                             </li>
+                            </Link>
                     </ol>
                 ))}
             </div>

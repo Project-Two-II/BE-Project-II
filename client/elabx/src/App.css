@@ -17,8 +17,14 @@ code {
 }
 
 .main {
-  background-color: #1F2334;
   position: static;
+  background-color: #1f2334;
+  /* background-color: #ffffff; */
+    display: "flex";
+    flex-direction: "column";
+    color: white;
+    padding: 15px;
+    height: max-content;
 }
 
 .App .courseHeader {
@@ -138,8 +144,6 @@ code {
   position: static;
 }
 .statusBtn{
-  position: relative;
-  left: 270px;
   width: 120px;
   margin: 10px;
   height: 30px;
@@ -156,11 +160,18 @@ hr{
   width: 90%;
   margin: auto;
 }
-.route-link-style{
+.route-link{
   text-decoration: none;
   color: white;
 }
 .dropdown-option:hover{
   background-color: white;
   color: black;
+}
+.create-btn{
+  color: "white";
+    background-Color: "green";
+    position: "absolute";
+    right: "105px";
+    width: "max-content"
 }

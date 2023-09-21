@@ -9,6 +9,7 @@ const course_card_style = {
   borderRadius: "5px",
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   padding: "10px",
+  color: "black"
 }
 const progress_bar_style = {
   border: "1px solid #1F2334",
@@ -20,7 +21,8 @@ const style={
   padding: "10px"
 }
 const CourseCard = ({ course }) => {
-  const routeTo = "/syllabus/" + course.id
+  const routeTo = "/syllabus/" + course.id + `?title=${course.title}`
+  const title = course.title
   return (
       <div className="course-card" style={course_card_style}>
         <h2 style={style}>{course.code_no}</h2>
