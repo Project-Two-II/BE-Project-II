@@ -72,7 +72,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/createchapter",
+    path: "/addchapter",
     element: <CreateChapter />
   },
   // {
@@ -95,10 +95,10 @@ const router = createBrowserRouter([
     path: "/teacher",
     element: <Teacher />
   },
-  // {
-  //   path: "/addquestion",
-  //   element: <CreateQuestion />
-  // },
+  {
+    path: "/addquestion",
+    element: <CreateQuestion />
+  },
   {
     path: "/createtest",
     element: <CreateTest />

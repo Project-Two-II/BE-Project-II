@@ -135,9 +135,12 @@ function Syllabus() {
             <Header />
             <div className="main" style={mainStyle}>
                 {/* <CourseHeader state={location.title}/> */} 
-                <Link to="/addquestion">
-                    <span className="btn create-btn" style={create_btn_style}>Add Question</span>
+                <Link to="/addchapter">
+                    <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
+                {/* <Link to="/addquestion">
+                    <span className="btn create-btn" style={create_btn_style}>Add Question</span>
+                </Link> */}
                 <Link to="/enroll">
                     <span className="btn enroll-btn" style={enroll_btn_style}>Enroll Student</span>
                 </Link>
