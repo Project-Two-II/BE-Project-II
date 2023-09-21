@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './TeacherCourseDetails.css';
 import AddQuestion from './CreateQuestion';
 import QuestionDetails from '../Components/QuestionDetails';
+import CreateChapter from './CreateChapter'; 
 
 const ChapterDetails = () => {
   const [showAddQuestion, setShowAddQuestion] = useState(false);
@@ -24,7 +25,7 @@ const ChapterDetails = () => {
 
   const handleEditChapter = () => {
     setShowAddQuestion(false);
-    setShowEditChapter(true);
+    setShowEditChapter(true); 
   };
 
   const handleQuestionClick = (question) => {
@@ -51,6 +52,7 @@ const ChapterDetails = () => {
         </ul>
         {selectedQuestion && <QuestionDetails question={selectedQuestion} />}
         {showAddQuestion && <AddQuestion />}
+        {showEditChapter && <CreateChapter />}
       </div>
     </div>
   );

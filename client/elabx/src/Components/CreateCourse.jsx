@@ -12,7 +12,6 @@ const CreateCourse = () => {
   const token = useSelector((state) => state.token)
   console.log(token)
 
-  //code_no, title, description, thumbnail
 
   if(!isLoggedIn){
     navigate("/login")
@@ -38,7 +37,6 @@ const CreateCourse = () => {
       "code_no": courseCode,
       "title": courseSubject,
       "description": desc,
-      // "thumbnail": thumbnail
     })
  }
 
