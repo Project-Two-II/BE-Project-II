@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import heroImg from "../../media/title.png";
+import heroImg from "../../media/hero.png";
 import "./hero-section.css";
 
 import {Link} from 'react-router-dom';

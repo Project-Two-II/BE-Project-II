@@ -1,9 +1,15 @@
 .footer {
   background: rgba(16, 24, 136, 0.473);
+  color: white;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .follows span a {
   text-decoration: none;
+}
+
+.follows p {
+  color: rgb(228, 228, 228);
 }
 
 .follows span {
@@ -14,8 +20,22 @@
   background: transparent;
 }
 
-.link__list a {
+.link__list a, p.para-graph {
   text-decoration: none;
-  color: #e9eeec;
   font-weight: 500;
+  color: rgb(228, 228, 228);
+}
+
+i.ri-pantone-line,
+i.ri-instagram-line,
+i.ri-facebook-line, 
+i.ri-linkedin-line,
+i.ri-twitter-line{
+  color: white;
+}
+
+h6>span.fw-bold {
+  border-bottom: 1px solid #a4abb9;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-variant: small-caps;
 }

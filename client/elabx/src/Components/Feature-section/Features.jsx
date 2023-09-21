@@ -6,7 +6,7 @@ const FeatureData = [
   {
     title: "Quick Learning",
     desc: "To optimize quick learning in a lab, prepare ahead, follow instructions attentively, actively participate in hands-on activities, take thorough notes, and engage in collaborative discussions with peers to clarify doubts and reinforce understanding.",
- icon: "ri-draft-line",
+    icon: "ri-draft-line",
   },
 
   {
@@ -31,7 +31,7 @@ const Features = () => {
             <Col lg="4" md="6" key={index}>
               <div className="single__feature text-center px-4">
                 <h2 className="mb-3">
-                  <i class={item.icon}></i>
+                  <i className={item.icon}></i>
                 </h2>
                 <h6>{item.title}</h6>
                 <p className="para">{item.desc}</p>

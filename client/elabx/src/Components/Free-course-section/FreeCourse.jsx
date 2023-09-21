@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 
+
 import courseImg01 from "../../media/platform1.png";
 import courseImg02 from "../../media/platform2.png";
 import courseImg03 from "../../media/platform3.png";
@@ -9,6 +10,7 @@ import courseImg05 from "../../media/platform5.png";
 import FreeCourseCard from "./FreeCourseCard";
 
 import "./free-course.css";
+
 
 const freeCourseData = [
   {
@@ -42,7 +44,7 @@ const FreeCourse = () => {
       <Container>
         <Row>
           <Col lg="12" className="text-center mb-5">
-            <h2 className="fw-bold">We provide platform for</h2>
+            <h2 className="fw-bold"><span className="title">We provide platform for</span></h2>
           </Col>
 
           {freeCourseData.map((item) => (

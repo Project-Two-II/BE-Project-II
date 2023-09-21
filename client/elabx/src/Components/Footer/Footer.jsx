@@ -85,7 +85,7 @@ const Footer = () => {
           </Col>
 
           <Col lg="3" md="6" className="mb-4">
-            <h6 className="fw-bold">Explore</h6>
+            <h6><span className="fw-bold">Explore</span></h6>
             <ListGroup className="link__list">
               {footerQuickLinks.map((item, index) => (
                 <ListGroupItem key={index} className="border-0 ps-0 link__item">
@@ -97,7 +97,7 @@ const Footer = () => {
           </Col>
 
           <Col lg="3" md="6" className="mb-4">
-            <h6 className="fw-bold">Information</h6>
+            <h6><span className="fw-bold">Information</span></h6>
             <ListGroup className="link__list">
               {footerInfoLinks.map((item, index) => (
                 <ListGroupItem key={index} className="border-0 ps-0 link__item">
@@ -109,11 +109,10 @@ const Footer = () => {
           </Col>
 
           <Col lg="3" md="6">
-            <h6 className="fw-bold">Get in Touch</h6>
-
-            <p className="para">Address: NCIT college Balkumari,lalitpur</p>
-            <p className="para"> Phone: 0121653 </p>
-            <p className="para">Email: ncit@ncit.edu.np</p>
+            <h6><span className="fw-bold">Get in Touch</span></h6>
+            <p className="para-graph">Address: NCIT college Balkumari,lalitpur</p>
+            <p className="para-graph"> Phone: 0121653 </p>
+            <p className="para-graph">Email: ncit@ncit.edu.np</p>
           </Col>
         </Row>
       </Container>

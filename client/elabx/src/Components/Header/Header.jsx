@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Container } from "reactstrap";
 import {Link} from 'react-router-dom'
 import "./header.css";
+import logo from "../../media/logo-nobg.png";
 
 
 const navLinks = [
@@ -36,11 +37,11 @@ const Header = () => {
           <div className="logo">
             <h2 className=" d-flex align-items-center gap-1">
               <i className="logo"></i> 
-              <Link to={"/"} className="brand-name">Elabx</Link>
+              <Link to={"/"}><img src={logo} alt="" className="w-100" /></Link>
             </h2>
           </div>
 
-          <div className="nav d-flex align-items-center gap-5">
+          <div className="margin-left nav d-flex align-items-center gap-5">
             <div className="nav__menu" ref={menuRef} onClick={menuToggle}>
               <ul className="nav__list">
                 {navLinks.map((item, index) => (

@@ -6,7 +6,7 @@ const CourseCard = (props) => {
   return (
     <div className="single__course__item">
       <div className="course__img">
-        <img src={imgUrl} alt="" className="w-100" />
+        <img src={imgUrl} alt="" className="w-100 icon-size" />
       </div>
 
       <div className="course__details">
@@ -14,7 +14,7 @@ const CourseCard = (props) => {
 
         <div className=" d-flex justify-content-between align-items-center">
           <p className="para lesson d-flex align-items-center gap-1">
-            <i class="ri-book-open-line"></i> {lesson} Lessons
+            <i className="ri-book-open-line"></i> {lesson} Lessons
           </p>
 
   

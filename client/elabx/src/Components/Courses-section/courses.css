@@ -1,5 +1,9 @@
 .single__course__item {
   padding: 15px;
+  margin: 15px;
+  border: 1px solid #1c305c;
+  border-radius: 25px;
+  /* background-color: #3c3d47; */
 }
 
 .course__img img {
@@ -26,6 +30,7 @@
 .students i,
 .rating i {
   font-weight: 400;
+  color:#1c305c;
 }
 
 .course__title {
@@ -34,4 +39,8 @@
 
 .course__top__left h2 {
   font-weight: 600;
+}
+
+icon-size {
+  height: 15px;
 }

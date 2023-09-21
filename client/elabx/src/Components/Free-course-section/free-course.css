@@ -24,3 +24,8 @@
   font-weight: 600;
   line-height: 2rem;
 }
+
+.title{
+  font-variant: small-caps;
+  border-bottom: 2px solid rgb(13, 17, 34);
+}
