@@ -1,73 +1,70 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import userlogo from '../media/people.svg';
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from "react-router-dom";
+
+import { setCred } from '../features/info'
+
+
+import elabx_logo from '../media/logo-nobg.png'
 
 const header_style = {
-  backgroundColor: "#0d1122",
+  backgroundColor: "#1c305c",
   width: "100%",
-  height: "12vh",
-  // position: "absolute",
-  color: "white"
-}
-const elabx_style = {
-  fontSize: "2rem",
-  marginLeft: "100px",
-  position: "relative",
-  top: "15px"
-};
-
-const icon_style = {
-  position: "absolute",
-  right: "-50px",
-  top: "7px"
+  color: "white",
+  display: "flex",
+  justifyContent: "space-around",
+  zIndex: "0"
 }
 
 const logo_style = {
-  width: "20%",
+  display: "inline-block",
   cursor: "pointer"
 };
 
 const searchbar_style = {
-  width: "200px",
+  minWidth: "200px",
   height: "20px",
-  position: "relative",
-  top: "7px",
-  marginLeft: "550px",
 };
 
 const dropdown_style = {
-  position: "relative",
-  right: "25px",
-  top: "15px",
-  backgroundColor: "#3C3D47",
+  backgroundColor: "black",
   width: "120px",
   padding: "0px",
-  zIndex: "1",
+  zIndex: "999",
   display: "block",
   borderRadius: "5px",
+  color: "white"
 };
 
 const optionStyle = {
   padding: "10px",
-  cursor: "pointer"
+  cursor: "pointer",
 };
+
+const sideStyle = {
+  display: "flex",
+  flexDirection: "row",
+  paddingTop : "10px"
+}
 
 function Header() {
   const token = useSelector((state) => state.token);
-  console.log(token)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const refreshToken = useSelector((state) => state.refreshToken)
-  console.log(refreshToken)
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogoClick = () => {
     setShowDropdown(!showDropdown);
   };
   
-
   const handleLogout = () => {
     setShowDropdown(false);
+
+    
 
     const fetchOption = {
         method: "POST",
@@ -79,12 +76,16 @@ function Header() {
             "refresh": refreshToken
         })
     } 
+
     fetch("http://localhost:8000/api/userauth/logout/", fetchOption)
         .then((resp) => {return resp.json()})
         .then(data => {
             console.log(data)
         })
         .catch( err => console.log(err))
+
+      dispatch(setCred({isLoggedIn: false, token: '', role: '', refreshToken: ''}))
+      navigate("/login")
   };
 
   const handleProfile = () => {
@@ -95,18 +96,21 @@ function Header() {
 
   return (
     <header style={header_style}>
-      <span className="elabx" style={elabx_style}>
-        ELabX
+      <span className="elabx">
+        <img src={elabx_logo} height={80} width={80}/>
       </span>
+      <div style={sideStyle}>
       <span style={searchbar_style}>
         <input type="text" placeholder="Search" />
       </span>
-      <span className="profile-icon" style={icon_style}>
+      <div className="profile-icon">
         <img
           className="Profile-logo"
           src={userlogo}
           alt="user logo"
           style={logo_style}
+          height={60}
+          width={60}
           onClick={handleLogoClick}
         />
         {showDropdown && (
@@ -117,7 +121,9 @@ function Header() {
               <div className="dropdown-option" style={optionStyle} onClick={handleLogout}>Logout</div>
           </div>
         )}
-      </span>
+      </div>
+      </div>
+      
     </header>
   );
 }

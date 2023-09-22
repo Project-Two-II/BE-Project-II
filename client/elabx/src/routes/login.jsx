@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {Form, Link} from 'react-router-dom';
 import loginimg from "../media/reg.png";
 
@@ -19,8 +19,6 @@ const Login = () => {
 
    const isLoggedIn = useSelector((state) => state.isLoggedIn)
    if(isLoggedIn) navigate("/home")
-  // const token = useSelector((state) => state.cred.token);
-  // const role = 0
 
   const dispatch = useDispatch()
 

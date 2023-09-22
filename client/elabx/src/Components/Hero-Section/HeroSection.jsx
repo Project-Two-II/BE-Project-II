@@ -5,6 +5,10 @@ import "./hero-section.css";
 
 import {Link} from 'react-router-dom';
 
+const btnStyle = {
+  padding: "15px"
+}
+
 const HeroSection = () => {
   return (
     <section>
@@ -12,11 +16,11 @@ const HeroSection = () => {
         <Row>
           <Col lg="6" md="6">
             <div className="hero__content">
-              <h2 className="mt-10 hero__title">
+              <h2 className="hero__title">
                 Anytime Anywhere <br /> Learn on your <br /> Suitable Schedule
               </h2>
               <div className="mt-top">
-              <Link to={"/register"} className="Register">Register Now</Link>
+              <Link style={btnStyle} to={"/register"} className="Register">Register Now</Link>
           </div>
             </div>
           </Col>

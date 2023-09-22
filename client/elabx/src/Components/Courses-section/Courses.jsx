@@ -54,19 +54,19 @@ const coursesData = [
     id: "07",
       lesson: 10,
       imgUrl: courseImg7,
-    },
+  },
   
-    {
+  {
       id: "08",
       lesson: 12,
       imgUrl: courseImg8,
-    },
+  },
   
-    {
+  {
       id: "09",
       lesson: 9,
       imgUrl: courseImg9,
-    },
+  },
 
 
 
@@ -90,8 +90,8 @@ const Courses = () => {
             </div>
           </Col>
           {coursesData.map((item) => (
-            <Col lg="4" md="6" sm="6">
-              <CourseCard key={item.id} item={item} />
+            <Col key={item.id} lg="4" md="6" sm="6">
+              <CourseCard  item={item} />
             </Col>
           ))}
         </Row>
