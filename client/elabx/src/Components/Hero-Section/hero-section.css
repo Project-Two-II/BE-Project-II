@@ -1,10 +1,11 @@
 .hero__content h2 {
   font-weight: 600;
-  line-height: 55px;
+  line-height: 50px;
 }
 
 .hero__content {
-  padding-top: 80px;
+  /* padding-top: 50px; */
+  margin-top: -50px;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-variant: small-caps;
 }
@@ -35,6 +36,9 @@
   }
 }
 
+.mt-top{
+  margin-top: 140px;;
+}
 
 
 .Register{
