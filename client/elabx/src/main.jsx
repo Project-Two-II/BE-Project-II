@@ -33,6 +33,8 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
 
+
+import CreateQuestionTest from './Components/CreateQuestionTest'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
@@ -154,6 +156,10 @@ const router = createBrowserRouter([
   //   path:"/questiontestdetails",
   //   element:<QuestionTestDetails/>
   // }.
+  {
+    path:"/createquestiontest",
+    element:<CreateQuestionTest/>
+  },
   {
   path :'/viewprogress',
   element:<ViewProgress/>
