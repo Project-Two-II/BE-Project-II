@@ -80,13 +80,17 @@ class SelfEnrollmentAPIView(APIView):
         if not actual_key:
             raise ValueError("Self enrollment is not available.")
         if requested_key == actual_key:
-            SubjectGroup.objects.get(subject=subject).users.add(user)
+            group = SubjectGroup.objects.get(subject=subject)
+            group.users.add(user)
+            user.subject_groups.add(group)
         else:
             raise ValidationError("Key is invalid.")
 
     def post(self, request, subject_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
+        print(subject)
         key = request.data.get("key")
+        print(key)
         try:
             self.enroll_user(key, subject)
             return Response(data={"detail": "Successfully enrolled.", "subject": subject.title, "key": key},
@@ -138,9 +142,7 @@ class SubjectGroupAPIView(APIView):
 
     def put(self, request, subject_id, *args, **kwargs):
         group = get_object_or_404(SubjectGroup, subject=subject_id)
-        print(group)
         user = get_object_or_404(User, email=request.data["user"])
-        print(user)
         group.users.add(user)
         user.subject_groups.add(group)
         serializer = SubjectGroupSerializer(group)
