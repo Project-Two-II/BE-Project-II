@@ -53,7 +53,6 @@ function Questions() {
 
     const [questionList, setQuestionList] = useState([]);
     function getQuestions() {
-        // fetch(`http://localhost:8000/api/subjects/1/chapters/1/questions/`, fetchOption)
             fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
             .then(resp => resp.json())
             .then(data => {
@@ -84,7 +83,7 @@ function Questions() {
                                 <div className="questions">{question.id}. {question.title}</div>
                                 <div className="question-description" style={textStyle}>{question.description}</div>
                                 <div>
-                                    <Link to={`/{courseId}/questionSolve/{question.id}`}>
+                                    <Link to={`/${courseId}/1/questionSolve/${question.id}`}>
                                         <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
                                     </Link>
                                 </div>

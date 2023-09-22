@@ -57,7 +57,7 @@ function UserProfile({ prop }) {
     }
     fetchDetails();
     }, [prop])
-
+    console.log(profile.role)
     return (
         <>
 

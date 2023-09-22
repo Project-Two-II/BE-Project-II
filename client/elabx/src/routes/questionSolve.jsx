@@ -12,12 +12,14 @@ function QuestionSolve({my_api}) {
   const param = useParams();
   console.log(param)
   const courseId = param.courseId;
-  const chapterId = param.questionId;
+  const questionId = param.questionId;
+  // const chapterId = param.chapterId;
   return (
     <>
     <CourseHeader />
     <div className="body">
-      <Question chapterId={chapterId} courseId={courseId}/>
+      <Question questionId={questionId} courseId={courseId}/>
+      {/* <Question questionId={questionId} courseId={courseId} chapterId={chapterId}/> */}
       <Editor defaultLang = "cpp" api = {my_api} />
     </div>
     </>

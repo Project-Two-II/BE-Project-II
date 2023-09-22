@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+
 import './Create.css';
 
 const AddStudent = () => {
-  const navigate = useNavigate()
+  
   const [subject, setSubject] = useState('c++');
   const [student, setStudent] = useState({ email: '' });
 

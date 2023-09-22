@@ -16,6 +16,7 @@ import Profile from './routes/profile'
 import Teacher from './routes/teacher'
 import Logout from './routes/logout'
 import AddCourse from './routes/addcourse'
+import AddChapter from './routes/addchapter'
 import AddQuestion from './routes/addquestion'
 import Enroll from './routes/enroll'
 
@@ -30,8 +31,8 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
-import StudentEnrollment from './Components/StudentEnrollment'
-import TeacherEnrollment from './Components/TeacherEnrollment'
+// import StudentEnrollment from './Components/StudentEnrollment'
+// import TeacherEnrollment from './Components/TeacherEnrollment'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -74,13 +75,14 @@ const router = createBrowserRouter([
     element: <Home />
   },
   {
-    path: "/questionsolve/:questionId",
+    path: "/:courseId/1/questionsolve/:questionId",
+    // path: "/:courseId/questionsolve/:questionId",
     element: <QuestionSolve />
   },
 
   {
     path: "/addchapter",
-    element: <CreateChapter />
+    element: <AddChapter />
   },
   {
     path: "/profile",
@@ -139,13 +141,9 @@ const router = createBrowserRouter([
     element:<QuestionDetails/>
   },
   {
-    path:"/studentenrollment",
-    element:<StudentEnrollment/>
+    path:"/enroll",
+    element:<Enroll />
   },
-  {
-    path:"/teacherenrollment",
-    element:<TeacherEnrollment/>
-  }
   
 ]);
 
