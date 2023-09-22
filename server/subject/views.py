@@ -138,8 +138,11 @@ class SubjectGroupAPIView(APIView):
 
     def put(self, request, subject_id, *args, **kwargs):
         group = get_object_or_404(SubjectGroup, subject=subject_id)
-        user = get_object_or_404(User, id=request.data["user"])
+        print(group)
+        user = get_object_or_404(User, email=request.data["user"])
+        print(user)
         group.users.add(user)
+        user.subject_groups.add(group)
         serializer = SubjectGroupSerializer(group)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

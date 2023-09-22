@@ -14,5 +14,11 @@ def create_group(sender, instance, created, **kwargs):
     """
     if created:
         group_name = f"{instance.code_no}_group"
-        SubjectGroup.objects.create(name=group_name, subject=instance)
-        SubjectGroup.objects.get(name=group_name).users.add(instance.owner.id)
+        group, created = SubjectGroup.objects.get_or_create(name=group_name, subject=instance)
+
+        # Add the subject owner to the group
+        if instance.owner:
+            group.users.add(instance.owner)
+
+            # Add the group to the owner's subject_groups
+            instance.owner.subject_groups.add(group)

@@ -51,7 +51,7 @@ class SubjectGroup(Group):
     One subject can have one group, and
     """
     subject = models.OneToOneField(Subject, on_delete=models.CASCADE, related_name="group")
-    users = models.ManyToManyField(User, blank=True)
+    users = models.ManyToManyField(User, blank=True, related_name="subject_groups")
 
     class Meta:
         db_table = "SubjectGroup_elabx"
