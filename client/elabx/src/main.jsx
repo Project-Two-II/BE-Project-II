@@ -79,7 +79,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/addchapter",
+    path: "syllabus/:subId/addchapter",
     element: <CreateChapter />
   },
   {
@@ -99,7 +99,7 @@ const router = createBrowserRouter([
     element: <Teacher />
   },
   {
-    path: "/addquestion",
+    path: "/syllabus/:subId/chapters/:chapterId/addquestion/",
     element: <AddQuestion />
   },
   {

@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import './Create.css';
 
+import { useSelector } from 'react-redux'
+import {  useParams, useLocation } from 'react-router-dom'
+
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}  
+
 const CreateChapter = () => {
+
+   const token = useSelector((state) => state.token);
+
+    const param = useParams();
+    const courseId = param.subId;
+
   const [chapterName, setChapterName] = useState('');
   const [chapterDescription, setChapterDescription] = useState('');
-  const [chapters, setChapters] = useState([]);
 
   const handleChapterNameChange = (e) => {
     setChapterName(e.target.value);
@@ -14,26 +29,35 @@ const CreateChapter = () => {
     setChapterDescription(e.target.value);
   };
 
-  const handleCreate = (e) => {
+  const handleSubmission = (e) =>{
     e.preventDefault();
 
-    const isConfirmed = window.confirm(`Are you sure you want to create the chapters for: ${chapterName}?`);
-    if (isConfirmed) {
-      console.log(`Submitted Chapter Name: ${chapterName}`);
-      console.log('Submitted Chapters:');
-      chapters.forEach((chapter) => {
-        console.log(`Chapter ${chapter.id} - Name: ${chapter.name}, Description: ${chapter.description}`);
-      });
 
-      setChapterName('');
-      setChapterDescription('');
-      setChapters([]);
-    }
-  };
+    const fetchOption = {
+      method: "POST",
+      headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        "title": chapterName,
+        "description": chapterDescription,
+      })
+  }
+
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
+    .then(resp => resp.json())
+            .then(data => {
+              // todo: add a success message
+              console.log(data)
+            })
+    .catch(err => console.log(err))
+
+  }
 
   return (
     <div className="formContainer">
-      <form className="ipContainer" onSubmit={handleCreate}>
+      <form className="ipContainer">
         <div className="inputGroup">
           <label htmlFor="chapterName">Chapter Name:</label>
           <input
@@ -58,32 +82,8 @@ const CreateChapter = () => {
           />
         </div>
 
-        {chapters.map((chapter, index) => (
-          <div key={chapter.id} className="chapterGroup">
-            <div className="inputGroup">
-              <label htmlFor={`chapterName${chapter.id}`}>Chapter Name:</label>
-                <input
-                name={`chapterName${chapter.id}`}
-                id={`chapterName${chapter.id}`}
-                value={chapter.name}
-                disabled
-              />
-            </div>
-
-            <div className="inputGroup">
-              <label htmlFor={`chapterDescription${chapter.id}`}>Chapter Description:</label>
-              <textarea
-                name={`chapterDescription${chapter.id}`}
-                id={`chapterDescription${chapter.id}`}
-                value={chapter.description}
-                disabled
-              />
-            </div>
-          </div>
-        ))}
-
         <div className="buttonGroup">
-          <button className="btn createBtn" type="submit">
+          <button className="btn createBtn" type="button" onClick={handleSubmission}>
             Create
           </button>
         </div>

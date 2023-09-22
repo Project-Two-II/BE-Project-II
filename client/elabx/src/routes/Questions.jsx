@@ -68,7 +68,7 @@ function Questions() {
             <Header />
             <div className="main">
                 <div>
-                    <Link to="/addquestion">
+                    <Link to={`/syllabus/${courseId}/chapters/${chapterId}/addquestion/`}>
                         <span className="btn create-btn" style={create_btn_style}>Add Question</span>
                     </Link>
                 </div>
