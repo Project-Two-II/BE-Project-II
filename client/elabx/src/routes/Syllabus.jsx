@@ -2,7 +2,6 @@ import React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import arrowIcon from '../media/arrowicon.png'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import CourseHeader from '../Components/CourseHeader.jsx'
@@ -89,7 +88,6 @@ const enroll_btn_style = {
   }  
 
 function Syllabus({ course }) {
-    // const routeTo = "/syllabus/" + course.id + `?title=${course.title}`
 
     let query = useQuery();
     const param = useParams();
@@ -105,19 +103,6 @@ function Syllabus({ course }) {
             "Authorization": "Bearer " + token
         },
     }
-    // const [course, setCourse] = useState([]);
-    // function getCourse() {
-
-    //     fetch(`http://localhost:8000/api/subjects/${courseId}`, fetchOption)
-    //         .then(resp => resp.json())
-    //         .then(data => {
-    //             setCourse(data)
-    //         })
-    //         .catch(err => console.log(err))
-    // }
-    // useEffect(() => {
-    //     getCourse()
-    // }, [])
 
     const [chapterList, setChapterList] = useState([])
     function getChapters() {
@@ -138,7 +123,7 @@ function Syllabus({ course }) {
             <Header />
             <div className="main">
                 {/* <CourseHeader state={location.title}/> */} 
-                <Link to="/addchapter">
+                <Link to={`/syllabus/${courseId}/addchapter`}>
                     <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
                 <Link to={`/enroll/${courseId}`}>

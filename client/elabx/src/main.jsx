@@ -80,8 +80,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/addchapter",
-    element: <AddChapter />
+    path: "syllabus/:subId/addchapter",
+    element: <CreateChapter />
   },
   {
     path: "/profile",
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
     element: <Teacher />
   },
   {
-    path: "/addquestion",
+    path: "/syllabus/:subId/chapters/:chapterId/addquestion/",
     element: <AddQuestion />
   },
   {

@@ -1,10 +1,14 @@
 *{
-    margin: 0;
+   margin: 5px;
     box-sizing: border-box;
 }
 
 .col-wh{
   color: white !important;
+  margin-left:2px;
+  padding: 18px;
+  width: 80%; 
+  margin: 0 auto;
 }
 
 .main-heading{
@@ -18,7 +22,7 @@
   justify-content: center;
   min-height: 100vh;
   flex-wrap: wrap;
-  background-color: #0a0000;
+  background-color:   #010714;
 }
 
 .FormJumbotron{
@@ -30,7 +34,7 @@
 }
 
 .Headline{
-  background-color: palevioletred ;
+  background-color:#1c305c;; 
   margin-bottom: 0 ;
   padding: 10px;
 }
@@ -43,14 +47,16 @@
 }
 
 .Message{
-  color:red;
+  color:blue;
   max-height: fit-content;
   margin:-2px 0 -1px 0;
 }
 
 .FormContainer{
   background-color: white;
-  padding: 18px;
+  padding: 50px;
+  
+
 }
 
 .InputField{
@@ -64,10 +70,10 @@ input{
 }
 
 .SubmitButton{
-  background-color: darkcyan;
+  background-color:#1c305c;;
   padding:9px;
   margin: 3px 0 2px 0;
-  color: white;
+  color:white;
   border: none;
   width: 100%;
 }

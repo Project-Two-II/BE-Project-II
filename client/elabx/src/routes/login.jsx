@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Form, Link} from 'react-router-dom';
+import loginimg from "../media/reg.png";
+
 
 import { useDispatch, useSelector } from 'react-redux'
  import { setCred } from '../features/info'
@@ -8,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import '../login.css'
 
 const errMessageStyle = {
-  color: "red"
+  color: "blue"
 }
 
 
@@ -81,9 +83,11 @@ const Login = () => {
   return (
     <div className="BoxContainer">
         <div className="FormJumbotron">
-            <h1 className= "col-wh main-heading">ELABX</h1>
-            <p className= "col-wh">By:Team ARBA</p>
-        </div>
+        <div className="login__img">
+              <img src={loginimg} alt="" className="w-100" />
+              <h1 className="col-wh main-heading">ELABX</h1>
+            </div>
+           </div>
   
         <div className="FormContainer">
             <div className="Headline">

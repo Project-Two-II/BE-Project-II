@@ -1,75 +1,82 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Create.css';
 
+import { useSelector } from 'react-redux'
+
+import {  useParams} from 'react-router-dom'
+
+
 const CreateQuestion = () => {
-  const navigate = useNavigate()
-  const [chapter, setChapter] = useState('');
-  const [questions, setQuestions] = useState([{ id: 1, text: '' }]);
-  const chapterTitles = ['Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Other'];
+
+  const token = useSelector((state) => state.token);
+
+  const param = useParams();
+  const courseId = param.subId;
+  const chapterId = param.chapterId
+
+  const [title, setTitle] = useState('');
+  const [questionDescription, setQuestionDescription] = useState('')
   const [boilerplateText, setBoilerplateText] = useState('');
 
-  const handleChapterChange = (e) => {
-    setChapter(e.target.value);
+
+
+  const handleQuestionChange = (e) => {
+    setTitle(e.target.value);
   }
 
-  const handleQuestionChange = (index, e) => {
-    const newQuestions = [...questions];
-    newQuestions[index].text = e.target.value;
-    setQuestions(newQuestions);
+  const handleDescriptionChange = (e) => {
+    setQuestionDescription(e.target.value)
   }
 
   const handleBoilerplateChange = (e) => {
     setBoilerplateText(e.target.value);
   }
 
-  const handleAddQuestion = () => {
-    const newQuestions = [...questions];
-    const newId = newQuestions.length + 1;
-    newQuestions.push({ id: newId, text: '' });
-    setQuestions(newQuestions);
-  }
 
-  const handleSubmit = (e) => {
+  const handleSubmission = (e) => {
     e.preventDefault();
 
-    const isConfirmed = window.confirm(`Are you sure you want to create the questions with Chapter Name: ${chapter}?`);
-    if (isConfirmed) {
-      console.log(`Submitted Chapter Name: ${chapter}`);
-      questions.forEach(question => {
-        console.log(`Question ${question.id}: ${question.text}`);
-      });
+    const fetchOption = {
+      method: "POST",
+      headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        "title": title,
+        "description": questionDescription,
+        "boilerplate":boilerplateText
+      })
+  }
 
-      console.log(`Boilerplate Text: ${boilerplateText}`);
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`, fetchOption)
+    .then(resp => resp.json())
+            .then(data => {
+              // todo: add a success message
+              console.log(data)
+            })
+    .catch(err => console.log(err))
 
-      setChapter('');
-      setQuestions([{ id: 1, text: '' }]);
-      setBoilerplateText('');
-    }
-    navigate("/syllabus/1")
   }
 
   return (
     <div className="formContainer">
-      <form className="ipContainer" onSubmit={handleSubmit}>
+      <form className="ipContainer">
         <div className="inputGroup">
         </div>
-        {questions.map((question, index) => (
-          <div key={question.id} className="inputGroup">
-            <label htmlFor={`question${question.id}`}>Question Title:</label>
-            <input name={`question${index}`} id={`question${index}`} value={question.question} onChange={(e) => handleQuestionChange(index, e)} required />
-            <label htmlFor={`answer${index}`}>Question Description:</label>
+          <div className="inputGroup">
+            <label >Question Title:</label>
+            <input value={title} onChange={handleQuestionChange} required />
+            <label>Question Description:</label>
             <div className="questionGroup">
               <textarea
-                name={`question${question.id}`}
-                id={`question${question.id}`}
-                value={question.text}
-                onChange={(e) => handleQuestionChange(index, e)}
+                value={questionDescription}
+                onChange={handleDescriptionChange}
                 required
               />
             </div>
           </div>
-        ))}
+      
 
         
         <div className="inputGroup">
@@ -82,7 +89,7 @@ const CreateQuestion = () => {
             required
           />
         </div>
-        <button className="btn" type="submit">Add</button>
+        <button className="btn" type="button" onClick={handleSubmission}>Add</button>
       </form>
     </div>
   );

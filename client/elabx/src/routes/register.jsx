@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Link } from 'react-router-dom'
+import loginimg from "../media/login.png";
 
 import '../login.css'
+
 
 const errMessageStyle = {
   color: "red"
 }
 const okMessageStyle = {
-  color: "green"
+  color: "gree  n"
 }
 
 const Register = () => {
@@ -107,9 +109,12 @@ const Register = () => {
     <div className="BoxContainer">
 
       <div className="FormJumbotron">
+      <div className="login__img">
+              <img src={loginimg} alt="" className="w-100" />
+            </div>
         <h1 className="col-wh main-heading">ELABX</h1>
-        <p className="col-wh" >Set your own Learning Path</p>
-      </div>
+         <p>By:Team ARBA</p>
+         </div>
 
       <div className="FormContainer">
         <div className="Headline">
@@ -127,12 +132,15 @@ const Register = () => {
           <div className="InputField"><input type="password" placeholder="Password" name="password" value={password} onChange={handlePasswordChange} /></div>
           <div className="InputField"><input type="password" placeholder="Confirm Password" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPasswordChange} />
           </div>
-          <div>
-            <select onChange={handleRoleChange}>
-               <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-            </select>
-          </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+  <p style={{ marginRight: '2px' }}>Role:</p>
+  <select>
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+  </select>
+</div>
+
           <button className="SubmitButton" type="submit" onClick={handleFormSubmission}>Register</button>
         </Form>
         <br />
