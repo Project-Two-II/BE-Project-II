@@ -2,9 +2,9 @@ name: Server side CI/CD
 
 on:
   push:
-    branches: [ "server" ]
+    branches: [ "new-server" ]
   pull_request:
-    branches: [ "server" ]
+    branches: [ "new-server" ]
   workflow_dispatch:
 
 jobs:
@@ -52,7 +52,7 @@ jobs:
       with:
        dockerfile: ./server/Dockerfile
        directory: ./server
-       image: ${{ secrets.DOCKER_USERNAME }}/elabx-server
+       image: ${{ secrets.DOCKER_USERNAME }}/elabx-new-server
        registry: docker.io
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
