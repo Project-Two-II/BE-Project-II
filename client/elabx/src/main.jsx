@@ -31,8 +31,12 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
-// import StudentEnrollment from './Components/StudentEnrollment'
-// import TeacherEnrollment from './Components/TeacherEnrollment'
+
+import StudentEnrollment from './Components/StudentEnrollment'
+import TeacherEnrollment from './Components/TeacherEnrollment'
+// import QuestionTestDetails from './Components/QuestionTestDetails'
+import ViewProgress from './Components/ViewProgress'
+import StudentProgress from './Components/StudentProgress'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -143,7 +147,27 @@ const router = createBrowserRouter([
     path:"/enroll/:courseId",
     element:<Enroll />
   },
-  
+
+  {
+    path:"/teacherenrollment",
+    element:<TeacherEnrollment/>
+  },
+  // {
+  //   path:"/questiontestdetails",
+  //   element:<QuestionTestDetails/>
+  // }.
+  {
+  path :'/viewprogress',
+  element:<ViewProgress/>
+  },
+  {
+    path :'/studentprogress',
+    element:<StudentProgress/>
+    },
+
+
+
+>>>>>>> dee1aae (progress added)
 ]);
 
 
