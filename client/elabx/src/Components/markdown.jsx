@@ -28,7 +28,7 @@ const renderers = {
   }
 };
 
-function Markdown({courseId, questionId}) {
+function Markdown({courseId, chapterId, questionId}) {
 
   const token = useSelector((state) =>  state.token);
 
@@ -43,9 +43,10 @@ function Markdown({courseId, questionId}) {
 
   const [description, setDescription] = useState('')
   function getDescription() {
-    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${courseId}/questions/${questionId}/`, fetchOption)
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, fetchOption)
       .then(resp => resp.json())
       .then(data => {
+        console.log(data.description)
         setDescription(data.description)
       })
       .catch(err => console.log(err))

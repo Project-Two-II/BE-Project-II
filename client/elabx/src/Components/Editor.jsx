@@ -9,18 +9,7 @@ const initialHeader = "#include <iostream>\n";
 
 
 function Editor({defaultLang}) {
-
   const token = useSelector((state) =>  state.token);
-
-  
-  const fetchOption = {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      "Authorization": "Bearer  " +  token
-    },
-  }
-
   const [code, setCode] = useState("")
   const [testCode, setTestCode] = useState("");
 
@@ -29,6 +18,15 @@ function Editor({defaultLang}) {
   }
 
   function getData() {
+
+    const fetchOption = {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": "Bearer  " +  token
+      },
+    }
+
     fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/2/test/", fetchOption)
         .then(resp => resp.json())
         .then(data => {
@@ -45,6 +43,26 @@ function Editor({defaultLang}) {
     API.compileLinkRun(finalCode);
   }
 
+  const submissionHandler = (e) => {
+    e.preventDefault();
+    const fetchOption = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": "Bearer  " +  token
+      },
+      body: JSON.stringify({
+        "solution": code
+      })
+    }
+    fetch("http://localhost:8000/api/submission/1/chapters/1/questions/2/submit/", fetchOption)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => console.log(err))
+  }
+
   useEffect(() => {
     getData()
 }, []);
@@ -52,7 +70,7 @@ function Editor({defaultLang}) {
   return (
     <div className="editorSection">
             <div className="editorButtons">
-              <button  className=" btn submitBtn">Submit</button>
+              <button  className=" btn submitBtn" onClick={submissionHandler}>Submit</button>
               <button onClick = {RunClickHandler} className="btn runBtn">Run</button>
             </div>
             <EditorWindow

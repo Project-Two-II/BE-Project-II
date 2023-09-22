@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 import Header from '../Components/header'
@@ -8,16 +8,15 @@ import AddStudent from '../Components/AddStudent'
 import SelfEnroll from '../Components/SelfEnroll';
 
 function Enroll() {
-  const location = useLocation()
-  // const navigate = useNavigate()
-  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const param = useParams();
+  const courseId = param.courseId;
+  console.log(param)
   const isTeacher = useSelector((state) => state.role)
-  // const token = useSelector((state) => state.token)
   console.log(isTeacher)
   return (
     <>
       <Header />
-      {isTeacher ? <AddStudent /> : <SelfEnroll />}
+      {isTeacher ? <AddStudent courseId={courseId}/> : <SelfEnroll courseId={courseId}/>}
       <Footer />
     </>
   )

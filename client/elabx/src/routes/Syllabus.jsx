@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useSelector } from 'react-redux'
 
 import arrowIcon from '../media/arrowicon.png'
@@ -79,6 +80,7 @@ const enroll_btn_style = {
     right: "270px",
     width: "max-content"
   }
+
   
   function useQuery() {
     const { search } = useLocation();
@@ -103,7 +105,6 @@ function Syllabus({ course }) {
             "Authorization": "Bearer " + token
         },
     }
-
     // const [course, setCourse] = useState([]);
     // function getCourse() {
 
@@ -118,7 +119,7 @@ function Syllabus({ course }) {
     //     getCourse()
     // }, [])
 
-    const [chapterList, setChapterList] = useState([]);
+    const [chapterList, setChapterList] = useState([])
     function getChapters() {
         fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
             .then(resp => resp.json())
@@ -132,19 +133,6 @@ function Syllabus({ course }) {
         getChapters()
     }, []);
 
-    // const [questionList, setQuestionList] = useState([]);
-    // function getQuestions() {
-    //     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
-    //         .then(resp => resp.json())
-    //         .then(data => {
-    //             setQuestionList(data)
-    //         })
-    //         .catch(err => console.log(err))
-    // }
-    // useEffect(() => {
-    //     getQuestions()
-    // }, []);
-
     return (
         <>
             <Header />
@@ -153,7 +141,7 @@ function Syllabus({ course }) {
                 <Link to="/addchapter">
                     <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
-                <Link to="/enroll">
+                <Link to={`/enroll/${courseId}`}>
                     <span className="btn enroll-btn" style={enroll_btn_style}>Enroll Student</span>
                 </Link>
                 {/* <CourseHeader /> */}
@@ -161,38 +149,15 @@ function Syllabus({ course }) {
                 {chapterList.map((chapter) =>
                 (
                     <ol key={chapter.id}>
-                        <Link to={`/syllabus/${courseId}/chapters/1/questions/`} className="route-link">
-                        {/* <Link to={routeTo} className="route-link"> */}
+                        <Link to={`/syllabus/${courseId}/chapters/${chapter.id}/questions/`} className="route-link">
                             <li className="chapter-list" style={listStyle}>
                                 <div className="chapters">{chapter.id}. {chapter.title}
-                                    {/* <img src={arrowIcon} style={iconStyle}></img> */}
                                 </div>
                                 <div className="chapter-description" style={textStyle}>
                                     {chapter.description}
                                 </div>
-                                {/* {questionList.map((question) =>
-                                (
-                                    <ul key={chapter.id}>
-                                        <div className="questionList">
-                                            <li>
-                                                <div className="questions" style={questionStyle}>
-                                                    <img src={arrowIcon} style={iconStyleSmall}></img>
-                                                    <span style={textStyle}>{question.id}. {question.title}</span>
-                                                </div>
-                                                {
-                                                    <Link to={`/syllabus/${chapter.id}/questionsolve/${question.id}`}>
-                                                        <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
-                                                    </Link>
-                                                    // <Link to='/questionSolve/{question.id}'>
-                                                    //     <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
-                                                    // </Link>
-                                                }
-                                            </li>
-                                        </div>
-                                    </ul>
-                                ))} */}
                             </li>
-                            </Link>
+                        </Link>
                     </ol>
                 ))}
             </div>

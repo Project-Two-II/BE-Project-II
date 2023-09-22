@@ -29,7 +29,7 @@ const QuestionDetails = ({ question }) => {
         <button onClick={handleAddTest}>Add Test</button>
         <button onClick={handleEditQuestions}>Edit</button>
       </div>
-      <p>{selectedQuestion}this is description of question</p> {/* Show selected question description */}
+      <p>{selectedQuestion}this is description of question</p>
       {showCreateTest && (
         <CreateTest />
       )}

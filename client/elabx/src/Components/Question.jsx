@@ -3,12 +3,18 @@ import '../App.css';
 import { Link } from 'react-router-dom'
 import Markdown from './markdown.jsx'
 
-function Question({courseId, questionId}) {
-  console.log("QuestionID: " + questionId )
+import { useParams} from 'react-router-dom'
+
+
+function Question() {
+    const param = useParams();
+    const courseId = param.subId;
+    const chapterId = param.chapterId;
+    const questionId = param.questionId;
   return (
     <div className="question">
-        <Markdown courseId = {courseId} questionId = {questionId}/>
-       <Link to={`/Syllabus/${courseId}/chapters/1`}>
+        <Markdown courseId = {courseId} chapterId = {chapterId} questionId = {questionId}/>
+       <Link to={`/Syllabus/${courseId}`}>
         <button className=" btn backBtn">back</button>
        </Link>
     </div>

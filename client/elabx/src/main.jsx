@@ -67,7 +67,7 @@ const router = createBrowserRouter([
     element: <Syllabus />
   },
   {
-    path: "/syllabus/:id/chapters/:id/questions",
+    path: "/syllabus/:subId/chapters/:chapterId/questions",
     element: <Questions />
   },
   {
@@ -75,8 +75,7 @@ const router = createBrowserRouter([
     element: <Home />
   },
   {
-    path: "/:courseId/1/questionsolve/:questionId",
-    // path: "/:courseId/questionsolve/:questionId",
+    path: "/syllabus/:subId/chapters/:chapterId/questionsolve/:questionId",
     element: <QuestionSolve />
   },
 
@@ -141,7 +140,7 @@ const router = createBrowserRouter([
     element:<QuestionDetails/>
   },
   {
-    path:"/enroll",
+    path:"/enroll/:courseId",
     element:<Enroll />
   },
   
