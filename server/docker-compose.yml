@@ -36,6 +36,9 @@ services:
       db:
         condition: service_healthy
 
+    volumes:
+      - .:/app  # Mount the current directory to /app inside the container
+
     command:
       - sh
       - -c
