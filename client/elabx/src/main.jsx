@@ -32,9 +32,6 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
 
-import StudentEnrollment from './Components/StudentEnrollment'
-import TeacherEnrollment from './Components/TeacherEnrollment'
-// import QuestionTestDetails from './Components/QuestionTestDetails'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
@@ -135,22 +132,17 @@ const router = createBrowserRouter([
     path: "/addcourse",
     element: <AddCourse />
   },
-  {
-    path: "/addquestion",
-    element: <AddQuestion />
-  },
+  // {
+  //   path: "/addquestion",
+  //   element: <AddQuestion />
+  // },
   {
     path:"/QuestionDetails",
     element:<QuestionDetails/>
   },
   {
-    path:"/enroll/:courseId",
+    path:"/syllabus/:courseId/enroll/",
     element:<Enroll />
-  },
-
-  {
-    path:"/teacherenrollment",
-    element:<TeacherEnrollment/>
   },
   // {
   //   path:"/questiontestdetails",
@@ -163,11 +155,7 @@ const router = createBrowserRouter([
   {
     path :'/studentprogress',
     element:<StudentProgress/>
-    },
-
-
-
->>>>>>> dee1aae (progress added)
+    }
 ]);
 
 

@@ -126,7 +126,7 @@ function Syllabus({ course }) {
                 <Link to={`/syllabus/${courseId}/addchapter`}>
                     <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
-                <Link to={`/enroll/${courseId}`}>
+                <Link to={`/syllabus/${courseId}/enroll/`}>
                     <span className="btn enroll-btn" style={enroll_btn_style}>Enroll Student</span>
                 </Link>
                 {/* <CourseHeader /> */}
