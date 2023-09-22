@@ -46,6 +46,7 @@ function Markdown({courseId, questionId}) {
     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${courseId}/questions/${questionId}/`, fetchOption)
       .then(resp => resp.json())
       .then(data => {
+        console.log(data.description)
         setDescription(data.description)
       })
       .catch(err => console.log(err))

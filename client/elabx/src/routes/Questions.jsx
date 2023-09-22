@@ -40,8 +40,8 @@ const solveBtnStyle = {
 
 function Questions() {
     const param = useParams();
-    const courseId = param.id;
-    console.log("courseId:" + courseId)
+    const courseId = param.subId;
+    const chapterId = param.chapterId
     const token = useSelector((state) => state.token);
     const fetchOption = {
         method: "GET",
@@ -53,15 +53,13 @@ function Questions() {
 
     const [questionList, setQuestionList] = useState([]);
     function getQuestions() {
-        // fetch(`http://localhost:8000/api/subjects/1/chapters/1/questions/`, fetchOption)
-            fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/1/questions/`, fetchOption)
+            fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`, fetchOption)
             .then(resp => resp.json())
             .then(data => {
                 setQuestionList(data)
             })
             .catch(err => console.log(err))
     }
-    console.log(questionList)
     useEffect(() => {
         getQuestions()
     }, []);
@@ -84,7 +82,7 @@ function Questions() {
                                 <div className="questions">{question.id}. {question.title}</div>
                                 <div className="question-description" style={textStyle}>{question.description}</div>
                                 <div>
-                                    <Link to={`/{courseId}/questionSolve/{question.id}`}>
+                                    <Link to={`/syllabus/${courseId}/chapters/${chapterId}/questionSolve/${question.id}`}>
                                         <button className="statusBtn" style={solveBtnStyle}>Solve this</button>
                                     </Link>
                                 </div>
