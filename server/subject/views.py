@@ -427,7 +427,7 @@ class SubjectDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, subject_id, *args, **kwargs):
+    def delete(self, request, subject_id, *args, **kwargs):
         subject = self.get_object(subject_id)
         if not subject:
             return Response(
@@ -435,4 +435,6 @@ class SubjectDetailApiView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         subject.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(data={
+            "detail": "Subject deleted successfully."
+        }, status=status.HTTP_204_NO_CONTENT)
