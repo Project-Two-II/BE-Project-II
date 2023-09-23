@@ -9,7 +9,7 @@ const errMessageStyle = {
   color: "red"
 }
 const okMessageStyle = {
-  color: "gree  n"
+  color: "green"
 }
 
 const Register = () => {
@@ -134,12 +134,12 @@ const Register = () => {
           </div>
           
           <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-  <p style={{ marginRight: '2px' }}>Role:</p>
-  <select>
-    <option value="student">Student</option>
-    <option value="teacher">Teacher</option>
-  </select>
-</div>
+          <p style={{ marginRight: '2px' }}>Role:</p>
+         <select onChange={handleRoleChange}>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          </select>
+        </div>
 
           <button className="SubmitButton" type="submit" onClick={handleFormSubmission}>Register</button>
         </Form>

@@ -78,7 +78,7 @@ body {
   color:#fff;
 }
 
-.container {
+.my-container {
   display: flex;
   border: 1px solid #ccc;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

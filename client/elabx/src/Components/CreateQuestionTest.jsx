@@ -20,7 +20,7 @@ const CreateQuestionTest = () => {
   };
 
   return (
-    <div className="container">
+    <div className="my-container">
   <div className="left-column" style={{ fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" }}>
         <h2>Add Question</h2>
         <div className="input-group">

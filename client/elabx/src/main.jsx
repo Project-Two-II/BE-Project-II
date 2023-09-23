@@ -17,6 +17,7 @@ import Teacher from './routes/teacher'
 import Logout from './routes/logout'
 import AddCourse from './routes/addcourse'
 import AddQuestion from './routes/addquestion'
+import CreateQuestion from './Components/CreateQuestion'
 import Enroll from './routes/enroll'
 
 import Dashboard from './Components/Dashboard/dashboard'
@@ -32,9 +33,9 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
-import Delete from './Components/DeleteDialog.jsx'
-import SubmissionReview from './Components/SubmissionReview'
 
+import SubmissionReview from './Components/SubmissionReview'
+import Delete from './Components/delete.jsx'
 
 import CreateQuestionTest from './Components/CreateQuestionTest'
 import ViewProgress from './Components/ViewProgress'
@@ -54,7 +55,6 @@ import {
 import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
-import DeleteDialog from './Components/DeleteDialog.jsx'
 
 const router = createBrowserRouter([
   {
@@ -192,11 +192,28 @@ const router = createBrowserRouter([
         element: <ViewQuestion/>
       },
       
+      {
+        path: "courses/:subId/chapters/add/",
+        element: <CreateChapter />
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/add/",
+        element: <CreateQuestion/>
+      },
+      {
+        path: "courses/:subId/delete/",
+        element: <Delete type={"Course"}/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/delete/",
+        element: <Delete type={"Chapter"}/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/question/:questionId/delete/",
+        element: <Delete type={"Question"}/>
+      },
+
     ],
-  },
-  {
-    path:"deletedialog/",
-    element :<DeleteDialog/>
   },
   {
     path:"submissionreview/",
