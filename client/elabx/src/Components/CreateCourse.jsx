@@ -75,7 +75,6 @@ const CreateCourse = () => {
 
   navigate("/dashboard/")
   }
->>>>>>> cf71e86 (direct to dashboard after adding course)
 
   return (
 
