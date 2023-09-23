@@ -50,7 +50,7 @@ const sideStyle = {
   paddingTop : "10px"
 }
 
-function Header() {
+function Header({SearchBar}) {
   const token = useSelector((state) => state.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,9 +63,6 @@ function Header() {
   
   const handleLogout = () => {
     setShowDropdown(false);
-
-    
-
     const fetchOption = {
         method: "POST",
         headers: {
@@ -100,9 +97,9 @@ function Header() {
         <img src={elabx_logo} height={80} width={80}/>
       </span>
       <div style={sideStyle}>
-      <span style={searchbar_style}>
+      {SearchBar && <span style={searchbar_style}>
         <input type="text" placeholder="Search" />
-      </span>
+      </span>}
       <div className="profile-icon">
         <img
           className="Profile-logo"

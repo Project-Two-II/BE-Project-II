@@ -16,9 +16,10 @@ import Profile from './routes/profile'
 import Teacher from './routes/teacher'
 import Logout from './routes/logout'
 import AddCourse from './routes/addcourse'
-import AddChapter from './routes/addchapter'
 import AddQuestion from './routes/addquestion'
 import Enroll from './routes/enroll'
+
+import Dashboard from './Components/Dashboard/dashboard'
 
 import CreateChapter from './Components/CreateChapter.jsx'
 // import CreateCourse from './Components/CreateCourse.jsx'
@@ -35,6 +36,8 @@ import QuestionDetails from './Components/QuestionDetails.jsx'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
+import ViewChapter from './Components/Dashboard/viewChapter'
+
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 import "slick-carousel/slick/slick.css";
@@ -44,6 +47,9 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import ViewCourse from './Components/Dashboard/viewCourse'
+import CreateCourse from './Components/CreateCourse'
+import ViewQuestion from './Components/Dashboard/viewQuestion'
 
 const router = createBrowserRouter([
   {
@@ -155,7 +161,30 @@ const router = createBrowserRouter([
   {
     path :'/studentprogress',
     element:<StudentProgress/>
-    }
+  },
+  {
+    path :'/dashboard',
+    element:<Dashboard/>,
+    children: [
+      {
+        path: "courses/",
+        element: <ViewCourse/>,
+      },
+      {
+        path: "createCourse/",
+        element: <CreateCourse/>
+      },
+      {
+        path: "courses/:subId/chapters/",
+        element: <ViewChapter/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/",
+        element: <ViewQuestion/>
+      },
+
+    ],
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

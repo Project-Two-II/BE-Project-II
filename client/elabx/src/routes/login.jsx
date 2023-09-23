@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Form, Link} from 'react-router-dom';
 import loginimg from "../media/reg.png";
 
@@ -16,11 +16,8 @@ const errMessageStyle = {
 
 const Login = () => {
    const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-   const isLoggedIn = useSelector((state) => state.isLoggedIn)
-   if(isLoggedIn) navigate("/home")
-
-  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,14 +67,13 @@ const Login = () => {
         } else{
           const isLoggedIn = true
           dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role, refreshToken: data.tokens.refresh}))
-          navigate("/home")
+          if (data.role == 1) navigate("/dashboard")
+          else if (data.role == 0) navigate("/home")
         }
       })
       .catch(err => console.log(err))
   };
-
-
-
+ 
   return (
     <div className="BoxContainer">
         <div className="FormJumbotron">
