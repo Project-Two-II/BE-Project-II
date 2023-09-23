@@ -71,7 +71,6 @@ const CreateCourse = () => {
     setMessage(data.detail);
   })
   .catch(err => console.log(err))
-  navigate("/home")
   }
 
   return (
