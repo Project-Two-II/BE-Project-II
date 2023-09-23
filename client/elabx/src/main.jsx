@@ -17,6 +17,7 @@ import Teacher from './routes/teacher'
 import Logout from './routes/logout'
 import AddCourse from './routes/addcourse'
 import AddQuestion from './routes/addquestion'
+import CreateQuestion from './Components/CreateQuestion'
 import Enroll from './routes/enroll'
 
 import Dashboard from './Components/Dashboard/dashboard'
@@ -191,6 +192,15 @@ const router = createBrowserRouter([
         element: <ViewQuestion/>
       },
       
+      {
+        path: "courses/:subId/chapters/add/",
+        element: <CreateChapter />
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/add/",
+        element: <CreateQuestion/>
+      },
+
     ],
   },
   {

@@ -17,6 +17,15 @@ const iconStyle = {
   color: "black"
 }
 
+const btnStyle = {
+    float: "right",
+    padding: "15px",
+    backgroundColor: "green",
+    color: "white",
+    marginBottom: "5px",
+    border: "none"
+}
+
 const ViewChapter = () => {
 
   const param = useParams();
@@ -55,7 +64,9 @@ const ViewChapter = () => {
     fetchCourses();
   }, []);
   return(
-    <Table bordered>
+    <>
+     <Link to={`add`} style={btnStyle}>Create New Chapter</Link>
+      <Table bordered>
         <thead>
           <tr>
             <th>#</th>
@@ -80,6 +91,8 @@ const ViewChapter = () => {
             
         </tbody>
       </Table>
+    </>
+    
   )
 }
 
