@@ -35,7 +35,10 @@ import QuestionDetails from './Components/QuestionDetails.jsx'
 import UpdateCourse from './Components/Dashboard/updateCourse'
 import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
+import Delete from './Components/DeleteDialog.jsx'
 
+
+import CreateQuestionTest from './Components/CreateQuestionTest'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
@@ -54,6 +57,7 @@ import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
 import CreateQuestion from './Components/CreateQuestion'
+import DeleteDialog from './Components/DeleteDialog.jsx'
 
 const router = createBrowserRouter([
   {
@@ -159,6 +163,10 @@ const router = createBrowserRouter([
   //   element:<QuestionTestDetails/>
   // }.
   {
+    path:"/createquestiontest",
+    element:<CreateQuestionTest/>
+  },
+  {
   path :'/viewprogress',
   element:<ViewProgress/>
   },
@@ -198,9 +206,13 @@ const router = createBrowserRouter([
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/",
         element: <UpdateQuestion/>
       }
-
     ],
-  }
+  },
+  {
+    path:"deletedialog/",
+    element :<DeleteDialog/>
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
