@@ -17,7 +17,7 @@ class ReviewAccessPermission(BasePermission):
             if request.method == "GET":
                 return True
             else:
-                return request.user.is_teacher
+                return request.user.is_teacher()
 
 
 class ResultAccessPermission(ReviewAccessPermission):
@@ -39,4 +39,4 @@ class SubmissionAccessPermission(BasePermission):
             if request.method == "GET":
                 return True
             elif request.method == "POST":
-                return request.user.is_student
+                return request.user.is_student()
