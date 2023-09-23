@@ -33,6 +33,7 @@ import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
 import Delete from './Components/DeleteDialog.jsx'
+import SubmissionReview from './Components/SubmissionReview'
 
 
 import CreateQuestionTest from './Components/CreateQuestionTest'
@@ -196,6 +197,10 @@ const router = createBrowserRouter([
   {
     path:"deletedialog/",
     element :<DeleteDialog/>
+  },
+  {
+    path:"submissionreview/",
+    element :<SubmissionReview/>
   },
 
 ]);
