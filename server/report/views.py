@@ -11,14 +11,14 @@ from subject.models import Subject, SubjectGroup, User
 from userauth.permissions import IsVerified
 
 from .utils import ProgressGenerator
-from .permissions import StudentListInASubjectAccessPermission
+from .permissions import StudentListInASubjectAccessPermission, StudentReportOfAQuestionAccessPermission
 
 
-class StudentReportInASubjectAPIView(APIView):
+class StudentReportOfAQuestionAPIView(APIView):
     """
     API view to generate student report in a particular subject
     """
-    __student_report = {}
+    permission_classes = (IsAuthenticated, IsVerified, StudentReportOfAQuestionAccessPermission)
 
     @staticmethod
     def get_question(subject_id, chapter_id, question_id):
@@ -32,8 +32,8 @@ class StudentReportInASubjectAPIView(APIView):
         group = get_object_or_404(SubjectGroup, subject=subject.id)
         return group.users.filter(email=user.email).exists()
 
-    def get(self, request, subject_id, chapter_id, question_id, user_id, *args, **kwargs):
-        user = get_object_or_404(User, id=user_id)
+    def get(self, request, subject_id, chapter_id, question_id, student_id, *args, **kwargs):
+        user = get_object_or_404(User, id=student_id)
         if not self.user_in_subject(subject_id, user):
             return Response(data={
                 "detail": "This student is not in the subject."
@@ -41,9 +41,9 @@ class StudentReportInASubjectAPIView(APIView):
         else:
             question = self.get_question(subject_id, chapter_id, question_id)
             progress_generator = ProgressGenerator
-            q, s, m, r = progress_generator.get_question_report(user_id, question)
+            question_report = progress_generator.get_question_report(user, question)
             return Response(data={
-                "detail": "user_found",
+                json.dumps(question_report),
             }, status=status.HTTP_200_OK)
 
 

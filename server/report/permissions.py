@@ -17,3 +17,7 @@ class StudentListInASubjectAccessPermission(BasePermission):
                 return request.user.is_teacher()
             else:
                 return False
+
+
+class StudentReportOfAQuestionAccessPermission(StudentListInASubjectAccessPermission):
+    pass
