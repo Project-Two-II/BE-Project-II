@@ -1,7 +1,12 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import { useSelector } from 'react-redux';
+import './Create.css';
 
 const Delete = ({type}) => {
+    const token = useSelector((state) => state.token)
+
     let param = useParams();
     let courseId = param.subId;
     const fetchOption = {
@@ -16,26 +21,38 @@ const Delete = ({type}) => {
     if (type == "Question"){
         let chapterId = param.chapterId;
         let questionId = param.questionId;
-        reqURL = `/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`
+        reqURL = `http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`
     }
     else if (type == "Chapter"){
-    reqURL = `/api/subjects/${courseId}/chapters/${chapterId}/`
+    reqURL = `http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/`
     }
-    else if (type == "Question"){
-    reqURL = `/api/subjects/${courseId}/`
+    else if (type == "Course"){
+    reqURL = `http://localhost:8000/api/subjects/${courseId}/`
     }
 
     const del = () => {
-    fetch(reqURL, fetchOption)
-    .then((resp) => {return resp.json()})
-        .then(data => {
-            console.log(data)
-        })
+     fetch(reqURL, fetchOption)
+     .then((resp) => {return resp.json()})
+     .then(data => {
+        console.log(data)
+     })
     .catch( err => console.log(err))
     }
     useEffect(del, [])
   return(
-    <h1></h1>
+    <div className="delete-dialog-overlay">
+      <div className="delete-dialog">
+        <div className="delete-dialog-content">
+          <p>Are you sure you want to delete this item?</p>
+          <div className="button-container">
+            <button onClick={del}>Yes</button>
+            <Link>No</Link>
+          </div>
+        </div>
+      </div>
+    </div>
   )    
 }
+
+export default Delete;
 

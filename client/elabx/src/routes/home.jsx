@@ -6,7 +6,7 @@ import HomePage from '../Components/HomePage/homepage'
 function Home() {
   return (
     <>
-      <Header />
+      <Header SearchBar={true}/>
       <HomePage />
       <Footer />
     </>
