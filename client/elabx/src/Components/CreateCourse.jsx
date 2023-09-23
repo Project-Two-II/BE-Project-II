@@ -63,16 +63,19 @@ const CreateCourse = () => {
     e.preventDefault();
     setMessage(' ');
 
-      fetch("http://localhost:8000/api/subjects/", fetchOption)
-        .then((resp) => {
-          return resp.json()
-        })
-        .then((data) => {
-          console.log(data);
-          setMessage(data.detail);
-        })
-        .catch(err => console.log(err))
-    }
+   fetch("http://localhost:8000/api/subjects/", fetchOption)
+   .then((resp) => {
+    return resp.json()
+  })
+  .then((data) => {
+    console.log(data);
+    setMessage(data.detail);
+  })
+  .catch(err => console.log(err))
+
+  navigate("/dashboard/")
+  }
+>>>>>>> cf71e86 (direct to dashboard after adding course)
 
   return (
 
