@@ -32,6 +32,9 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
+import UpdateCourse from './Components/Dashboard/updateCourse'
+import UpdateChapter from './Components/Dashboard/updateChapter'
+import UpdateQuestion from './Components/Dashboard/updateQuestion'
 
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
@@ -50,6 +53,7 @@ import {
 import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
+import CreateQuestion from './Components/CreateQuestion'
 
 const router = createBrowserRouter([
   {
@@ -182,6 +186,18 @@ const router = createBrowserRouter([
         path: "courses/:subId/chapters/:chapterId/questions/",
         element: <ViewQuestion/>
       },
+      {
+        path: "courses/:subId/update/",
+        element: <UpdateCourse/>
+      },
+      {
+        path : "courses/:subId/chapters/:chapterId/update/",
+        element: <UpdateChapter/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/",
+        element: <UpdateQuestion/>
+      }
 
     ],
   }

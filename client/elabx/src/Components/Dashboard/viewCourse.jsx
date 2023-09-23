@@ -21,7 +21,6 @@ const ViewCourse = () => {
   const token = useSelector((state) => state.token);
   const [course, setCourse] = useState([]);
 
-
   const fetchOption = {
     method: "GET",
     headers: {
@@ -29,7 +28,6 @@ const ViewCourse = () => {
       "Authorization": "Bearer " +  token
     }
   }
-
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -43,7 +41,7 @@ const ViewCourse = () => {
         const data = await response.json();
         console.log(data)
         setCourse(data);
-        console.log(course)
+        // console.log(course)
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -51,6 +49,7 @@ const ViewCourse = () => {
 
     fetchCourses();
   }, []);
+
   return(
     <Table bordered>
         <thead>
@@ -69,7 +68,9 @@ const ViewCourse = () => {
                  <td>{c.code_no}</td>
                  <td>{c.title}</td>
                  <td>
-                   <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link> <Link><BiSolidPencil style={iconStyle}/></Link> <Link ><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
+                   <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
+                   <Link ><AiFillDelete style={iconStyle}/></Link> 
                  </td>
                  </tr>
               ))

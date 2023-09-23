@@ -73,7 +73,9 @@ const ViewQuestion = () => {
                  <td>{c.title}</td>
                  <td>{c.description}</td>
                  <td>
-                   <Link to={`${c.id}/questions/`}><AiFillEye style={iconStyle}/></Link><Link><BiSolidPencil style={iconStyle}/></Link><Link><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/questions/`}><AiFillEye style={iconStyle}/></Link>
+                   <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
+                   <Link><AiFillDelete style={iconStyle}/></Link> 
                  </td>
                  </tr>
               ))
