@@ -131,8 +131,7 @@ function Header({SearchBar}) {
         )}
       </div>
       </div>
-      
-    </header>
+       </header>
   );
 }
 

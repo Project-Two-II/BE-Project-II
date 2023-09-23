@@ -32,6 +32,7 @@ import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ChapterDetails from './Components/ChapterDetails.jsx'
 import QuestionDetails from './Components/QuestionDetails.jsx'
+import Delete from './Components/DeleteDialog.jsx'
 
 
 import CreateQuestionTest from './Components/CreateQuestionTest'
@@ -52,6 +53,7 @@ import {
 import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
+import DeleteDialog from './Components/DeleteDialog.jsx'
 
 const router = createBrowserRouter([
   {
@@ -188,9 +190,14 @@ const router = createBrowserRouter([
         path: "courses/:subId/chapters/:chapterId/questions/",
         element: <ViewQuestion/>
       },
-
+      
     ],
-  }
+  },
+  {
+    path:"deletedialog/",
+    element :<DeleteDialog/>
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
