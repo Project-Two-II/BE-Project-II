@@ -123,12 +123,12 @@ function Syllabus({ course }) {
             <Header />
             <div className="main">
                 {/* <CourseHeader state={location.title}/> */} 
-                <Link to={`/syllabus/${courseId}/addchapter`}>
+                {/* <Link to={`/syllabus/${courseId}/addchapter`}>
                     <span className="btn create-btn" style={create_btn_style}>Add Chapter</span>
                 </Link>
                 <Link to={`/syllabus/${courseId}/enroll/`}>
                     <span className="btn enroll-btn" style={enroll_btn_style}>Enroll Student</span>
-                </Link>
+                </Link> */}
                 {/* <CourseHeader /> */}
                 <div><span style={headerStyle}>{courseTitle}</span></div>
                 {chapterList.map((chapter) =>

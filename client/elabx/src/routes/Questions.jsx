@@ -51,6 +51,22 @@ function Questions() {
         },
     }
     
+    const [chapter, setChapter] = useState([]);
+    function getChapter(){
+        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/`, fetchOption)
+            .then(resp => resp.json())
+            .then(data => {
+                setChapter(data)
+            })
+            .catch(err => console.log(err))
+            console.log(chapter.title)
+    }
+    useEffect(() => {
+        getChapter()
+    }, []);
+
+    // const courseTitle = chapter.courseTitle
+
     const [questionList, setQuestionList] = useState([]);
     function getQuestions() {
             fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`, fetchOption)
@@ -67,13 +83,13 @@ function Questions() {
         <>
             <Header />
             <div className="main">
-                <div>
+                {/* <div>
                     <Link to={`/syllabus/${courseId}/chapters/${chapterId}/addquestion/`}>
                         <span className="btn create-btn" style={create_btn_style}>Add Question</span>
                     </Link>
-                </div>
+                </div> */}
                 <div style={headerStyle}>
-                    <span>course</span>
+                    <span>{chapter.title}</span>
                 </div>
                 <div>
                     {questionList.map((question) => (
