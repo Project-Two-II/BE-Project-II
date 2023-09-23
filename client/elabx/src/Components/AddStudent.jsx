@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import './header.jsx'
 
 import './Create.css';
 

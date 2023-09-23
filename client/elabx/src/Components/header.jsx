@@ -13,22 +13,10 @@ import elabx_logo from '../media/logo-nobg.png'
 const header_style = {
   backgroundColor: "#1c305c",
   width: "100%",
-  height: "12vh",
-  // position: "absolute",
-  color: "white"
+  color: "white",
+  display: "flex",
+  justifyContent: "space-around"
 }
-const elabx_style = {
-  fontSize: "2rem",
-  marginLeft: "100px",
-  position: "relative",
-  top: "15px"
-};
-
-// const icon_style = {
-//   position: "absolute",
-//   right: "-50px",
-//   top: "7px"
-// }
 
 const logo_style = {
   display: "inline-block",
@@ -43,7 +31,7 @@ const searchbar_style = {
 const dropdown_style = {
   backgroundColor: "black",
   width: "120px",
-  padding: "0px",
+  padding: "0",
   zIndex: "999",
   display: "block",
   borderRadius: "5px",

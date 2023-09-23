@@ -78,7 +78,7 @@ body {
   color:#fff;
 }
 
-.container {
+.my-container {
   display: flex;
   border: 1px solid #ccc;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -164,12 +164,54 @@ p {
 }
 .button-container {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-end; 
   margin-top: 20px;
 }
+/* Style for the CQuestionList component */
 
-  
-   
+/* Center the questions and set a max width */
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Style for each question item */
+li {
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Style for the button to show/hide question details */
+button {
+  background-color: #3C3D47;;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+
+input[type="number"] {
+  width: 50px;
+  padding: 5px;
+}
+
+
+
+/* Style for the "Submit Review" button */
+button[type="submit"] {
+  background-color: rgb(28, 48, 92);
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+
+ 
     
 
 

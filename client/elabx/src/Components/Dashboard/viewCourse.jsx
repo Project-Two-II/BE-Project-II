@@ -9,6 +9,7 @@ import {BiSolidPencil} from 'react-icons/bi'
 
 import { Link } from 'react-router-dom';
 
+
 const iconStyle = {
   cursor: "pointer",
   height: "20px",
@@ -82,6 +83,7 @@ const ViewCourse = () => {
                    <Link ><AiFillDelete style={iconStyle}/></Link> 
                    <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
                    <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
+                   <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link> <Link><BiSolidPencil style={iconStyle}/></Link> <Link to={`${c.id}/delete/`}><AiFillDelete  style={iconStyle}/></Link> 
                  </td>
                  </tr>
               ))

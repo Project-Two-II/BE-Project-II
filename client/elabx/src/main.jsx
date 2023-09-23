@@ -39,6 +39,8 @@ import UpdateQuestion from './Components/Dashboard/updateQuestion'
 import Delete from './Components/DeleteDialog.jsx'
 import AddStudent from './Components/AddStudent'
 
+import SubmissionReview from './Components/SubmissionReview'
+import Delete from './Components/delete.jsx'
 
 import CreateQuestionTest from './Components/CreateQuestionTest'
 import ViewProgress from './Components/ViewProgress'
@@ -59,7 +61,7 @@ import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
 // import CreateQuestion from './Components/CreateQuestion'
-import DeleteDialog from './Components/DeleteDialog.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -229,12 +231,24 @@ const router = createBrowserRouter([
         path: "courses/:subId/chapters/:chapterId/questions/add/",
         element: <CreateQuestion/>
       },
+      {
+        path: "courses/:subId/delete/",
+        element: <Delete type={"Course"}/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/delete/",
+        element: <Delete type={"Chapter"}/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/question/:questionId/delete/",
+        element: <Delete type={"Question"}/>
+      },
 
     ],
   },
   {
-    path:"deletedialog/",
-    element :<DeleteDialog/>
+    path:"submissionreview/",
+    element :<SubmissionReview/>
   },
 
 ]);
