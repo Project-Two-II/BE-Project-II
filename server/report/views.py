@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -66,4 +68,4 @@ class StudentListInASubjectAPIView(APIView):
             data["email"] = f"{user.email}"
             data["progress"] = progress_generator.get_my_progress(user, subject=subject)
             self.__subject_report.append(data)
-        return Response(self.__subject_report, status=status.HTTP_200_OK)
+        return Response(json.dumps(self.__subject_report), status=status.HTTP_200_OK)
