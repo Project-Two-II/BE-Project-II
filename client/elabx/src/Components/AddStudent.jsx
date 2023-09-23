@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 import './Create.css';
 
-const AddStudent = ({courseId}) => {
+const AddStudent = () => {
+
+  const params = useParams()
+  const courseId = params.subId;
 
   const navigate = useNavigate();
 
@@ -33,7 +36,6 @@ const AddStudent = ({courseId}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(`Course ID: ${courseId} Student: ${email}`);
     setMessage('');
 
     fetch(`http://localhost:8000/api/subjects/${courseId}/group/`,fetchOption)
@@ -50,10 +52,6 @@ const AddStudent = ({courseId}) => {
   return (
     <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
-        {/* <div className="inputGroup">
-          <label>Course ID</label>
-          <input name="courseId" value={courseId} onChange={handleCourseChange} required />
-        </div> */}
         <div className="inputGroup">
           <label>Student Email:</label>
           <input name="studentEmail" id="studentEmail" value={student} onChange={handleStudentChange} required />

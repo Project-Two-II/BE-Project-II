@@ -15,6 +15,15 @@ const iconStyle = {
   width: "40px",
   color: "black"
 }
+const btnStyle = {
+  float: "right",
+  padding: "10px",
+  backgroundColor: "green",
+  color: "white",
+  margin: "5px",
+  border: "none",
+  borderRadius: "8px"
+}
 
 const ViewCourse = () => {
 
@@ -39,7 +48,7 @@ const ViewCourse = () => {
           throw new Error("Network response was not ok.");
         }
         const data = await response.json();
-        console.log(data)
+        console.log(typeof(data))
         setCourse(data);
         // console.log(course)
       } catch (error) {
@@ -71,6 +80,8 @@ const ViewCourse = () => {
                    <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
                    <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
                    <Link ><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
+                   <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
                  </td>
                  </tr>
               ))

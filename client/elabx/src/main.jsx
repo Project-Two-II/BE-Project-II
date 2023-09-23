@@ -17,6 +17,7 @@ import Teacher from './routes/teacher'
 import Logout from './routes/logout'
 import AddCourse from './routes/addcourse'
 import AddQuestion from './routes/addquestion'
+import CreateQuestion from './Components/CreateQuestion'
 import Enroll from './routes/enroll'
 
 import Dashboard from './Components/Dashboard/dashboard'
@@ -36,6 +37,7 @@ import UpdateCourse from './Components/Dashboard/updateCourse'
 import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
 import Delete from './Components/DeleteDialog.jsx'
+import AddStudent from './Components/AddStudent'
 
 
 import CreateQuestionTest from './Components/CreateQuestionTest'
@@ -56,7 +58,7 @@ import {
 import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
-import CreateQuestion from './Components/CreateQuestion'
+// import CreateQuestion from './Components/CreateQuestion'
 import DeleteDialog from './Components/DeleteDialog.jsx'
 
 const router = createBrowserRouter([
@@ -170,10 +172,10 @@ const router = createBrowserRouter([
   path :'/viewprogress',
   element:<ViewProgress/>
   },
-  {
-    path :'/studentprogress',
-    element:<StudentProgress/>
-  },
+  // {
+  //   path :'/studentprogress',
+  //   element:<StudentProgress/>
+  // },
   {
     path :'/dashboard',
     element:<Dashboard/>,
@@ -205,7 +207,29 @@ const router = createBrowserRouter([
       {
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/",
         element: <UpdateQuestion/>
-      }
+      },
+      
+      {
+        path: "courses/:subId/chapters/add/",
+        element: <CreateChapter />
+      },
+      {
+        path: "courses/:subId/addstudent/",
+        element: <AddStudent />
+      },
+      {
+        path: "courses/:subId/viewstudent/",
+        element: <StudentProgress />
+      },
+      {
+        path: "courses/:subId/viewstudent/:studentId/chapters/",
+        element: <ViewProgress />
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/add/",
+        element: <CreateQuestion/>
+      },
+
     ],
   },
   {

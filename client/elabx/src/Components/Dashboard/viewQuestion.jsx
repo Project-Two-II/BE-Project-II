@@ -16,6 +16,16 @@ const iconStyle = {
   color: "black"
 }
 
+const btnStyle = {
+    float: "right",
+    padding: "15px",
+    backgroundColor: "green",
+    color: "white",
+    marginBottom: "5px",
+    border: "none",
+    borderRadius: "8px"
+}
+
 const ViewQuestion = () => {
 
   const param = useParams();  
@@ -56,7 +66,9 @@ const ViewQuestion = () => {
     fetchCourses();
   }, []);
   return(
-    <Table bordered>
+    <>
+    <Link style={btnStyle} to={`add`}>Add New Question</Link>
+     <Table bordered>
         <thead>
           <tr>
             <th>#</th>
@@ -83,6 +95,8 @@ const ViewQuestion = () => {
             
         </tbody>
       </Table>
+    </>
+    
   )
 }
 
