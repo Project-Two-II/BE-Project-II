@@ -162,11 +162,18 @@ class TestApiView(APIView):
     """
     permission_classes = (IsAuthenticated, IsVerified, TestAccessPermission)
 
-    def get_object(self, subject_id, chapter_id, question_id):
+    def get_question(self, subject_id, chapter_id, question_id):
         try:
             subject = get_object_or_404(Subject, id=subject_id)
             chapter = get_object_or_404(subject.chapters, id=chapter_id)
             question = get_object_or_404(chapter.questions, id=question_id)
+            return question
+        except Question.DoesNotExist:
+            return None
+
+    def get_object(self, subject_id, chapter_id, question_id):
+        try:
+            question = self.get_question(subject_id, chapter_id, question_id)
             return question.test
         except Test.DoesNotExist:
             return None
@@ -183,8 +190,10 @@ class TestApiView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
-        question = self.get_object(subject_id, chapter_id, question_id)
-        serializer = TestSerializer(data=request.data)
+        question = self.get_question(subject_id, chapter_id, question_id)
+        payload = request.data.copy()
+        payload["question"] = question.id
+        serializer = TestSerializer(data=payload)
         if serializer.is_valid():
             test = serializer.save()
             question.test = test
@@ -193,7 +202,7 @@ class TestApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
-        test = self.get_object(subject_id, chapter_id, question_id)
+        test = self.get_question(subject_id, chapter_id, question_id)
         if not test:
             return Response(
                 {"detail": "Test of the given question does not exist."},
