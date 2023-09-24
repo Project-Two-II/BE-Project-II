@@ -62,39 +62,38 @@ const ViewCourse = () => {
 
   return(
     <Table bordered>
-            {
-              course.length > 0 ? course.map((c, index) => (
-            <>
-             <thead>
-          <tr>
-            <th>#</th>
-            <th>Course Code</th>
-            <th>Title</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-            
-                <tr key={index}>
-                <th scope="row">{index + 1}</th>
-                 <td>{c.code_no}</td>
-                 <td>{c.title}</td>
-                 <td>
-                   <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
-                   <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
-                   <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
-                   <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
-                   <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
-                 </td>
-                 </tr>
-            
-            </tbody>
-            </>
-         
-          )) : "No Courses Here Yet!"
-         
-        }
-      </Table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Course Code</th>
+      <th>Title</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    {course.length > 0 ? (
+      course.map((c, index) => (
+        <tr key={index}>
+          <th scope="row">{index + 1}</th>
+          <td>{c.code_no}</td>
+          <td>{c.title}</td>
+          <td>
+            <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
+            <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
+            <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
+            <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
+            <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="4">No Courses Here Yet!</td>
+      </tr>
+    )}
+  </tbody>
+</Table>
+
   )
 }
 

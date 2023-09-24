@@ -47,6 +47,7 @@ import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
 import ViewChapter from './Components/Dashboard/viewChapter'
+import TeacherHome from './Components/Dashboard/teacherhome';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -182,6 +183,10 @@ const router = createBrowserRouter([
     path :'/dashboard',
     element:<Dashboard/>,
     children: [
+      {
+        path: "home/",
+        element: <TeacherHome/>,
+      },
       {
         path: "courses/",
         element: <ViewCourse/>,

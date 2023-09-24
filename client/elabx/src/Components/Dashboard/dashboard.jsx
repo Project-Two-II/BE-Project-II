@@ -22,7 +22,6 @@ const Dashboard = () => {
       <div className="main-body">
         <div id="sidebar">
           <h1>ELabX Dashboard</h1>
-          <div></div>
           <nav>
             <ul>
               <li>
@@ -34,25 +33,10 @@ const Dashboard = () => {
             </ul>
           </nav>
         </div>
+        
         <div id="detail">
-        <div className="total-card-container">
-          <TotalCard title="Total Subjects" count={10} type={"subject"} />
-  <TotalCard title="Total Students" count={100} type ={"student"} />
-</div>
-          <div className="all-courses-section">
-    <h2>All Courses</h2>
-    <div className="course-cards-container"> <CourseCard imageSrc={courseImg2} />
-          <CourseCard imageSrc={courseImg3} />
-          <CourseCard imageSrc={courseImg4} />
-          <CourseCard imageSrc={courseImg5} />
-          <CourseCard imageSrc={courseImg6} />
-          <CourseCard imageSrc={courseImg7} />
-          <CourseCard imageSrc={courseImg8} />
-          <CourseCard imageSrc={courseImg9} /></div>
-         
-        </div>
-        </div>
         <Outlet />
+        </div>
       </div>
     </>
   );
