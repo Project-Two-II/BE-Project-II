@@ -1,10 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from subject.models import Chapter, Question
+from subject.models import Chapter, Question, Subject
 from userauth.permissions import IsVerified
 from .permissions import (
     ReviewAccessPermission,
@@ -25,28 +26,19 @@ class SubmissionAPIView(APIView):
     """
     permission_classes = (IsAuthenticated, IsVerified, SubmissionAccessPermission)
 
-    def get(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
-        chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
-        question = Question.objects.get(id=question_id, chapter=chapter.id)
-        submissions = Submission.objects.get(question=question.id)
-        serializer = SubmissionSerializer(submissions, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
     def post(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
         data = request.data.copy()
         # Validate and check if the question exists,
         # if yes assign this submission to this question by requested user
-        try:
-            chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
-            question = Question.objects.get(id=question_id, chapter=chapter.id)
-        except Chapter.DoesNotExist or Question.DoesNotExist:
-            return Response({"detail": "Invalid Subject, Chapter or Question"}, status=status.HTTP_400_BAD_REQUEST)
+        subject = get_object_or_404(Subject, id=subject_id)
+        chapter = get_object_or_404(subject.chapters, id=chapter_id)
+        question = get_object_or_404(chapter.questions, id=question_id)
 
         # assign question and user
         data["question"] = question.id
         data["submitted_by"] = request.user.id
 
-        serializer = SubmissionSerializer(data=data, partial=True)
+        serializer = SubmissionSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
