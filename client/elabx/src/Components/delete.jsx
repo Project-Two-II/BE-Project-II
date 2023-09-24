@@ -42,20 +42,23 @@ const Delete = ({type}) => {
      .then((resp) => {return resp.json()})
      .then(data => {
         console.log(data)
+        navigate(-1)
+
      })
     .catch( err => console.log(err))
-    //  navigate("/dashboard/courses/")
+    }
+
+    const goBack = () => {
+      navigate(-1)
     }
   return(
     <div className="delete-dialog-overlay">
       <div className="delete-dialog">
         <div className="delete-dialog-content">
-          <p>Are you sure you want to delete this item?</p>
+          <p>Are you sure you want to delete this {type}?</p>
           <div className="button-container">
             <button onClick={del}>Yes</button>
-            {type === "Course" ? <Link to={`/dashboard/courses/`}>No</Link> : ''}
-            {type === "Chapter" ? <Link to={`/dashboard/courses/${courseId}/chapters/`}>No</Link> : ''}
-            {type === "Question" ? <Link to={`/dashboard/courses/{courseId}/chapters/${chapterId}/`}>No</Link> : ''}
+            <button onClick={goBack}>No</button>
 
           </div>
         </div>

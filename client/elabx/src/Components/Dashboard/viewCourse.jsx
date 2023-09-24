@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 
@@ -58,7 +57,7 @@ const ViewCourse = () => {
     };
 
     fetchCourses();
-  }, []);
+  }, [course.length]);
 
   return(
     <Table bordered>

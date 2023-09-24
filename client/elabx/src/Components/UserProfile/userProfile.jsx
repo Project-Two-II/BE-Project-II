@@ -1,7 +1,7 @@
 import './userprofile.css'
 import userlogo from '../../media/people.svg';
 import { Link} from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import CourseList from '../CourseList.jsx';
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -27,12 +27,11 @@ const spanStyle = {
 
 function UserProfile({ prop }) {
     // console.log(prop)
-    const navigate = useNavigate();
     const [profile, setProfile] = useState([])
     const token = useSelector((state) => state.token);
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     if (!isLoggedIn)
-        navigate('/login')
+        return <Navigate to={'/login'}/>
     console.log(token)
     const fetchOption = {
         method: "GET",

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Form, Link } from 'react-router-dom'
 import loginimg from "../media/login.png";
 
+import { Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import '../login.css'
 
 
@@ -13,6 +16,16 @@ const okMessageStyle = {
 }
 
 const Register = () => {
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const userRole  = useSelector((state) => state.role);
+
+  if (isLoggedIn){
+    if(iserRole == 1) return <Navigate to={'/dashboard/home'}/>
+    if (userRole == 0) return <Navigate to={'/home'}/>
+  } 
+
+
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

@@ -27,15 +27,9 @@ function HomePage() {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state) => state.isLoggedIn)
   const isTeacher = useSelector((state)=> state.role)
-  // console.log(isTeacher)
   const token = useSelector((state) => state.token);
   return (
     <div className="main">
-      {/* {isTeacher && (
-      <Link to="/addcourse">
-        <span className="btn create-btn" style={btn_style}>Create Course</span>
-      </Link>
-      )} */}
       {isLoggedIn ? (
         <div className="home-container">
           <div className="headingStyle" style={headingStyle}>My Courses</div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {Form, Link} from 'react-router-dom';
+import {Form, Link, useNavigate} from 'react-router-dom';
 import loginimg from "../media/reg.png";
 
 
 import { useDispatch, useSelector } from 'react-redux'
  import { setCred } from '../features/info'
 
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import '../login.css'
 
 const errMessageStyle = {
@@ -15,10 +15,13 @@ const errMessageStyle = {
 
 
 const Login = () => {
-   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const role  = useSelector((state) => state.role);
+
+
   const dispatch = useDispatch();
 
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errMessage, setErrMessage] = useState('');
@@ -65,14 +68,27 @@ const Login = () => {
         if(hasError){
           setErrMessage(data.detail)
         } else{
-          const isLoggedIn = true
-          dispatch(setCred({isLoggedIn: isLoggedIn, token: data.tokens.access, role: data.role, refreshToken: data.tokens.refresh}))
-          if (data.role == 1) navigate("/dashboard")
-          else if (data.role == 0) navigate("/home")
+          dispatch(setCred({isLoggedIn: true, token: data.tokens.access, role: data.role, refreshToken: data.tokens.refresh}))
+          
         }
       })
       .catch(err => console.log(err))
+      if (role == 1) return <Navigate to={"/dashboard/home"}/>
+      if (role == 0) return <Navigate to={"/home"}/>
   };
+
+    // Check isLoggedIn and role here and redirect accordingly
+  useEffect(() => {
+    if (isLoggedIn) {
+      if (role === 1) {
+        // Redirect to the teacher dashboard
+        navigate("/dashboard/home")
+      } else if (role === 0) {
+        // Redirect to the home page
+        navigate("/dashboard/home")
+      }
+    }
+  }, [isLoggedIn, role]);
  
   return (
     <div className="BoxContainer">
