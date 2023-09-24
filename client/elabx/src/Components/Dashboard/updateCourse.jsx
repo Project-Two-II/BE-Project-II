@@ -54,7 +54,7 @@ const UpdateCourse = () => {
   }
 
   const handleSubjectChange = (e) => {
-    e.target.value = courseSubject
+    // e.target.value = courseSubject
     setCourseSubject(e.target.value);
   }
 

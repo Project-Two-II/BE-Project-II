@@ -32,7 +32,7 @@ function StudentProgressTable() {
         })
         .then((data) => {
           const newdata = JSON.parse(data)
-          console.log(typeof(newdata));
+          console.log(newdata);
           setStudents(newdata);
         })
     };
