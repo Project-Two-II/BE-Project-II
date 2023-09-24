@@ -86,7 +86,7 @@ const ViewChapter = () => {
                  <td>
                    <Link to={`${c.id}/questions/`}><AiFillEye style={iconStyle}/></Link>
                    <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
-                   <Link><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
                  </td>
                  </tr>
               ))
