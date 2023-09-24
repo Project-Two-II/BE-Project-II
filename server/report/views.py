@@ -10,8 +10,32 @@ from rest_framework.generics import get_object_or_404
 from subject.models import Subject, SubjectGroup, User
 from userauth.permissions import IsVerified
 
-from .utils import ProgressGenerator
-from .permissions import StudentListInASubjectAccessPermission, StudentReportOfAQuestionAccessPermission
+from .utils import ProgressGenerator, StatsGenerator
+from .permissions import (
+    StudentListInASubjectAccessPermission,
+    StudentReportOfAQuestionAccessPermission,
+    MySubjectStatsAccessPermission
+)
+
+
+class MySubjectsStatsAPIView(APIView):
+    """
+    It provides stats related to a teacher subjects
+    """
+    permission_classes = (IsAuthenticated, IsVerified, MySubjectStatsAccessPermission)
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        _my_subject_stats = dict()
+        stats_generator = StatsGenerator
+        _total_subjects = stats_generator.count_my_subjects(user)
+        _my_subject_stats["total_subjects"] = _total_subjects
+        _total_students = stats_generator.count_my_students(user)
+        _my_subject_stats["total_students"] = _total_students
+        return Response(data={
+            json.dumps(_my_subject_stats)
+        }, status=status.HTTP_200_OK
+        )
 
 
 class StudentReportOfAQuestionAPIView(APIView):
@@ -56,7 +80,7 @@ class StudentListInASubjectAPIView(APIView):
     permission_classes = (IsAuthenticated, IsVerified, StudentListInASubjectAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
-        __subject_report = []
+        _subject_report = []
         subject = get_object_or_404(Subject, id=subject_id)
         group = get_object_or_404(SubjectGroup, subject=subject.id)
 
@@ -68,5 +92,5 @@ class StudentListInASubjectAPIView(APIView):
             data["name"] = f"{user.first_name} {user.last_name}"
             data["email"] = f"{user.email}"
             data["progress"] = progress_generator.get_my_progress(user, subject=subject)
-            __subject_report.append(data)
-        return Response(json.dumps(__subject_report), status=status.HTTP_200_OK)
+            _subject_report.append(data)
+        return Response(json.dumps(_subject_report), status=status.HTTP_200_OK)

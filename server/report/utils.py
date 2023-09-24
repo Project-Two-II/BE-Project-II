@@ -1,7 +1,21 @@
 from rest_framework.generics import get_object_or_404
 
-from subject.models import Chapter, Question
+from subject.models import Chapter, Question, SubjectGroup
 from submission.models import Submission, Result, Review
+
+
+class StatsGenerator:
+    @staticmethod
+    def count_my_subjects(user):
+        return SubjectGroup.objects.filter(users=user).count()
+
+    @staticmethod
+    def count_my_students(user):
+        _users = set()
+        groups = SubjectGroup.objects.filter(users=user)
+        for group in groups:
+            _users.update(group.users.all())
+        return len(_users)
 
 
 class ProgressGenerator:

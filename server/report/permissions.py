@@ -29,3 +29,16 @@ class StudentReportOfAQuestionAccessPermission(BasePermission):
                 return request.user.is_teacher() or request.user.is_student()
             else:
                 return False
+
+
+class MySubjectStatsAccessPermission(BasePermission):
+    """
+        Permission class to view subject statistics
+        """
+
+    def has_permission(self, request, view):
+        if SubjectGroup.objects.filter(users=request.user).exists():
+            if request.method == "GET":
+                return request.user.is_teacher()
+            else:
+                return False
