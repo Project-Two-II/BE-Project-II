@@ -1,89 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import {useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 
 function QuestionList() {
-  const [selectedChapter, setSelectedChapter] = useState(null);
-
-    const param = useParams();
-    const courseId = param.subId;
-    const studentId = param.studentId;
-   
-    const token = useSelector((state) => state.token);
-    const [chapters, setChapters] = useState([]);
-    // const [student, setStudent] = useState({})
-    const [course, setCourse] = useState({})
-  
-  
-    const fetchOption = {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        "Authorization": "Bearer " +  token
-      }
-    }
-
-    /*
-    useEffect(()=>{
-      const fetchStudent= async() => {
-        try{
-          const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/students/${studentId}/`,fetchOption)
-          // console.log(response)
-          if (!response.ok) {
-            throw new Error("Network response was not ok.");
-          }
-          const data = await response.json();
-          // console.log(data)
-          setStudent(data);
-          // console.log(student)
-        } catch (error) {
-          console.error("Error fetching Students:", error);
-        }
-      };
-      fetchStudent();
-    },[])
-    */
-
-    useEffect(()=>{
-      const fetchCourse= async() => {
-        try{
-          const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/`,fetchOption)
-          // console.log(response)
-          if (!response.ok) {
-            throw new Error("Network response was not ok.");
-          }
-          const data = await response.json();
-          // console.log(data)
-          setCourse(data);
-          // console.log(course)
-        } catch (error) {
-          console.error("Error fetching Courses:", error);
-        }
-      };
-      fetchCourse();
-    },[])
-  
-    useEffect(() => {
-      const fetchChapters = async () => {
-        try {
-          console.log("Trying to fetch with", fetchOption)
-          const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption);
-          // console.log(response)
-          if (!response.ok) {
-            throw new Error("Network response was not ok.");
-          }
-          const data = await response.json();
-          // console.log(data)
-          setChapters(data);
-          // console.log(chapters)
-        } catch (error) {
-          console.error("Error fetching Chapters:", error);
-        }
-      };
-  
-      fetchChapters();
-    }, []);
 
   const containerStyle = {
     backgroundColor: '#1E2D3B',
@@ -98,6 +18,7 @@ function QuestionList() {
     gridGap: '10px',
   };
 
+  /*
   const chapterStyle = {
     backgroundColor: '#3F5368',
     padding: '10px',
@@ -106,16 +27,18 @@ function QuestionList() {
     cursor: 'pointer',
     textAlign: 'center',
   };
+  */
 
   const chapterTitleStyle = {
-    fontWeight: 'bold',
     margin: '0',
     padding: '10px',
     backgroundColor: '#5B718B',
     borderRadius: '5px',
     color: 'white',
+    textAlign: 'center'
   };
 
+  /*
   const selectedChapterTitleStyle = {
     backgroundColor: '#4C6080',
   };
@@ -143,29 +66,175 @@ function QuestionList() {
     textAlign: 'center',
     color: 'white',
   };
+  */
+
+  const [selectedChapter, setSelectedChapter] = useState(null);
+
+  const param = useParams();
+  const courseId = param.subId;
+  const studentId = param.studentId;
+
+  const token = useSelector((state) => state.token);
+  const [chapters, setChapters] = useState([]);
+  // const [student, setStudent] = useState({})
+  const [course, setCourse] = useState({})
+  const [questions, setQuestions] = useState([])
+
+
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  }
+
+  /*
+  useEffect(()=>{
+    const fetchStudent= async() => {
+      try{
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/students/${studentId}/`,fetchOption)
+        // console.log(response)
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        // console.log(data)
+        setStudent(data);
+        // console.log(student)
+      } catch (error) {
+        console.error("Error fetching Students:", error);
+      }
+    };
+    fetchStudent();
+  },[])
+  */
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/subjects/${courseId}/`, fetchOption)
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((data) => {
+        console.log(data)
+        setCourse(data)
+      })
+      .catch(err => console.log(err))
+
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((data) => {
+        console.log(data)
+        setChapters(data)
+
+        /*
+        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${data.id}/questions/`)
+        .then((resp) => {
+          return resp.json()
+        })
+        .then((data) => {
+          console.log(data)
+        })
+        */
+
+      })
+      .catch(err => console.log(err))
+
+
+  }, [])
+
+
+
+  /*
+  useEffect(()=>{
+    const fetchCourse= async() => {
+      try{
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/`,fetchOption)
+        // console.log(response)
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        // console.log(data)
+        setCourse(data);
+        // console.log(course)
+      } catch (error) {
+        console.error("Error fetching Courses:", error);
+      }
+    };
+    fetchCourse();
+  },[])
+  */
+
+  /*
+  useEffect(() => {
+    const fetchChapters = async () => {
+      try {
+        console.log("Trying to fetch with", fetchOption)
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption);
+        // console.log(response)
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        // console.log(data)
+        setChapters(data);
+        // console.log(chapters)
+      } catch (error) {
+        console.error("Error fetching Chapters:", error);
+      }
+    };
+ 
+    fetchChapters();
+  }, []);
+
+  useEffect(()=>{
+    const fetchQuestions = async () => {
+      try {
+        console.log("Trying to fetch with", fetchOption)
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${data.id}/questions/`, fetchOption);
+        // console.log(response)
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data1 = await response.json();
+        // console.log(data)
+        setQuestions(data1);
+        // console.log(questions)
+      } catch (error) {
+        console.error("Error fetching Questions:", error);
+      }
+    };
+    fetchQuestions();
+  },[])
+  */
 
   return (
     <div style={containerStyle}>
       <h1><b>Course Id: {course.title}</b></h1>
+      <h6>{course.description}</h6>
       <h3><b>Progress of Student Id: {studentId}</b></h3>
-      <p color="darkgrey">courseCode:CMP240</p>
-      <p color ="darkgrey">This is course Description</p>
+      {/* <p color="darkgrey">courseCode:CMP240</p>
+      <p color ="darkgrey">This is course Description</p> */}
       <h3><b>Chapters</b></h3>
       <div style={chapterContainerStyle}>
         {chapters.map(chapter => (
-          <div
-            key={chapter.id}
-            style={{
-              ...chapterStyle,
-              ...(selectedChapter === chapter.id ? selectedChapterTitleStyle : null),
-            }}
-            onClick={() => setSelectedChapter(selectedChapter === chapter.id ? null : chapter.id)}
-          >
-            <p style={{ ...chapterTitleStyle }}>{chapter.title}</p>
-          </div>
+          <Link className='route-link' to={`${chapter.id}/questions/`}>
+            <div key={chapter.id}
+            // style={{
+            //   ...chapterStyle,
+            //   ...(selectedChapter === chapter.id ? selectedChapterTitleStyle : null),
+            // }}
+            // onClick={() => setSelectedChapter(selectedChapter === chapter.id ? null : chapter.id)}
+            >
+              <p style={chapterTitleStyle}>{chapter.title}</p>
+            </div>
+          </Link>
         ))}
       </div>
-      {selectedChapter !== null && (
+      {/* {selectedChapter !== null && (
         <table style={questionTableStyle}>
           <thead>
             <tr style={questionTableRowStyle}>
@@ -184,7 +253,7 @@ function QuestionList() {
             ))}
           </tbody>
         </table>
-      )}
+      )} */}
     </div>
   );
 }

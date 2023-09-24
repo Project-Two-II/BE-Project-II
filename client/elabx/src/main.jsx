@@ -228,6 +228,10 @@ const router = createBrowserRouter([
         element: <ViewProgress />
       },
       {
+        path: "courses/:subId/viewstudent/:studentId/chapters/:chapterId/questions/",
+        element: <SubmissionReview />
+      },
+      {
         path: "courses/:subId/chapters/:chapterId/questions/add/",
         element: <CreateQuestion/>
       },
@@ -240,16 +244,16 @@ const router = createBrowserRouter([
         element: <Delete type={"Chapter"}/>
       },
       {
-        path: "courses/:subId/chapters/:chapterId/question/:questionId/delete/",
+        path: "courses/:subId/chapters/:chapterId/questions/:questionId/delete/",
         element: <Delete type={"Question"}/>
       },
 
     ],
   },
-  {
-    path:"submissionreview/",
-    element :<SubmissionReview/>
-  },
+  // {
+  //   path:"submissionreview/",
+  //   element :<SubmissionReview/>
+  // },
 
 ]);
 

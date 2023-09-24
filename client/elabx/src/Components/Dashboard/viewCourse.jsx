@@ -62,18 +62,21 @@ const ViewCourse = () => {
 
   return(
     <Table bordered>
-            {
-              course.length > 0 ? course.map((c, index) => (
             <>
              <thead>
+               {course.length > 0 ? 
           <tr>
             <th>#</th>
             <th>Course Code</th>
             <th>Title</th>
             <th>Remarks</th>
           </tr>
+        
+       : "No Courses Here Yet!" }
         </thead>
-        <tbody>
+
+            {course.length > 0 ? course.map((c, index) => (
+            <tbody>
             
                 <tr key={index}>
                 <th scope="row">{index + 1}</th>
@@ -88,12 +91,10 @@ const ViewCourse = () => {
                  </td>
                  </tr>
             
-            </tbody>
-            </>
-         
-          )) : "No Courses Here Yet!"
-         
-        }
+            </tbody>)):("No courses")
+                 
+                }
+                </>
       </Table>
   )
 }

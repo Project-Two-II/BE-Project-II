@@ -33,7 +33,7 @@ const UpdateQuestion = () => {
   const [message, setMessage] = useState('')
 
 
-  const updateOption = {
+  const updateQuestionOption = {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
@@ -43,7 +43,17 @@ const UpdateQuestion = () => {
       "title": questionTitle,
       "description": questionDescription,
       "boilerplate": boilerplateText,
-      "testDescription": testDescription
+    })
+  }
+
+  const updateTestOption = {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({
+      "source_code": testDescription
     })
   }
 
@@ -87,18 +97,17 @@ const UpdateQuestion = () => {
         }
         const data = await response.json();
         // setQuestionId(data);
-        console.log(data)
+        // console.log(data)
         setQuestionTitle(data.title)
         setQuestionDescription(data.description)
         setBoilerplateText(data.boilerplate)
-        setTestDescription(data.testDescription)
-
+        
       } catch (error) {
         console.error("Error fetching data: ", error)
       }
     };
     fetchQuestion();
-
+    
     const fetchTest  = async() => {
       try{
         const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/test/`, fetchOption);
@@ -107,7 +116,8 @@ const UpdateQuestion = () => {
           throw new Error("Network response was not ok.");
         }
         const data = await response.json();
-        console.log(data)
+        setTestDescription(data.source_code)
+        // console.log(data)
       } catch(error){
         console.log("Error fetching data: ", error)
       }
@@ -123,8 +133,18 @@ const UpdateQuestion = () => {
     console.log('Question Description:', questionDescription);
     console.log('Boilerplate Code:', boilerplateText);
     console.log('Test Description:', testDescription);
-    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, updateOption)
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, updateQuestionOption)
       .then((resp) => {
+        return resp.json()
+      })
+      .then((data) => {
+        console.log(data);
+        setMessage(data.detail);
+      })
+      .catch(err => console.log(err))
+
+      fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/test/`,updateTestOption)
+      .then((resp)=>{
         return resp.json()
       })
       .then((data) => {

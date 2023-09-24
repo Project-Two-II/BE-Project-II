@@ -26,6 +26,7 @@ const spanStyle = {
 }
 
 function UserProfile({ prop }) {
+    // console.log(prop)
     const navigate = useNavigate();
     const [profile, setProfile] = useState([])
     const token = useSelector((state) => state.token);
@@ -49,6 +50,7 @@ function UserProfile({ prop }) {
                     throw new Error("Couldn't fetch user details")
                 }
                 const data = await response.json()
+                console.log(data)
                 setProfile(data)
             }
             catch(error){
@@ -100,7 +102,7 @@ function UserProfile({ prop }) {
 
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <Link to='/editprofile'>
+                                        <Link to={`/editprofile`}>
                                             <button className="btn btn-info">Edit</button>
                                         </Link>
                                     </div>
@@ -110,12 +112,7 @@ function UserProfile({ prop }) {
                     </div>
                 </div>
             </div>
-            <div style={headerStyle} className="courseHeader">
-                <span style={spanStyle}>Your Courses</span>
-            </div>
-            <div className="course-container">
-                <CourseList />
-            </div>
+            
         </>
 
     )

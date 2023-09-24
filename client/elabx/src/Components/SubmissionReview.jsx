@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Header from './header';
 import Footer from './Footer/Footer';
 import './Create.css'
+import { useEffect } from 'react';
 
+
+
+/*
 const questions = [
   {
     id: 1,
@@ -22,8 +28,38 @@ const questions = [
   },
   // Add more questions here
 ];
+*/
 
 function CQuestionList() {
+
+  const param = useParams();
+  const courseId = param.subId;
+  const studentId = param.studentId;
+  const chapterId = param.chapterId;
+  // console.log(chapterId);
+
+  const token = useSelector((state) => state.token);
+  const [questions, setQuestions] = useState([]);
+
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  }
+
+  useEffect(() =>{
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`,fetchOption)
+    .then((resp) => {
+      return resp.json()
+    })
+    .then(data => {
+      console.log(data)
+      setQuestions(data)
+    })
+  },[])
+
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [marksInput, setMarksInput] = useState(0);
   const [reviewInput, setReviewInput] = useState('');
@@ -70,14 +106,11 @@ function CQuestionList() {
   return (
     <div>
       <div>
-        <Header />
-      </div>
-      <div>
         <ul>
           {questions.map((q) => (
             <li key={q.id}>
               <button onClick={() => handleQuestionClick(q.id)}>
-                {q.question}
+                {q.title}
               </button>
               {selectedQuestion === q.id && (
                 <div>
@@ -116,7 +149,6 @@ function CQuestionList() {
           ))}
         </ul>
       </div>
-      <Footer />
     </div>
   );
 }

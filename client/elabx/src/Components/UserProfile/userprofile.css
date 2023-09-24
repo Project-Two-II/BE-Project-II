@@ -6,9 +6,11 @@
     align-items: center;
     gap: 30px;
 }
-.row{
+
+.row {
     align-items: center;
 }
+
 .user-card {
     display: flex;
     flex-direction: column;
@@ -25,15 +27,21 @@
     margin: auto;
     padding: 10px;
 }
+.user-name{
+    max-width: fit-content;
+    white-space: wrap;
+}
 
 .user-card-1 {
     padding: 10px;
     max-height: 100% !important;
     flex-grow: 1;
 }
-.input{
+
+.input {
     border: 1px solid gray;
 }
-p{
+
+p {
     color: gray;
 }
