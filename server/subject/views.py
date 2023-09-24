@@ -202,7 +202,7 @@ class TestApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
-        test = self.get_question(subject_id, chapter_id, question_id)
+        test = self.get_object(subject_id, chapter_id, question_id)
         if not test:
             return Response(
                 {"detail": "Test of the given question does not exist."},
