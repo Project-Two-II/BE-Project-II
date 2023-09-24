@@ -17,10 +17,9 @@ code {
 }
 
 .main {
-  position: static;
-  background-color: #1f2334;
-  /* background-color: #ffffff; */
-    display: "flex";
+   position: static;
+   background-color: #1f2334;
+   display: "flex";
     flex-direction: "column";
     color: white;
     padding: 15px;
@@ -28,7 +27,7 @@ code {
 }
 
 .App .courseHeader {
-  height: "18vh";
+  /* height: "18vh"; */
   position: "static";
   background-color: "#1F2334"
 
@@ -72,14 +71,14 @@ code {
 .question .backBtn {
   background-color: #0038FF;
   color: white;
-  position: relative;
+  /* position: relative;
   bottom: -10px;
-  left: 30px;
+  left: 30px; */
 }
 
 .editorButtons {
   background-color: #1f1e1f;
-  width: 100%;
+  /* width: 100%; */
   position: static;
   padding: 15px;
 }
@@ -97,37 +96,29 @@ code {
   cursor: pointer;
 }
 
-.submitBtn {
-  position: relative;
-  left: 100px;
-  background-color: #00FF38;
-}
-
-.runBtn {
-  position: relative;
-  left: 500px;
-  background-color: #FFFF00;
+.submitBtn, .runBtn {
+  /* position: relative; */
+  /* left: 100px; */
+  background-color: #3585b3;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
 }
 
 .body .editorSection {
   background-color: #1F2334;
-  width: 60%;
+  /* width: 60%; */
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
   border-left: 5px solid white;
 }
 
-.editorFooter {
-  width: 90%;
-  height: 10vh;
-  padding: 20px;
-  margin: auto;
-  margin-top: 10px;
-  background-color: #1f1e1f;
-  border-radius: 10px;
-  color: white;
-}
+/* .editorFooter {
+  padding: "20px",
+  margin: "auto",
+  background-color: "#1f1e1f",
+  border-radius: "10px",
+  color: "white",
+} */
 
 .footer {
   padding: 0px;
@@ -170,8 +161,8 @@ hr{
 }
 .create-btn{
   color: "white";
-    background-Color: "green";
-    position: "absolute";
-    right: "105px";
-    width: "max-content"
+  background-Color: "green";
+  position: "absolute";
+  right: "105px";
+  width: "max-content"
 }

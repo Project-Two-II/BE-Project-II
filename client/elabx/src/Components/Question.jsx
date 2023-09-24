@@ -13,25 +13,8 @@ function Question() {
     const questionId = param.questionId;
   return (
     <div className="question">
-        <Markdown courseId = {courseId} chapterId = {chapterId} questionId = {questionId}/>
-       <Link to={`/Syllabus/${courseId}`}>
-        <button className=" btn backBtn">back</button>
-       </Link>
+       <Markdown courseId = {courseId} chapterId = {chapterId} questionId = {questionId}/>
     </div>
   )
 }
-// function Question({courseId, questionId, chapterId}) {
-//   console.log("QuestionID: " + questionId )
-//   console.log("ChapterID: " + ChapterId )
-//   console.log("CourseID: " + CourseId )
-//   return (
-//     <div className="question">
-//         <Markdown courseId = {courseId} questionId = {questionId}/>
-//        <Link to={`/Syllabus/${courseId}/chapters/${chapterId}`}>
-//         <button className=" btn backBtn">back</button>
-//        </Link>
-//     </div>
-//   )
-// }
-
-export default Question
+export default Question;

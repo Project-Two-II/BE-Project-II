@@ -2,7 +2,8 @@ import {React, useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import EditorWindow from "@monaco-editor/react";
 
-import WorkerAPI from '../shared_web.js'
+import WorkerAPI from '../shared_web.js';
+import './Editor.css'
 
 
 const initialHeader = "#include <iostream>\n";
@@ -69,21 +70,22 @@ function Editor({defaultLang}) {
 
   return (
     <div className="editorSection">
-            <div className="editorButtons">
-              <button  className=" btn submitBtn" onClick={submissionHandler}>Submit</button>
-              <button onClick = {RunClickHandler} className="btn runBtn">Run</button>
-            </div>
-            <EditorWindow
-              height="50vh"
-              width="100%"
-              defaultLanguage={defaultLang}
-              theme="vs-dark"
-              value = {code}
-              onChange={handleCodeChange}
-            />  
-            <textarea className="editorFooter" id = "output" placeholder='Output'>
-            </textarea>
-          </div>
+        <div className="editorButtons">
+          <button  className="submitBtn" onClick={submissionHandler}>Submit</button>
+          <button onClick = {RunClickHandler} className="runBtn">Run</button>
+        </div>
+
+        <div className="editorMain">
+          <EditorWindow
+            height="100%"
+            defaultLanguage={defaultLang}
+            theme="vs-dark"
+            value = {code}
+            onChange={handleCodeChange}
+          />  
+          {/* <textarea className="editorFooter" id = "output" placeholder='Output'></textarea> */}
+        </div>
+      </div>
   )
 }
 
