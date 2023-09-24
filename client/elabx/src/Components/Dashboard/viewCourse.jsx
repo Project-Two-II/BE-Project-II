@@ -62,7 +62,10 @@ const ViewCourse = () => {
 
   return(
     <Table bordered>
-        <thead>
+            {
+              course.length > 0 ? course.map((c, index) => (
+            <>
+             <thead>
           <tr>
             <th>#</th>
             <th>Course Code</th>
@@ -71,8 +74,7 @@ const ViewCourse = () => {
           </tr>
         </thead>
         <tbody>
-            {
-              course.map((c, index) => (
+            
                 <tr key={index}>
                 <th scope="row">{index + 1}</th>
                  <td>{c.code_no}</td>
@@ -80,16 +82,18 @@ const ViewCourse = () => {
                  <td>
                    <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
                    <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
-                   <Link ><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
                    <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
                    <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
-                   <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link> <Link><BiSolidPencil style={iconStyle}/></Link> <Link to={`${c.id}/delete/`}><AiFillDelete  style={iconStyle}/></Link> 
                  </td>
                  </tr>
-              ))
-            }
             
-        </tbody>
+            </tbody>
+            </>
+         
+          )) : "No Courses Here Yet!"
+         
+        }
       </Table>
   )
 }
