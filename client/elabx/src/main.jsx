@@ -62,6 +62,9 @@ import {
 import ViewCourse from './Components/Dashboard/viewCourse'
 import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
+
+import ChapterDetail from './Components/ChapterDetail.jsx'
+
 // import CreateQuestion from './Components/CreateQuestion'
 
 
@@ -84,13 +87,16 @@ const router = createBrowserRouter([
     element: <Editor />
   },
   {
-    path: "/syllabus/:id",
-    element: <Syllabus />
+    path: "/syllabus/:subId",
+    element: <CourseDetailPage />,
+    children: [
+      {
+        path: "chapters/:chapterId/questions",
+        element: <ChapterDetail />
+      },
+    ]
   },
-  {
-    path: "/syllabus/:subId/chapters/:chapterId/questions",
-    element: <Questions />
-  },
+
   {
     path: "/home",
     element: <Home />

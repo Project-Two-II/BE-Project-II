@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 import { Link, useParams, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import CourseHeader from '../Components/CourseHeader.jsx'
 import Header from '../Components/header'
 import Footer from '../Components/Footer/Footer'
 
@@ -65,20 +64,7 @@ const solveBtnStyle = {
 const lockBtnStyle = {
     backgroundColor: "red"
 }
-const create_btn_style = {
-    color: "white",
-    backgroundColor: "green",
-    position: "absolute",
-    right: "105px",
-    width: "max-content"
-  }
-const enroll_btn_style = {
-    color: "white",
-    backgroundColor: "green",
-    position: "absolute",
-    right: "270px",
-    width: "max-content"
-  }
+
 
   
   function useQuery() {
