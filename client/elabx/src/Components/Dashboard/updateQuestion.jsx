@@ -25,10 +25,11 @@ const UpdateQuestion = () => {
     return
   }
 
-  const [question, setQuestion] = useState('')
+  // const [questionId, setQuestionId] = useState('')
   const [questionTitle, setQuestionTitle] = useState('');
   const [questionDescription, setQuestionDescription] = useState('')
   const [boilerplateText, setBoilerplateText] = useState('');
+  const [testDescription, setTestDescription] = useState('');
   const [message, setMessage] = useState('')
 
 
@@ -39,9 +40,10 @@ const UpdateQuestion = () => {
       "Authorization": "Bearer " + token
     },
     body: JSON.stringify({
-        "title": questionTitle,
-        "description": questionDescription,
-        "boilerplate":boilerplateText
+      "title": questionTitle,
+      "description": questionDescription,
+      "boilerplate": boilerplateText,
+      "testDescription": testDescription
     })
   }
 
@@ -53,91 +55,173 @@ const UpdateQuestion = () => {
     }
   }
 
-  const handleQuestionChange = (e) => {
-    setQuestionTitle(e.target.value);
-  }
+  // const handleQuestionChange = (e) => {
+  //   setQuestionTitle(e.target.value);
+  // }
 
-  const handleDescriptionChange = (e) => {
-    setQuestionDescription(e.target.value)
-  }
+  // const handleDescriptionChange = (e) => {
+  //   setQuestionDescription(e.target.value)
+  // }
 
-  const handleBoilerplateChange = (e) => {
-    setBoilerplateText(e.target.value);
-  }
+  // const handleBoilerplateChange = (e) => {
+  //   setBoilerplateText(e.target.value);
+  // }
+  // const handleAddQuestion = () => {
+
+  //   console.log('Question Title:', questionTitle);
+  //   console.log('Question Description:', questionDescription);
+  //   console.log('Boilerplate Code:', boilerplateText);
+  //   console.log('Test Description:', testDescription);
+
+  // };
 
 
- useEffect(()=>{
-     const fetchChapter = async() => {
+  useEffect(() => {
+    const fetchQuestion = async () => {
 
-         try{
-             const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, fetchOption);
-             console.log(response)
-             if (!response.ok) {
-                 throw new Error("Network response was not ok.");
-                }
-                const data = await response.json();
-                setQuestion(data);
-                // console.log(data)
-                setQuestionTitle(data.title)
-                setQuestionDescription(data.description)
-                setBoilerplateText(data.boilerplate)
-                
-            } catch(error)
-            {
-                console.error("Error fetching data: ", error)
-            }
-        };
-        fetchChapter();
- },[])
+      try {
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, fetchOption);
+        console.log(response)
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        // setQuestionId(data);
+        console.log(data)
+        setQuestionTitle(data.title)
+        setQuestionDescription(data.description)
+        setBoilerplateText(data.boilerplate)
+        setTestDescription(data.testDescription)
 
- const handleSubmission = async(e) => {
+      } catch (error) {
+        console.error("Error fetching data: ", error)
+      }
+    };
+    fetchQuestion();
+
+    const fetchTest  = async() => {
+      try{
+        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/test/`, fetchOption);
+        console.log(response)
+        if(!response.ok){
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        console.log(data)
+      } catch(error){
+        console.log("Error fetching data: ", error)
+      }
+    };
+    fetchTest();
+
+  }, [])
+
+  const handleSubmission = async (e) => {
     e.preventDefault();
     setMessage(' ');
-
-      fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, updateOption)
-        .then((resp) => {
-          return resp.json()
-        })
-        .then((data) => {
-          console.log(data);
-          setMessage(data.detail);
-        })
-        .catch(err => console.log(err))
-    }
+    console.log('Question Title:', questionTitle);
+    console.log('Question Description:', questionDescription);
+    console.log('Boilerplate Code:', boilerplateText);
+    console.log('Test Description:', testDescription);
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, updateOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((data) => {
+        console.log(data);
+        setMessage(data.detail);
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
-    <div className="formContainer">
-      <form className="ipContainer">
-        <div className="inputGroup">
+    <div className="my-container">
+      <div className="left-column" style={{ fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif" }}>
+        <h2>Add Question</h2>
+        <div className="input-group">
+          <label htmlFor="questionTitle">Question Title:</label>
         </div>
-          <div className="inputGroup">
-            <label >Question Title:</label>
-            <input value={questionTitle} onChange={handleQuestionChange} required />
-            <label>Question Description:</label>
-            <div className="questionGroup">
-              <textarea
-                value={questionDescription}
-                onChange={handleDescriptionChange}
-                required
-              />
-            </div>
-          </div>
-      
+        <input
+          type="text"
+          id="questionTitle"
+          value={questionTitle}
+          onChange={(e) => setQuestionTitle(e.target.value)}
+          placeholder="Enter question title"
+          style={{ height: "80px", width: 500, resize: "vertical" }}
+        />
 
-        
-        <div className="inputGroup">
-          <label htmlFor="boilerplateText">Boilerplate Text:</label>
-          <textarea
-            name="boilerplateText"
-            id="boilerplateText"
-            value={boilerplateText}
-            onChange={handleBoilerplateChange}
-            required
-          />
+        <div className="input-group">
+          <label htmlFor="questionDescription">Question Description:</label>
         </div>
-        <button className="btn" type="button" onClick={handleSubmission}>Add</button>
-      </form>
+        <textarea
+          id="questionDescription"
+          value={questionDescription}
+          onChange={(e) => setQuestionDescription(e.target.value)}
+          placeholder="Enter question description"
+        />
+
+        <div className="input-group">
+          <label htmlFor="boilerplate">Boilerplate Code:</label>
+        </div>
+        <textarea
+          id="boilerplate"
+          value={boilerplateText}
+          onChange={(e) => setBoilerplateText(e.target.value)}
+          placeholder="Enter boilerplate code"
+          style={{ height: "200px", resize: "vertical" }}
+        />
+      </div>
+
+      <div className="right-column">
+        <h2>Test</h2>
+        {/* <div className="box"></div> */}
+
+        <div className="input-group">
+          <label htmlFor="testDescription">Test Description:</label>
+        </div>
+        <textarea
+          id="testDescription"
+          value={testDescription}
+          onChange={(e) => setTestDescription(e.target.value)}
+          style={{ height: "300px", width: "400px", resize: "vertical" }}
+        />
+        <button className="add-question-button" onClick={handleSubmission}>
+          Add Question
+        </button>
+      </div>
     </div>
+    // <div className="formContainer">
+    //   <form className="ipContainer">
+    //     <div className="inputGroup">
+    //     </div>
+    //       <div className="inputGroup">
+    //         <label >Question Title:</label>
+    //         <input value={questionTitle} onChange={handleQuestionChange} required />
+    //         <label>Question Description:</label>
+    //         <div className="questionGroup">
+    //           <textarea
+    //             value={questionDescription}
+    //             onChange={handleDescriptionChange}
+    //             required
+    //           />
+    //         </div>
+    //       </div>
+
+
+
+    //     <div className="inputGroup">
+    //       <label htmlFor="boilerplateText">Boilerplate Text:</label>
+    //       <textarea
+    //         name="boilerplateText"
+    //         id="boilerplateText"
+    //         value={boilerplateText}
+    //         onChange={handleBoilerplateChange}
+    //         required
+    //       />
+    //     </div>
+    //     <button className="btn" type="button" onClick={handleSubmission}>Add</button>
+    //   </form>
+    // </div>
   );
 }
 

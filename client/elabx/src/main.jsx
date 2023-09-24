@@ -36,7 +36,7 @@ import QuestionDetails from './Components/QuestionDetails.jsx'
 import UpdateCourse from './Components/Dashboard/updateCourse'
 import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
-import Delete from './Components/DeleteDialog.jsx'
+// import Delete from './Components/DeleteDialog.jsx'
 import AddStudent from './Components/AddStudent'
 
 import SubmissionReview from './Components/SubmissionReview'
