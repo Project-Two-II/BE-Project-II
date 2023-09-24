@@ -32,7 +32,9 @@ class StudentReportOfAQuestionAPIView(APIView):
         group = get_object_or_404(SubjectGroup, subject=subject.id)
         return group.users.filter(email=user.email).exists()
 
-    def get(self, request, subject_id, chapter_id, question_id, student_id, *args, **kwargs):
+    def get(self, request, subject_id, chapter_id, question_id, student_id=None, *args, **kwargs):
+        if request.user.is_student():
+            student_id = request.user.id
         user = get_object_or_404(User, id=student_id)
         if not self.user_in_subject(subject_id, user):
             return Response(data={

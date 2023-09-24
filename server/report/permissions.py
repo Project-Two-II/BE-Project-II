@@ -19,5 +19,13 @@ class StudentListInASubjectAccessPermission(BasePermission):
                 return False
 
 
-class StudentReportOfAQuestionAccessPermission(StudentListInASubjectAccessPermission):
-    pass
+class StudentReportOfAQuestionAccessPermission(BasePermission):
+    def has_permission(self, request, view):
+        subject_id = view.kwargs.get("subject_id")
+        subject = get_object_or_404(Subject, id=subject_id)
+
+        if SubjectGroup.objects.filter(subject=subject, users=request.user).exists():
+            if request.method == "GET":
+                return request.user.is_teacher() or request.user.is_student()
+            else:
+                return False
