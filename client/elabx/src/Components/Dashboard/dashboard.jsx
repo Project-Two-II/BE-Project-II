@@ -3,7 +3,6 @@ import Header from '../header';
 import { Outlet } from 'react-router-dom';
 import './dashboard.css';
 
-// Correct the import filenames with proper case
 import TotalCard from './TotalCard';
 import CourseCard from './CourseCard';
 

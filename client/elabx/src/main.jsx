@@ -37,6 +37,7 @@ import UpdateCourse from './Components/Dashboard/updateCourse'
 import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
 import AddStudent from './Components/AddStudent'
+import CourseDetailPage from './Components/CourseDetailPage'
 
 import SubmissionReview from './Components/SubmissionReview'
 import Delete from './Components/delete.jsx'
@@ -248,6 +249,10 @@ const router = createBrowserRouter([
   {
     path:"submissionreview/",
     element :<SubmissionReview/>
+  },
+  {
+    path:"coursedetailpage/",
+    element :<CourseDetailPage/>
   },
 
 ]);
