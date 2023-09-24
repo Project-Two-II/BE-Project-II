@@ -26,6 +26,7 @@ class ProgressGenerator:
         try:
             submission = Submission.objects.get(question=question, submitted_by__email=user)
             question_report["status"] = 1
+            question_report["submission_id"] = submission.id
             question_report["solution"] = submission.solution
             try:
                 question_report["marks"] = get_object_or_404(Result, submission=submission).marks
@@ -38,6 +39,7 @@ class ProgressGenerator:
         except Exception as e:
             question_report["status"] = 0
             question_report["marks"] = 0
+            question_report["submission_id"] = 0
             question_report["solution"] = ""
             question_report["review"] = ""
             return question_report
