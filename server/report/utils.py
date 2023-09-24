@@ -54,4 +54,4 @@ class ProgressGenerator:
             for question in questions:
                 if Submission.objects.filter(question=question, submitted_by__email=user).exists():
                     submitted_questions += 1
-        return (submitted_questions/total_questions) * 100
+        return (submitted_questions/total_questions) * 100 if total_questions else 0
