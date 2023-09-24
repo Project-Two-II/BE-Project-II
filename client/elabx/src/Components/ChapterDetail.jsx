@@ -22,14 +22,16 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const CourseDetailPage = () => {
-    let  [chapters, setChapters] = useState([]);
+
+const ChapterDetail = () => {
+    let  [question, setQuestion] = useState([]);
     let query = useQuery();
     const param = useParams();
     const courseId = param.subId;
-    const courseTitle = query.get("title");
+    const chapterId = param.chapterId;
     console.log("courseId:" + courseId)
-    console.log("courseTitle:" + courseTitle)
+    console.log("chapterId:" + chapterId)
+
     const token = useSelector((state) => state.token);
     const fetchOption = {
         method: "GET",
@@ -40,43 +42,23 @@ const CourseDetailPage = () => {
     }
 
  useEffect(() => {
-  fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
+  fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`, fetchOption)
   .then(resp => resp.json())
   .then(data => {
-      setChapters(data)
+      setQuestion(data)
       console.log(data)
-      console.log("Fetched sth")
   })
   .catch(err => console.log(err))
  }, [])
-  
+    return(
+        <ul>
+            {question.map((q, index) => (
+                <li key={index + 1}>
+                    <Link to = {`/syllabus/${courseId}/chapters/${chapterId}/questionsolve/${q.id}/`}>{index + 1}. {q.title}</Link>
+                </li>
+            ))}
+        </ul>
+    )
+}
 
-  return (
-    <>
-    <Header SearchBar={false} />
-    <div className="main-body">
-      <div id="sidebar">
-        <h1>Chapter List</h1>
-        <nav>
-          <ul>
-            {
-              chapters.map((chapter, index) => (
-                <li key={index} style={listStyle}>
-                 <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
-              </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
-
-      <div id="detail">
-        <h3 style={titleStyle}>{courseTitle}</h3>
-      <Outlet />
-      </div>
-    </div>
-  </>
-  );
-};
-
-export default CourseDetailPage;
+export default ChapterDetail;
