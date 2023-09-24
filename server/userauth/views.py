@@ -282,11 +282,10 @@ class UserAPIView(APIView):
 
     def put(self, request, *args, **kwargs):
         user = self.get_object()
-        serializer = UserSerializer(data=request.data, partial=True)
+        print(request.data)
+        serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
-            user.first_name = serializer.data["first_name"]
-            user.last_name = serializer.data["last_name"]
-            user.save()
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
