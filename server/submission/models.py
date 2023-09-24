@@ -60,7 +60,7 @@ class Review(models.Model):
     """
     Model for Review. Teacher can review the solution submitted by student.
     """
-    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    submission = models.OneToOneField(Submission, on_delete=models.CASCADE)
     message = models.TextField()
     reviewed_by = models.ForeignKey(User, on_delete=models.CASCADE)
     reviewed_at = models.DateTimeField(auto_now_add=True)

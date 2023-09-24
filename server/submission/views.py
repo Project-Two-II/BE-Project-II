@@ -103,27 +103,33 @@ class ResultAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ReviewListCreateAPIView(APIView):
+class ReviewAPIView(APIView):
     permission_classes = (IsAuthenticated, IsVerified, ReviewAccessPermission)
 
+    def get_submission(self, subject_id, chapter_id, question_id, submission_id):
+        subject = get_object_or_404(Subject, id=subject_id)
+        chapter = get_object_or_404(subject.chapters, id=chapter_id)
+        question = get_object_or_404(chapter.questions, id=question_id)
+        try:
+            submission = Submission.objects.get(question=question.id, id=submission_id)
+            return submission
+        except Submission.DoesNotExist:
+            return Response({"detail": "Submission not found."}, status=status.HTTP_404_NOT_FOUND)
+
     def get(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
-        chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
-        question = Question.objects.get(id=question_id, chapter=chapter.id)
-        submission = Submission.objects.get(question=question.id, id=submission_id)
+        submission = self.get_submission(subject_id, chapter_id, question_id, submission_id)
         review = Review.objects.get(submission=submission.id)
-        serializer = ResultSerializer(review)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if (request.user.is_student() and (submission.submitted_by == request.user)) or request.user.is_teacher():
+            serializer = ReviewSerializer(review)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(
+            data={"detail": "You do not have permission to access it."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     def post(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
         payload = request.data.copy()
-        try:
-            chapter = Chapter.objects.get(id=chapter_id, subject=subject_id)
-            question = Question.objects.get(id=question_id, chapter=chapter.id)
-            submission = Submission.objects.get(id=submission_id, question=question.id)
-        except Submission.DoesNotExist or Question.DoesNotExist or Chapter.DoesNotExist:
-            return Response({"detail": "Invalid Subject or Chapter or Question or Submission"},
-                            status=status.HTTP_400_BAD_REQUEST)
-
+        submission = self.get_submission(subject_id, chapter_id, question_id, submission_id)
         payload["submission"] = submission.id
         payload["reviewed_by"] = self.request.user.id
 
@@ -133,8 +139,21 @@ class ReviewListCreateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def put(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
+        payload = request.data.copy()
+        submission = self.get_submission(subject_id, chapter_id, question_id, submission_id)
+        review = get_object_or_404(Review, submission=submission.id)
+        payload["submission"] = submission.id
+        payload["reviewed_by"] = self.request.user.id
 
-class ReviewRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    permission_classes = (IsAuthenticated, IsVerified, ResultAccessPermission)
+        serializer = ReviewSerializer(review, data=payload)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, subject_id, chapter_id, question_id, submission_id, *args, **kwargs):
+        submission = self.get_submission(subject_id, chapter_id, question_id, submission_id)
+        review = get_object_or_404(Review, submission=submission.id)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
