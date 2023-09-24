@@ -347,7 +347,7 @@ class ChapterDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, subject_id, chapter_id, *args, **kwargs):
+    def delete(self, request, subject_id, chapter_id, *args, **kwargs):
         chapter = self.get_object(subject_id, chapter_id)
         if not chapter:
             return Response(
