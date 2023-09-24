@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import './header.jsx'
+import Header from './header';
+import Footer from './Footer/Footer';
 
 import './Create.css';
 
@@ -51,7 +52,7 @@ const AddStudent = () => {
   }
 
   return (
-    <div className="formContainer">
+      <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
         <div className="inputGroup">
           <label>Student Email:</label>

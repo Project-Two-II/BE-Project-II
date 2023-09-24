@@ -38,6 +38,7 @@ import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
 // import Delete from './Components/DeleteDialog.jsx'
 import AddStudent from './Components/AddStudent'
+import CourseDetailPage from './Components/CourseDetailPage'
 
 import SubmissionReview from './Components/SubmissionReview'
 import Delete from './Components/delete.jsx'
@@ -47,6 +48,7 @@ import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 
 import ViewChapter from './Components/Dashboard/viewChapter'
+import TeacherHome from './Components/Dashboard/teacherhome';
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -183,6 +185,10 @@ const router = createBrowserRouter([
     element:<Dashboard/>,
     children: [
       {
+        path: "home/",
+        element: <TeacherHome/>,
+      },
+      {
         path: "courses/",
         element: <ViewCourse/>,
       },
@@ -254,6 +260,14 @@ const router = createBrowserRouter([
   //   path:"submissionreview/",
   //   element :<SubmissionReview/>
   // },
+  {
+    path:"submissionreview/",
+    element :<SubmissionReview/>
+  },
+  {
+    path:"coursedetailpage/",
+    element :<CourseDetailPage/>
+  },
 
 ]);
 

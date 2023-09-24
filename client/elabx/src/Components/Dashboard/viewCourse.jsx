@@ -86,7 +86,7 @@ const ViewCourse = () => {
                    <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
                    <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
                    <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
-                   <Link to={`${c.id}/addstudent`} style={btnStyle}>Add Student</Link>
+                   <Link to={`${c.id}/addstudent`} style ={btnStyle}>Add Student</Link>
                    <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
                  </td>
                  </tr>

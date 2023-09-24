@@ -1,84 +1,124 @@
 #sidebar{
-    display: flex;
-    flex-direction: column;
-    width: 22rem;
-    background-color: #f7f7f7;
-    border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
+  width: 22rem;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
 }
 #sidebar h1 {
-    font-size: 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 1rem 2rem;
-    border-top: 1px solid #e3e3e3;
-    order: 1;
-    line-height: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1rem 2rem;
+  border-top: 1px solid #e3e3e3;
+  order: 1;
+  line-height: 1;
 }
 #sidebar > div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e3e3e3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e3e3;
 }
 #sidebar nav {
-    flex: 1;
-    overflow: auto;
-    padding-top: 1rem;
-  }
-  
-  #sidebar nav a span {
-    float: right;
-    color: #eeb004;
-  }
-  #sidebar nav a.active span {
-    color: inherit;
-  }
-  #sidebar ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  #sidebar li {
-    margin: 0.25rem 0;
-    padding: 4px;
-  }
-  
-  #sidebar nav a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-  
-    white-space: pre;
-    padding: 0.5rem;
-    border-radius: 8px;
-    color: inherit;
-    text-decoration: none;
-    gap: 1rem;
-  }
-  
-#sidebar nav a:hover {
-  background: #e3e3e3;
+  flex: 1;
+  overflow: auto;
+  padding-top: 1rem;
 }
-  
+
+#sidebar nav a span {
+  float: right;
+  color: #eeb004;
+}
+#sidebar nav a.active span {
+  color: inherit;
+}
+#sidebar ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#sidebar li {
+  margin: 0.25rem 0;
+  padding: 4px;
+}
+
+#sidebar nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+
+  white-space: pre;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  gap: 1rem;
+}
+
+#sidebar nav a:hover {
+background: #e3e3e3;
+}
+
 #sidebar nav a.active {
-  background: hsl(224, 98%, 58%);
-  color: white;
+background: hsl(224, 98%, 58%);
+color: white;
 }
 
 #detail {
-  flex: 1;
-  padding: 2rem 4rem;
-  width: 100%;
+flex: 1;
+padding: 2rem 4rem;
+width: 100%;
 }
 
 .main-body{
-  height: 90vh;
-  display: flex;
-  justify-content: space-around;
+height: 90vh;
+display: flex;
 }
+
+/* dashboard coursecard ko lagi.css */
+
+
+/* .course-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.course-card, .total-card{
+  width: 400px; 
+  margin: 10px; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color:#dcdde6;
+}
+
+.course-cards-container,.total-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; 
+  gap: 10px; 
+}
+
+.total-card p {
+  font-size: 34px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.all-courses-section h2 {
+  font-family: Arial, sans-serif; 
+  font-size: 34px;
+  font-weight: bolder; 
+  color: #333; 
+  text-decoration: underline;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} */

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../Create.css'
 import { useNavigate } from 'react-router-dom';
-
+import Header from '../header';
 const UpdateChapter = () => {
 
   const param = useParams('');
