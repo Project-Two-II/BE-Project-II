@@ -8,12 +8,14 @@
 
 .course-card {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(150, 11, 11, 0.1);
     padding: 10px;
     color: black;
-    max-width:300px;
+    min-width:400px;
     margin:0px;
   }
   
