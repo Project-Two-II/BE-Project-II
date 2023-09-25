@@ -32,18 +32,7 @@ const UpdateCourse = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [message, setMessage] = useState('')
 
-  const updateOption = {
-    method: "PUT",
-    headers: {
-      "Content-type": "application/json",
-      "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({
-      "code_no": courseCode,
-      "title": courseSubject,
-      "description": courseDesc,
-    })
-  }
+  
 
   const fetchOption = {
     method: "GET",
@@ -83,7 +72,6 @@ const UpdateCourse = () => {
                 }
                 const data = await response.json();
                 setCourse(data);
-                // console.log(data)
                 setCourseSubject(data.title)
                 setCourseDesc(data.description)
                 setCourseCode(data.code_no)
@@ -99,6 +87,20 @@ const UpdateCourse = () => {
     e.preventDefault();
     setMessage(' ');
 
+    let formData = new FormData();
+    formData.append("code_no",courseCode)
+    formData.append("title", courseSubject)
+    formData.append("description",courseDesc)
+    formData.append("thumbnail",thumbnail, thumbnail.name)
+
+    const updateOption = {
+      method: "PUT",
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+      body: formData
+    }
+
       fetch(`http://localhost:8000/api/subjects/${courseId}/`, updateOption)
         .then((resp) => {
           return resp.json()
@@ -113,15 +115,14 @@ const UpdateCourse = () => {
   return (
 
     <div className="formContainer">
-      <p>{message}</p>
       <form className="ipContainer">
+      <p>{message}</p>
         <div className="inputGroup">
           <label htmlFor="subject">Course Title:</label>
           <input
             type="text"
             name="subject"
             id="subject"
-            // value={updateDb ? title : { courseSubject }}
             value={courseSubject}
             onChange={handleSubjectChange}
             required
@@ -135,7 +136,6 @@ const UpdateCourse = () => {
             type="text"
             name="courseCode"
             id="courseCode"
-            // value={updateDb ? code : { courseCode }}
             value={courseCode}
             onChange={handleCourseCodeChange}
             required
@@ -148,7 +148,6 @@ const UpdateCourse = () => {
           <textarea
             name="description"
             id="description"
-            // value={updateDb ? desc : { courseDesc }}
             value={courseDesc}
             onChange={handleDescChange}
             required
@@ -169,7 +168,7 @@ const UpdateCourse = () => {
         </div>
 
         <button id="submit" className="btn" type="submit" onClick={handleCourseSubmission}>
-          Create
+          Update
         </button>
       </form>
     </div>

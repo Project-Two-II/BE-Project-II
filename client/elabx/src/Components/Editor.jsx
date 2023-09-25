@@ -92,7 +92,7 @@ function Editor(props) {
             height="100%"
             defaultLanguage={props.props.defaultLang}
             theme="vs-dark"
-            value = {code}
+            value = {props.props.boilerplate}
             onChange={handleCodeChange}
           />  
         </div>

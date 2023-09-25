@@ -26,21 +26,27 @@ const style = {
   gap:"20px"
 };
 
+const cardStyle = {
+  display: "flex",
+  flexDirection: "column"
+}
+
 const CourseCard = ({ course }) => {
   const routeTo = "/syllabus/" + course.id + `?title=${course.title}`;
   const title = course.title;
 
-const dummyImage = 'https://via.placeholder.com/150'; 
   return (
-     <div className="course-card" style={{display:"flex"}}><div>
-    <div> <img src={dummyImage} alt="Course Thumbnail" style={{ maxWidth: '70%',diaplay:"flex" }} /></div>
-     <div className ="card-style" style={{dispaly:"flex"}}> <h2 style={style}>{course.title}</h2>
-     <div><hr className="progressBar" style={progress_bar_style}></hr></div></div>
-     </div> <Link to={routeTo}> 
-       <div>  <h3 style={style}>{course.code_no}</h3></div>
-          </Link>
-         
-            </div>
+     <div className="course-card" style={{display:"flex"}}>
+      <img src={`http://localhost:8000/${course.thumbnail}`} alt="Course Thumbnail" style={{ height : '100px', Width: '200px',display:"flex" }} />
+     <div style={cardStyle}>
+      <h2 style={style}>{course.code_no}</h2>
+      <hr className="progressBar" style={progress_bar_style}></hr>
+      <Link to={routeTo}> 
+       <h3 style={style}>{course.title}</h3>
+      </Link> 
+     </div>
+      
+    </div>
   );
 };
 
