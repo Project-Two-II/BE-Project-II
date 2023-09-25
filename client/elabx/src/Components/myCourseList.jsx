@@ -10,6 +10,7 @@ const course_list_style = {
 
 function MyCourseList({ token }) {
   const [course, setCourse] = useState([]);
+  const myCourses =[]
 
   const fetchOption = {
     method: "GET",
@@ -28,18 +29,23 @@ function MyCourseList({ token }) {
         }
         const data = await response.json();
         setCourse(data);
+        // enrolledCourses.push(course.id)
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
     };
-
+    
     fetchCourses();
+    // course.map(course => (myCourses.push(course.id)))
+    // console.log(myCourses)
   }, [token]);
 
   return (
     <div className='course-list' style={course_list_style}>
+      {/* {course.map((course) =>(myCourses.push(course.id))) } */}
+      {/* {course.map((course) => (myCourses.push(course.id)))} */}
       {course.map((course) => (
-        <CourseCard key={course.id} course={course} />
+        <CourseCard key={course.id} course={course} myCourses={myCourses}/>
       ))}
     </div>
   );

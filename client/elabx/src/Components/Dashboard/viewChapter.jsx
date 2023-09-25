@@ -22,7 +22,7 @@ const btnStyle = {
     padding: "15px",
     backgroundColor: "green",
     color: "white",
-    marginBottom: "5px",
+    margin: "5px",
     border: "none",
     borderRadius: "8px"
 }

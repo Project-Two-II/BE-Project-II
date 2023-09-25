@@ -38,6 +38,8 @@ import UpdateChapter from './Components/Dashboard/updateChapter'
 import UpdateQuestion from './Components/Dashboard/updateQuestion'
 // import Delete from './Components/DeleteDialog.jsx'
 import AddStudent from './Components/AddStudent'
+import SelfEnroll from './Components/SelfEnroll'
+import AddEnrollmentKey from './Components/addEnrollmentKey'
 import CourseDetailPage from './Components/CourseDetailPage'
 
 import SubmissionReview from './Components/SubmissionReview'
@@ -71,8 +73,8 @@ import ChapterDetail from './Components/ChapterDetail.jsx'
 
 import NotFoundPage from './routes/ErrorPage.jsx';
 
-import AuthGuard from '../AuthGuard';
-import TeacherGuard from '../TeacherGuard'
+// import AuthGuard from '../AuthGuard';
+// import TeacherGuard from '../TeacherGuard'
 
 // import CreateQuestion from './Components/CreateQuestion'
 
@@ -94,7 +96,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home/>,
+    element: <Home />,
+  },
+  {
+    // path: "/home"
   },
   {
     path: "/editor",
@@ -116,6 +121,10 @@ const router = createBrowserRouter([
     path: "/syllabus/:subId/chapters/:chapterId/questionsolve/:questionId",
     element: <QuestionSolve />
   },
+  {
+    path: "/syllabus/:courseId/enroll",
+    element: <SelfEnroll />
+  },
 
   // {
   //   path: "syllabus/:subId/addchapter",
@@ -133,70 +142,6 @@ const router = createBrowserRouter([
     path: "/codereview",
     element: <CodeReview />
   },
-  // {
-  //   path: "/teacher",
-  //   element: <Teacher />
-  // },
-  // {
-  //   path: "/syllabus/:subId/chapters/:chapterId/addquestion/",
-  //   element: <AddQuestion />
-  // },
-  // {
-  //   path: "/createtest",
-  //   element: <CreateTest />
-  // },
-  // {
-  //   path: "/logout",
-  //   element: <Logout />
-  // },
-  // {
-  //   path: "/teachercoursedetails",
-  //   element: <TeacherCourseDetails />
-  // },
-  // {
-  //   path: "/errorpage",
-  //   element: <ErrorPage />
-  // },
-  // {
-  //   path: "/ChapterDetails",
-  //   element: <ChapterDetails />
-  // },
-  // {
-  //   path: "/QuestionDetails",
-  //   element: <QuestionDetails />
-  // },
-  // {
-  //   path: "/addcourse",
-  //   element: <AddCourse />
-  // },
-  // {
-  //   path: "/addquestion",
-  //   element: <AddQuestion />
-  // },
-  // {
-  //   path:"/QuestionDetails",
-  //   element:<QuestionDetails/>
-  // },
-  // {
-  //   path:"/syllabus/:courseId/enroll/",
-  //   element:<Enroll />
-  // },
-  // {
-  //   path:"/questiontestdetails",
-  //   element:<QuestionTestDetails/>
-  // }.
-  // {
-  //   path:"/createquestiontest",
-  //   element:<CreateQuestionTest/>
-  // },
-  // {
-  // path :'/viewprogress',
-  // element:<ViewProgress/>
-  // },
-  // {
-  //   path :'/studentprogress',
-  //   element:<StudentProgress/>
-  // },
   {
     path :'/dashboard',
     element:<Dashboard/>,
@@ -243,6 +188,10 @@ const router = createBrowserRouter([
       {
         path: "courses/:subId/addstudent/",
         element: <AddStudent />
+      },
+      {
+        path: "courses/:subId/addenrollmentkey/",
+        element: <AddEnrollmentKey />
       },
       {
         path: "courses/:subId/viewstudent/",

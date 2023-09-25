@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
 
 import './Create.css';
 
-const SelfEnroll = () => {
+const AddEnrollmentKey = () => {
 
   const params = useParams()
   const courseId = params.subId;
@@ -32,7 +32,7 @@ const SelfEnroll = () => {
       "user": student
     })
  }
- */
+*/
 
   const handleKeyChange = (e) => {
     setKey(e.target.value);
@@ -57,21 +57,17 @@ const SelfEnroll = () => {
   }
 
   return (
-      <>
-      <Header />
       <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
         <div className="inputGroup">
-          <label>Enter Enrollment Key</label>
-          <input name="enrollmentKey" value={key} onChange={handleKeyChange} required />
+          <label>Add Key</label>
+          <input name="enrollmentKey" id="enrollmentKey" value={key} onChange={handleKeyChange} required />
         </div>
 
         <button id="submit" className="btn" type="submit">Add</button>
       </form>
     </div>
-    <Footer />
-      </>
   );
 }
 
-export default SelfEnroll;
+export default AddEnrollmentKey;
