@@ -1,61 +1,87 @@
-import React, { useState } from 'react';
-
-const questions = [
-  {
-    id: 1,
-    text: 'What is a variable in programming?',
-    code: 'const variableName = 42;',
-    status: 'Completed',
-    marks: 10,
-    comment: 'Good explanation of variables.',
-  },
-  {
-    id: 2,
-    text: 'Explain the concept of functions.',
-    code: 'function functionName() {\n  // Function code here\n}',
-    status: 'Incomplete',
-    marks: null,
-    comment: 'Please provide more details about functions.',
-  },
-  {
-    id: 3,
-    text: 'How do you declare an array?',
-    code: 'const myArray = [1, 2, 3];',
-    status: 'Completed',
-    marks: 8,
-    comment: 'Correct array declaration.',
-  },
-  // Add more questions, status, marks, and comments as needed
-];
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function QuestionList() {
-  const [selectedCode, setSelectedCode] = useState(null);
-
-  const handleViewCode = (code) => {
-    setSelectedCode(code);
-  };
-
+  
+  
   const tableStyle = {
     borderCollapse: 'collapse',
     width: '80%',
     margin: '20px auto',
     border: '1px solid #ccc',
   };
-
+  
   const thTdStyle = {
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
   };
-
+  
   const headerStyle = {
     backgroundColor: '#f2f2f2',
   };
+  
+  const handleViewCode = (code) => {
+    setSelectedCode(code);
+  };
+  
+  const [selectedCode, setSelectedCode] = useState(null);
+  const param = useParams()
+  const courseId = param.subId
+  const chapterId = param.chapterId
+  const [questions, setQuestions] = useState([])
+  const [chapter, setChapter] = useState([])
+  const token = useSelector((state) => state.token);
+
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    }
+  }
+
+  const handleViewRemarks = (chapterId) => {
+    alert(`Viewing remarks for Chapter ${chapterId}`);
+  };
+
+  useEffect(() => {
+
+    const fetchChapters=() => {
+      fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/`, fetchOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then(data => {
+        setChapter(data)
+        console.log(data)
+      })
+      .catch(err => console.log(err))
+    }
+    fetchChapters();
+
+    const fetchQuestions=() => {
+      fetch(`http://localhost:8000/api/report/subjects/${courseId}/${chapterId}/`, fetchOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then(data => {
+        console.log()
+        // const newdata = JSON.parse(data)
+        // setQuestions(data)
+        // console.log(questions)
+        // console.log(chapters)
+      })
+      .catch(err => console.log(err))
+    }
+    // fetchQuestions();
+  }, [])
 
   return (
     <div>
-      <h2>Chapter 1: Introduction To OOP</h2>
-      <p>the description of the chapter goes here</p>
+      <h2>{chapter.title}</h2>
+      <p>{chapter.description}</p>
       <table style={tableStyle} className="question-table">
         <thead>
           <tr>
@@ -68,7 +94,7 @@ function QuestionList() {
           </tr>
         </thead>
         <tbody>
-          {questions.map((question, index) => (
+          {/* {questions.map((question, index) => (
             <tr key={question.id}>
               <td style={thTdStyle}>{index + 1}</td>
               <td style={thTdStyle}>{question.text}</td>
@@ -89,7 +115,7 @@ function QuestionList() {
                 )}
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>

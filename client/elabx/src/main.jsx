@@ -49,6 +49,7 @@ import Delete from './Components/delete.jsx'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 import ChapterView from './Components/ChapterView'
+import QuestionList from './Components/QuestionView.jsx'
 
 import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
     element: <Editor />
   },
   {
+    path:"/chapterview",
+    element: <ChapterView />
+  },
+  {
     path: "/syllabus/:subId",
     element: <CourseDetailPage />,
     errorElement: <NotFoundPage/>,
@@ -114,6 +119,14 @@ const router = createBrowserRouter([
         path: "chapters/:chapterId/questions",
         element: <ChapterDetail />
       },
+      {
+        path: "viewchapters",
+        element: <ChapterView />
+      },
+      {
+        path: "viewchapters/:chapterId/viewquestions",
+        element: <QuestionList />
+      }
       // {
       //   path: "viewprogress/",
       //   element: <ViewProgress />

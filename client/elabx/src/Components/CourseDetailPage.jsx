@@ -16,6 +16,16 @@ const listStyle = {
   display: "inline-block"
 }
 
+const btnStyle = {
+  float: "right",
+  padding: "15px",
+  backgroundColor: "green",
+  color: "white",
+  margin: "5px",
+  border: "none",
+  borderRadius: "8px"
+}
+
 function useQuery() {
   const { search } = useLocation();
 
@@ -30,12 +40,13 @@ const CourseDetailPage = () => {
   if (role == 1) return <Navigate to={'/dashboard/home'} />
 
   let [chapters, setChapters] = useState([]);
+  let [course, setCourse] = useState([])
   let query = useQuery();
   const param = useParams();
   const courseId = param.subId;
-  const courseTitle = query.get("title");
+  // const courseTitle = query.get("title");
   console.log("courseId:" + courseId)
-  console.log("courseTitle:" + courseTitle)
+  // console.log("courseTitle:" + courseTitle)
   const token = useSelector((state) => state.token);
   const fetchOption = {
     method: "GET",
@@ -46,6 +57,7 @@ const CourseDetailPage = () => {
   }
 
   useEffect(() => {
+
     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
       .then(resp => resp.json())
       .then(data => {
@@ -54,32 +66,47 @@ const CourseDetailPage = () => {
         // console.log("Fetched sth")
       })
       .catch(err => console.log(err))
+
+
+    fetch(`http://localhost:8000/api/subjects/${courseId}/`, fetchOption)
+      .then(resp => resp.json())
+      .then(data => {
+        setCourse(data)
+        console.log(data)
+        // console.log("Fetched sth")
+      })
+      .catch(err => console.log(err))
   }, [])
+
+  // const routeTo = "viewchapters" + `?title=${courseTitle}`;
 
   // const routeTo = "/syllabus/" + course.id + `?title=${course.title}`
   // const route = `chapters/${chapter.id}/questions/`+`?title=${courseTitle}`
 
   return (
     <>
-    <Header SearchBar={false} />
-    <div className="main-body">
-      <div id="sidebar">
-        <h1>Chapter List</h1>
-        <nav>
-          <ul>
-            {
-              chapters.map((chapter, index) => (
-                <li key={index}>
-                 <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
-              </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
+      <Header SearchBar={false} />
+      <div className="main-body">
+        <div id="sidebar">
+          <h1>Chapter List</h1>
+          <Link to={`viewchapters`}>
+            <button style={btnStyle}>View Progress</button>
+          </Link>
+          <nav>
+            <ul>
+              {
+                chapters.map((chapter, index) => (
+                  <li key={index}>
+                    <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
 
         <div id="detail">
-          <h3 style={titleStyle}>{courseTitle}</h3>
+          <h3 style={titleStyle}>{course.title}</h3>
           <Outlet />
         </div>
       </div>
