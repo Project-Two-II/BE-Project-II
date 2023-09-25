@@ -3,11 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
+
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 
 from userauth.models import User
 from userauth.permissions import IsVerified
+
 from .models import Subject, Chapter, Question, Test, SubjectGroup, SubjectEnrollment
 from .permissions import (
     SubjectListAccessPermission,
@@ -373,6 +376,7 @@ class SubjectListApiView(APIView):
     and associated user can send GET request
     """
     permission_classes = (IsAuthenticated, IsVerified, SubjectListAccessPermission)
+    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, *args, **kwargs):
         # If user searching for subject return searched result
