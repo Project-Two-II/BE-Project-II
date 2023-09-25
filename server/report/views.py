@@ -68,6 +68,7 @@ class StudentReportOfAQuestionAPIView(APIView):
             question = self.get_question(subject_id, chapter_id, question_id)
             progress_generator = ProgressGenerator
             question_report = progress_generator.get_question_report(user, question)
+            question_report["role"] = self.request.user.role
             return Response(data={
                 json.dumps(question_report),
             }, status=status.HTTP_200_OK)
