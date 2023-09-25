@@ -37,6 +37,9 @@ const CourseCard = ({ course, myCourses }) => {
           <button>Enroll</button>
         </Link>)
       } */}
+      <Link to={`/syllabus/${course.id}/enroll`}>
+          <button>Enroll</button>
+        </Link>
       <hr className="progressBar" style={progress_bar_style}></hr>
     </div>
   );

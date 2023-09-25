@@ -21,18 +21,17 @@ const AddEnrollmentKey = () => {
   const [key, setKey] = useState('')
   const [message, setMessage] = useState('')
 
-  /*
+  
   const fetchOption = {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " +  token
     },
     body: JSON.stringify({
-      "user": student
+      "key": key
     })
  }
-*/
 
   const handleKeyChange = (e) => {
     setKey(e.target.value);
@@ -43,8 +42,8 @@ const AddEnrollmentKey = () => {
     setMessage('');
     console.log(key)
 
-    /*
-    fetch(`http://localhost:8000/api/subjects/${courseId}/group/`,fetchOption)
+    
+    fetch(`http://127.0.0.1:8000/api/subjects/${courseId}/add-enrollment-key/`,fetchOption)
     .then((resp) => {
       return resp.json()
     })
@@ -53,7 +52,7 @@ const AddEnrollmentKey = () => {
       setMessage(data.detail);
     })
     .catch(err => console.log(err))
-    */
+    
   }
 
   return (

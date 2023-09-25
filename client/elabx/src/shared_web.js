@@ -1,3 +1,6 @@
+
+import { Terminal } from 'xterm';
+
 class WorkerAPI {
     constructor() {
       this.nextResponseId = 0;
@@ -6,12 +9,22 @@ class WorkerAPI {
       const channel = new MessageChannel();
       this.port = channel.port1;
       this.port.onmessage = this.onmessage.bind(this);
-      this.output = null;
   
       const remotePort = channel.port2;
       // pass the remortPort to the worker along with the object.
       this.worker.postMessage({id: 'constructor', data: remotePort},
                               [remotePort]);
+      this.term = null;
+      this.msg = ""
+    }
+
+    initTerm(){
+      var op = document.getElementById("output")
+      if(op.hasChildNodes()){
+        op.removeChild(output.children[0])
+      }
+      this.term = new Terminal();
+      this.term.open(document.getElementById('output'))
     }
   
     terminate() {
@@ -40,11 +53,17 @@ class WorkerAPI {
     async onmessage(event) {
       switch (event.data.id) {
         case 'write':
-          let op = document.getElementById("output");
           console.log(event.data.data)
+          this.msg += event.data.data
+          
+
+          if(this.term == null){
+            this.initTerm();
+          }
   
-          if (op != null){
-            op.value += event.data.data;
+          if (this.term !== null){
+            this.term.clear()
+            this.term.writeln(this.msg)
           }
           break;
   

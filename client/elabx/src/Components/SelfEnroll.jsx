@@ -9,7 +9,7 @@ import './Create.css';
 const SelfEnroll = () => {
 
   const params = useParams()
-  const courseId = params.subId;
+  const courseId = params.courseId;
 
   const navigate = useNavigate();
 
@@ -21,18 +21,16 @@ const SelfEnroll = () => {
   const [key, setKey] = useState('')
   const [message, setMessage] = useState('')
 
-  /*
   const fetchOption = {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " +  token
     },
     body: JSON.stringify({
-      "user": student
+      "key": key
     })
  }
- */
 
   const handleKeyChange = (e) => {
     setKey(e.target.value);
@@ -41,10 +39,10 @@ const SelfEnroll = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessage('');
+    console.log(courseId)
     console.log(key)
 
-    /*
-    fetch(`http://localhost:8000/api/subjects/${courseId}/group/`,fetchOption)
+    fetch(`http://127.0.0.1:8000/api/subjects/${courseId}/enroll/`,fetchOption)
     .then((resp) => {
       return resp.json()
     })
@@ -53,7 +51,7 @@ const SelfEnroll = () => {
       setMessage(data.detail);
     })
     .catch(err => console.log(err))
-    */
+    
   }
 
   return (
