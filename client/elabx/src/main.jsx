@@ -46,6 +46,7 @@ import Delete from './Components/delete.jsx'
 // import CreateQuestionTest from './Components/CreateQuestionTest'
 import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
+import ChapterView from './Components/ChapterView'
 
 import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
@@ -213,6 +214,7 @@ const router = createBrowserRouter([
         path: "createCourse/",
         element: <CreateCourse/>
       },
+      
       {
         path: "courses/:subId/chapters/",
         element: <ViewChapter/>
@@ -272,6 +274,11 @@ const router = createBrowserRouter([
       },
 
     ],
+    
+  },
+  {
+    path: "chapterview/",
+    element: <ChapterView/>
   },
   // {
   //   path:"submissionreview/",
