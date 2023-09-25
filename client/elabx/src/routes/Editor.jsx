@@ -30,7 +30,7 @@ const Editor = () => {
         value = {code}
         onChange={handleCodeChange}
     />
-    <textarea className="editorFooter" id = "output" placeholder='Output' rows={8}></textarea>
+    {/* <div id = "output"></div> */}
     </>
   )
 }

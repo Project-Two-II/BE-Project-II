@@ -93,18 +93,29 @@ const  QuestionSolve = ({my_api}) => {
   if(!isLoggedIn) return <Navigate to={"/login"}/>
   if(role == 1) return <Navigate to={"/dashboard/home"}/>
 
+
   const param = useParams();
   console.log(param)
-  const courseId = param.courseId;
+  const courseId = param.subId;
+  const chapterId = param.chapterId;
   const questionId = param.questionId;
+
+  console.log(courseId, chapterId, questionId)
+
+  const EditorProps = {
+    courseId, 
+    chapterId,
+    questionId,
+    defaultLang: "cpp"
+  }
 
   const factory = (node) => {
      var component = node.getComponent();
     if (component === "textarea") {
-        return (<textarea style = {outputStyle} className="editorFooter" id = "output" placeholder='Output'></textarea>);
+        return (<div style = {outputStyle}  id = "output"></div>);
     }
     else if (component === "Editor") {
-      return (<Editor style = {borderStyle} defaultLang = "cpp" api = {my_api} />);
+      return (<Editor style = {borderStyle}  props = {EditorProps} />);
     }
     else if (component === "Question") {
       return (<Question questionId={questionId} courseId={courseId}/>);
