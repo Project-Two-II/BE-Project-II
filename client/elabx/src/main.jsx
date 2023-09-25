@@ -187,14 +187,14 @@ const router = createBrowserRouter([
   //   path:"/createquestiontest",
   //   element:<CreateQuestionTest/>
   // },
-  // {
-  // path :'/viewprogress',
-  // element:<ViewProgress/>
-  // },
-  // {
-  //   path :'/studentprogress',
-  //   element:<StudentProgress/>
-  // },
+   {
+  path :'/viewprogress',
+  element:<ViewProgress/>
+  },
+  {
+    path :'/studentprogress',
+    element:<StudentProgress/>
+  },
   {
     path :'/dashboard',
     element:<Dashboard/>,
