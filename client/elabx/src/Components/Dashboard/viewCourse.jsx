@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 
 import {useSelector } from 'react-redux'
 
-import {AiFillEye, AiFillDelete} from 'react-icons/ai'
+import {AiFillEye, AiFillDelete, AiFillApple} from 'react-icons/ai'
 import {BiSolidPencil} from 'react-icons/bi'
 
 import { Link } from 'react-router-dom';
@@ -85,6 +85,7 @@ const ViewCourse = () => {
                    <Link to={`${c.id}/chapters/`}><AiFillEye style={iconStyle}/></Link>
                    <Link to={`${c.id}/update/`}><BiSolidPencil style={iconStyle}/></Link>
                    <Link to={`${c.id}/delete/`}><AiFillDelete style={iconStyle}/></Link> 
+                   <Link to={`${c.id}/addenrollmentkey/`}><AiFillApple style={iconStyle}/></Link> 
                    <Link to={`${c.id}/addstudent`} style ={btnStyle}>Add Student</Link>
                    <Link to={`${c.id}/viewstudent`} style={btnStyle}>View Student</Link>
                  </td>

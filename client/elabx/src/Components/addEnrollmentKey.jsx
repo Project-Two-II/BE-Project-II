@@ -6,10 +6,10 @@ import Footer from './Footer/Footer';
 
 import './Create.css';
 
-const SelfEnroll = () => {
+const AddEnrollmentKey = () => {
 
   const params = useParams()
-  const courseId = params.courseId;
+  const courseId = params.subId;
 
   const navigate = useNavigate();
 
@@ -21,6 +21,7 @@ const SelfEnroll = () => {
   const [key, setKey] = useState('')
   const [message, setMessage] = useState('')
 
+  
   const fetchOption = {
     method: "POST",
     headers: {
@@ -39,10 +40,10 @@ const SelfEnroll = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessage('');
-    console.log(courseId)
     console.log(key)
 
-    fetch(`http://127.0.0.1:8000/api/subjects/${courseId}/enroll/`,fetchOption)
+    
+    fetch(`http://127.0.0.1:8000/api/subjects/${courseId}/add-enrollment-key/`,fetchOption)
     .then((resp) => {
       return resp.json()
     })
@@ -55,21 +56,17 @@ const SelfEnroll = () => {
   }
 
   return (
-      <>
-      <Header />
       <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
         <div className="inputGroup">
-          <label>Enter Enrollment Key</label>
-          <input name="enrollmentKey" value={key} onChange={handleKeyChange} required />
+          <label>Add Key</label>
+          <input name="enrollmentKey" id="enrollmentKey" value={key} onChange={handleKeyChange} required />
         </div>
 
         <button id="submit" className="btn" type="submit">Add</button>
       </form>
     </div>
-    <Footer />
-      </>
   );
 }
 
-export default SelfEnroll;
+export default AddEnrollmentKey;

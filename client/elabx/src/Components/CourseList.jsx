@@ -39,7 +39,7 @@ function CourseList({ token }) {
   return (
     <div className='course-list' style={course_list_style}>
       {course.map((course) => (
-        <CourseCard key={course.id} course={course} />
+        <CourseCard key={course.id} course={course}/>
       ))}
     </div>
   );
