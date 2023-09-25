@@ -64,7 +64,7 @@ function Editor(props) {
         "solution": code
       })
     }
-    fetch(`http://localhost:8000/api/submission/${props.props.courseId}/chapters/${props.props.chapterId}/questions/${props.props.questionId}/submit/`, fetchOption)
+    fetch(`http://localhost:8000/api/submission/${props.props.courseId}/${props.props.chapterId}/${props.props.questionId}/submit/`, fetchOption)
         .then(resp => resp.json())
         .then(data => {
           console.log(data)

@@ -8,14 +8,22 @@ import { useSelector } from 'react-redux'
 import './Dashboard/dashboard.css'
 
 const listStyle = {
-  display : "inline-block"
+  display: "inline-block"
 }
 
 const titleStyle = {
-  textAlign : "center",
+  textAlign: "center",
   opacity: 0.7
 }
-
+const btnStyle = {
+  // float: "right",
+  padding: "10px",
+  backgroundColor: "green",
+  color: "white",
+  margin: "5px",
+  border: "none",
+  borderRadius: "8px"
+}
 function useQuery() {
   const { search } = useLocation();
 
@@ -25,63 +33,70 @@ function useQuery() {
 const CourseDetailPage = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  if (!isLoggedIn) return <Navigate to={'/login'}/>
+  if (!isLoggedIn) return <Navigate to={'/login'} />
   const role = useSelector((state) => state.role);
-  if (role == 1) return <Navigate to={'/dashboard/home'}/>
+  if (role == 1) return <Navigate to={'/dashboard/home'} />
 
-    let  [chapters, setChapters] = useState([]);
-    let query = useQuery();
-    const param = useParams();
-    const courseId = param.subId;
-    const courseTitle = query.get("title");
-    console.log("courseId:" + courseId)
-    console.log("courseTitle:" + courseTitle)
-    const token = useSelector((state) => state.token);
-    const fetchOption = {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json",
-            "Authorization": "Bearer " + token
-        },
-    }
+  let [chapters, setChapters] = useState([]);
+  let query = useQuery();
+  const param = useParams();
+  const courseId = param.subId;
+  const courseTitle = query.get("title");
+  console.log("courseId:" + courseId)
+  console.log("courseTitle:" + courseTitle)
+  const token = useSelector((state) => state.token);
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+  }
 
- useEffect(() => {
-  fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
-  .then(resp => resp.json())
-  .then(data => {
-      setChapters(data)
-      console.log(data)
-      console.log("Fetched sth")
-  })
-  .catch(err => console.log(err))
- }, [])
-  
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
+      .then(resp => resp.json())
+      .then(data => {
+        setChapters(data)
+        console.log(data)
+        // console.log("Fetched sth")
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+  // const routeTo = "/syllabus/" + course.id + `?title=${course.title}`
+  // const route = `chapters/${chapter.id}/questions/`+`?title=${courseTitle}`
 
   return (
     <>
-    <Header SearchBar={false} />
-    <div className="main-body">
-      <div id="sidebar">
-        <h1>Chapter List</h1>
-        <nav>
-          <ul>
-            {
-              chapters.map((chapter, index) => (
-                <li key={index} style={listStyle}>
-                 <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
-              </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
+      <Header SearchBar={false} />
+      {/* <h3 style={titleStyle}>{courseTitle}</h3> */}
+      <div className="main-body">
+        <div id="sidebar">
+          <h1>Chapter List</h1>
+          <Link to={"viewprogress"}>
+            <button style={btnStyle}>View Progress</button>
+          </Link>
+          <nav>
+            <ul>
+              {
+                chapters.map((chapter, index) => (
+                  <li key={index} style={listStyle}>
+                    {/* <Link style={listStyle} to={`chapters/${chapter.id}/questions/`+`?title=${courseTitle}`}>{index + 1}. {chapter.title}</Link> */}
+                    <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
 
-      <div id="detail">
-        <h3 style={titleStyle}>{courseTitle}</h3>
-      <Outlet />
+        <div id="detail">
+          <h3 style={titleStyle}>{courseTitle}</h3>
+          <Outlet />
+        </div>
       </div>
-    </div>
-  </>
+    </>
   );
 };
 

@@ -111,6 +111,14 @@ const router = createBrowserRouter([
         path: "chapters/:chapterId/questions",
         element: <ChapterDetail />
       },
+      // {
+      //   path: "viewprogress/",
+      //   element: <ViewProgress />
+      // },
+      // {
+      //   path: "viewprogress/:chapterId/questions",
+      //   element: <SubmissionReview />
+      // },
     ]
   },
 

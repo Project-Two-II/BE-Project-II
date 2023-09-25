@@ -49,27 +49,27 @@ function CQuestionList() {
     }
   }
 
-  useEffect(() =>{
-    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`,fetchOption)
-    .then((resp) => {
-      return resp.json()
-    })
-    .then(data => {
-      // console.log(data)
-      setQuestions(data)
-    })
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/`, fetchOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then(data => {
+        // console.log(data)
+        setQuestions(data)
+      })
 
-  },[])
+  }, [])
 
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [marksInput, setMarksInput] = useState(0);
   const [reviewInput, setReviewInput] = useState('');
   const [submission, setSubmission] = useState([]);
 
-    const handleQuestionClick = (questionId) => {
-      setSelectedQuestion(questionId === selectedQuestion ? null : questionId);
-      const fetchSubmission = () => {
-        fetch(`http://localhost:8000/api/report/subjects/${courseId}/${chapterId}/${questionId}/students/${studentId}/`,fetchOption)
+  const handleQuestionClick = (questionId) => {
+    setSelectedQuestion(questionId === selectedQuestion ? null : questionId);
+    const fetchSubmission = () => {
+      fetch(`http://localhost:8000/api/report/subjects/${courseId}/${chapterId}/${questionId}/students/${studentId}/`, fetchOption)
         .then((resp) => {
           return resp.json()
         })
@@ -79,9 +79,9 @@ function CQuestionList() {
           // console.log(data)
         })
         .catch(err => console.log(err))
-      }
-      fetchSubmission();
     }
+    fetchSubmission();
+  }
 
   const handleMarksInputChange = (event) => {
     // Update the marks input when the teacher types
@@ -115,30 +115,30 @@ function CQuestionList() {
     })
   }
 
-  const handleSubmitReview = (questionId,submissionId) => {
+  const handleSubmitReview = (questionId, submissionId) => {
     // Logic to submit the review for the selected question
     console.log(marksInput)
     console.log(reviewInput)
     console.log(submissionId)
     console.log(questionId)
     console.log(setMarksOption)
-    fetch(`http://localhost:8000/api/submission/${courseId}/${chapterId}/${questionId}/${submissionId}/result/`,setMarksOption)
-    .then((resp) => {
-      return resp.json()
-    })
-    .then(data => {
-      console.log(data)
-    })
-    .catch(err => console.log(err))
+    fetch(`http://localhost:8000/api/submission/${courseId}/${chapterId}/${questionId}/${submissionId}/result/`, setMarksOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
 
-    fetch(`http://localhost:8000/api/submission/${courseId}/${chapterId}/${questionId}/${submissionId}/review/`,setReviewOption)
-    .then((resp) => {
-      return resp.json()
-    })
-    .then(data => {
-      console.log(data)
-    })
-    .catch(err => console.log(err))
+    fetch(`http://localhost:8000/api/submission/${courseId}/${chapterId}/${questionId}/${submissionId}/review/`, setReviewOption)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
 
     const updatedQuestions = questions.map((q) => {
       if (q.id === questionId) {
@@ -165,53 +165,56 @@ function CQuestionList() {
 
   return (
     <div>
-      <div>
-        <ul>
-          {questions.map((q) => (
-            <li key={q.id}>
-              <button onClick={() => handleQuestionClick(q.id)}>
-                {q.title}
-              </button>
-              {selectedQuestion === q.id && (
+      <ul>
+        {questions.map((q) => (
+          <li key={q.id}>
+            <button onClick={() => handleQuestionClick(q.id)}>
+              {q.title}
+            </button>
+            {selectedQuestion === q.id && (
+
+              <div>
+                <p>Status: {submission.status === 0 ? 'Not Submitted' : 'Submitted'}</p>
+
                 <div>
-                  <p>Status: {submission.status === 0 ? 'Not Submitted' : 'Submitted'}</p>
-                  {/* {q.status === 1 && ( */}
-                    <>
-                  <div>
-                    <p>Marks:</p>
-                    <input
-                      type="number"
-                      value={marksInput}
-                      onChange={handleMarksInputChange}
-                    />
-                  </div>
-                      <div>
-                        <p>Code:</p>
-                        <p>{submission.solution}</p>
-                        {/* <pre>{submission.solution}</pre> */}
-                      </div>
-                      <div>
-                        <p>Review:</p>
-                        <textarea
-                          rows="4"
-                          cols="50"
-                          value={reviewInput}
-                          onChange={handleReviewInputChange}
-                        />
-                      </div>
-                      <button onClick={() => handleSubmitReview(q.id,submission.submission_id)}>
-                        Submit Review
-                      </button>
-                    </>
-                  {/* )} */}
+                  <p>Marks:</p>
+                  <input
+                    type="number"
+                    value={marksInput}
+                    onChange={handleMarksInputChange}
+                  />
                 </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+
+                <div>
+                  <p>Code:</p>
+                  <p>{submission.solution}</p>
+                  {/* <pre>{submission.solution}</pre> */}
+                </div>
+
+                <div>
+                  <p>Review:</p>
+                  <textarea
+                    rows="4"
+                    cols="50"
+                    value={reviewInput}
+                    onChange={handleReviewInputChange}
+                  />
+                </div>
+
+                <button onClick={() => handleSubmitReview(q.id, submission.submission_id)}>
+                  Submit Review
+                </button>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default CQuestionList;
+
+/*
+
+*/
