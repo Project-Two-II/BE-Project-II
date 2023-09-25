@@ -88,10 +88,11 @@ class StudentListInASubjectAPIView(APIView):
         progress_generator = ProgressGenerator
         users = group.users.all()
         for user in users:
-            data = dict()
-            data["id"] = f"{user.id}"
-            data["name"] = f"{user.first_name} {user.last_name}"
-            data["email"] = f"{user.email}"
-            data["progress"] = progress_generator.get_my_progress(user, subject=subject)
-            _subject_report.append(data)
+            if user.is_student():
+                data = dict()
+                data["id"] = f"{user.id}"
+                data["name"] = f"{user.first_name} {user.last_name}"
+                data["email"] = f"{user.email}"
+                data["progress"] = progress_generator.get_my_progress(user, subject=subject)
+                _subject_report.append(data)
         return Response(json.dumps(_subject_report), status=status.HTTP_200_OK)
