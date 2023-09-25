@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import Question from '../Components/Question.jsx';
 import Editor from '../Components/Editor.jsx'
@@ -90,8 +90,20 @@ const  QuestionSolve = ({my_api}) => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const role  = useSelector((state) => state.role);
 
+
   if(!isLoggedIn) return <Navigate to={"/login"}/>
   if(role == 1) return <Navigate to={"/dashboard/home"}/>
+
+  const token  = useSelector((state) => state.token);
+
+
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+ }
 
 
   const param = useParams();
@@ -102,11 +114,28 @@ const  QuestionSolve = ({my_api}) => {
 
   console.log(courseId, chapterId, questionId)
 
+  // you might be wondering why I'm fetching it here.
+  // yes I have to, no options left just for getting question boilerplate
+  const [boilerplate, setBoilerplate] = useState('')
+  function getBoilerplate() {
+    fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${questionId}/`, fetchOption)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data.boilerplate)
+        setBoilerplate(data.boilerplate)
+      })
+      .catch(err => console.log(err))
+  }
+  useEffect(() => {
+    getBoilerplate()
+  }, []);
+
   const EditorProps = {
     courseId, 
     chapterId,
     questionId,
-    defaultLang: "cpp"
+    defaultLang: "cpp",
+    boilerplate
   }
 
   const factory = (node) => {
