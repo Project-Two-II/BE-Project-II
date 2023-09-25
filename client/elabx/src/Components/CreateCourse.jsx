@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import './Create.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , redirect} from 'react-router-dom';
 
 const CreateCourse = () => {
 
@@ -62,17 +62,17 @@ const CreateCourse = () => {
     e.preventDefault();
     setMessage(' ');
 
-   fetch("http://localhost:8000/api/subjects/", fetchOption)
-   .then((resp) => {
+    fetch("http://localhost:8000/api/subjects/", fetchOption)
+    .then((resp) => {
     return resp.json()
-  })
-  .then((data) => {
+    })
+   .then((data) => {
     console.log(data);
     setMessage(data.detail);
-  })
+   })
   .catch(err => console.log(err))
 
-  navigate("/dashboard/")
+  navigate("/dashboard/courses")
   }
 
   return (

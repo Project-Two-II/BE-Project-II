@@ -4,6 +4,9 @@ import Question from '../Components/Question.jsx';
 import Editor from '../Components/Editor.jsx'
 import Header from '../Components/header.jsx'
 
+import { Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import * as FlexLayout from "flexlayout-react";
 import '../Components/flexlayout.css'
 // import '../App.css';
@@ -83,6 +86,13 @@ var json = {
 };
 
 const  QuestionSolve = ({my_api}) => {
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const role  = useSelector((state) => state.role);
+
+  if(!isLoggedIn) return <Navigate to={"/login"}/>
+  if(role == 1) return <Navigate to={"/dashboard/home"}/>
+
   const param = useParams();
   console.log(param)
   const courseId = param.courseId;

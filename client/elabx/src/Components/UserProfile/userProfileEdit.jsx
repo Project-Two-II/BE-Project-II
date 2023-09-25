@@ -22,8 +22,7 @@ const UserProfileEdit = () => {
     const token = useSelector((state) => state.token);
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
     if (!isLoggedIn)
-        navigate('/login')
-    console.log(token)
+        return <Navigate to={'/login'}/>
     const fetchOption = {
         method: "GET", 
         headers: {

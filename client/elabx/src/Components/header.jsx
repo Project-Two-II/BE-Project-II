@@ -80,7 +80,7 @@ function Header({SearchBar}) {
         })
         .catch( err => console.log(err))
 
-      dispatch(setCred({isLoggedIn: false, token: '', role: '', refreshToken: ''}))
+      dispatch(setCred({isLoggedIn: false, token: null, role: null, refreshToken: null}))
       navigate("/login")
   };
 

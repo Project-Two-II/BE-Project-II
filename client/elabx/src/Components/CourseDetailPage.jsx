@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './header';
-import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import { Link, Outlet, useParams, useLocation, Navigate } from 'react-router-dom';
 
 import { useSelector } from 'react-redux'
 
@@ -23,6 +23,12 @@ function useQuery() {
 }
 
 const CourseDetailPage = () => {
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  if (!isLoggedIn) return <Navigate to={'/login'}/>
+  const role = useSelector((state) => state.isLoggedIn);
+  if (role == 1) return <Navigate to={'/dashboard/home'}/>
+
     let  [chapters, setChapters] = useState([]);
     let query = useQuery();
     const param = useParams();
