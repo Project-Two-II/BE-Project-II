@@ -69,6 +69,7 @@ import CreateCourse from './Components/CreateCourse'
 import ViewQuestion from './Components/Dashboard/viewQuestion'
 
 import ChapterDetail from './Components/ChapterDetail.jsx'
+import QuestionView from './Components/QuestionView.jsx'
 
 import NotFoundPage from './routes/ErrorPage.jsx';
 
@@ -280,6 +281,10 @@ const router = createBrowserRouter([
     path: "chapterview/",
     element: <ChapterView/>
   },
+  {
+    path: "questionview/",
+    element: <QuestionView/>
+  }
   // {
   //   path:"submissionreview/",
   //   element :<SubmissionReview/>
