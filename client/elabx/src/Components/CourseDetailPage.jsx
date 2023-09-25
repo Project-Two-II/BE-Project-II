@@ -7,23 +7,15 @@ import { useSelector } from 'react-redux'
 
 import './Dashboard/dashboard.css'
 
-const listStyle = {
-  display: "inline-block"
-}
-
 const titleStyle = {
   textAlign: "center",
   opacity: 0.7
 }
-const btnStyle = {
-  // float: "right",
-  padding: "10px",
-  backgroundColor: "green",
-  color: "white",
-  margin: "5px",
-  border: "none",
-  borderRadius: "8px"
+
+const listStyle = {
+  display: "inline-block"
 }
+
 function useQuery() {
   const { search } = useLocation();
 
@@ -69,27 +61,22 @@ const CourseDetailPage = () => {
 
   return (
     <>
-      <Header SearchBar={false} />
-      {/* <h3 style={titleStyle}>{courseTitle}</h3> */}
-      <div className="main-body">
-        <div id="sidebar">
-          <h1>Chapter List</h1>
-          <Link to={"viewprogress"}>
-            <button style={btnStyle}>View Progress</button>
-          </Link>
-          <nav>
-            <ul>
-              {
-                chapters.map((chapter, index) => (
-                  <li key={index} style={listStyle}>
-                    {/* <Link style={listStyle} to={`chapters/${chapter.id}/questions/`+`?title=${courseTitle}`}>{index + 1}. {chapter.title}</Link> */}
-                    <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
-                  </li>
-                ))
-              }
-            </ul>
-          </nav>
-        </div>
+    <Header SearchBar={false} />
+    <div className="main-body">
+      <div id="sidebar">
+        <h1>Chapter List</h1>
+        <nav>
+          <ul>
+            {
+              chapters.map((chapter, index) => (
+                <li key={index}>
+                 <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
+              </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
 
         <div id="detail">
           <h3 style={titleStyle}>{courseTitle}</h3>

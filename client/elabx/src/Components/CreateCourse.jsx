@@ -62,6 +62,13 @@ const CreateCourse = () => {
     e.preventDefault();
     setMessage(' ');
 
+    let formData = new FormData();
+    formData.append("code_no",courseCode)
+    formData.append("title", course)
+    formData.append("code_no",courseCode)
+    formData.append("code_no",courseCode)
+
+
     fetch("http://localhost:8000/api/subjects/", fetchOption)
     .then((resp) => {
     return resp.json()

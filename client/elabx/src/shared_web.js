@@ -16,6 +16,11 @@ class WorkerAPI {
                               [remotePort]);
       this.term = null;
       this.msg = ""
+      this.testPassed = false; 
+    }
+
+    getTestPassStatus(){
+      return this.testPassed;
     }
 
     initTerm(){
@@ -64,6 +69,10 @@ class WorkerAPI {
           if (this.term !== null){
             this.term.clear()
             this.term.writeln(this.msg)
+            console.log("Includes:", event.data.data.includes("All Test Passed"))
+            if(event.data.data.includes("All Test Passed")){
+              this.testPassed = true;
+            }
           }
           break;
   

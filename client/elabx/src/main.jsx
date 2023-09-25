@@ -52,6 +52,7 @@ import ChapterView from './Components/ChapterView'
 
 import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
+import TestFail from './Components/testfail'
 
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
@@ -126,7 +127,13 @@ const router = createBrowserRouter([
 
   {
     path: "/syllabus/:subId/chapters/:chapterId/questionsolve/:questionId",
-    element: <QuestionSolve />
+    element: <QuestionSolve />,
+    children:[
+      {
+        path: "testfail",
+        element: <TestFail />
+      }
+    ]
   },
   {
     path: "/syllabus/:courseId/enroll",
