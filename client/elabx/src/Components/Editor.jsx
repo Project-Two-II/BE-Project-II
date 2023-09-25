@@ -1,6 +1,9 @@
-import {React, useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import EditorWindow from "@monaco-editor/react";
+
+import { useLocation} from 'react-router-dom';
+
 
 import WorkerAPI from '../shared_web.js';
 import './Editor.css'
@@ -9,7 +12,8 @@ import './Editor.css'
 const initialHeader = "#include <iostream>\n";
 
 
-function Editor({defaultLang}) {
+function Editor(props) {
+
   const token = useSelector((state) =>  state.token);
   const [code, setCode] = useState("")
   const [testCode, setTestCode] = useState("");
@@ -18,7 +22,11 @@ function Editor({defaultLang}) {
    setCode(code)
   }
 
-  function getData() {
+  useEffect(() => {
+    getData()
+   }, []);
+
+  const getData = () => {
 
     const fetchOption = {
       method: "GET",
@@ -28,14 +36,14 @@ function Editor({defaultLang}) {
       },
     }
 
-    fetch("http://localhost:8000/api/subjects/1/chapters/1/questions/2/test/", fetchOption)
+    fetch(`http://localhost:8000/api/subjects/${props.props.courseId}/chapters/${props.props.chapterId}/questions/${props.props.questionId}/test/`, fetchOption)
         .then(resp => resp.json())
         .then(data => {
           console.log(data)
           setTestCode(data.source_code)
         })
         .catch(err => console.log(err))
-}
+     }
   
   const RunClickHandler = (e) => {
     e.preventDefault();
@@ -56,7 +64,7 @@ function Editor({defaultLang}) {
         "solution": code
       })
     }
-    fetch("http://localhost:8000/api/submission/1/chapters/1/questions/2/submit/", fetchOption)
+    fetch(`http://localhost:8000/api/submission/${props.props.courseId}/chapters/${props.props.chapterId}/questions/${props.props.questionId}/submit/`, fetchOption)
         .then(resp => resp.json())
         .then(data => {
           console.log(data)
@@ -64,9 +72,7 @@ function Editor({defaultLang}) {
         .catch(err => console.log(err))
   }
 
-  useEffect(() => {
-    getData()
-}, []);
+ 
 
   return (
     <div className="editorSection">
@@ -78,7 +84,7 @@ function Editor({defaultLang}) {
         <div className="editorMain">
           <EditorWindow
             height="100%"
-            defaultLanguage={defaultLang}
+            defaultLanguage={props.props.defaultLang}
             theme="vs-dark"
             value = {code}
             onChange={handleCodeChange}
