@@ -26,7 +26,7 @@ const CourseDetailPage = () => {
 
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   if (!isLoggedIn) return <Navigate to={'/login'}/>
-  const role = useSelector((state) => state.isLoggedIn);
+  const role = useSelector((state) => state.role);
   if (role == 1) return <Navigate to={'/dashboard/home'}/>
 
     let  [chapters, setChapters] = useState([]);

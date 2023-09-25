@@ -71,8 +71,6 @@ import ChapterDetail from './Components/ChapterDetail.jsx'
 
 import NotFoundPage from './routes/ErrorPage.jsx';
 
-import AuthGuard from '../AuthGuard';
-import TeacherGuard from '../TeacherGuard'
 
 // import CreateQuestion from './Components/CreateQuestion'
 
