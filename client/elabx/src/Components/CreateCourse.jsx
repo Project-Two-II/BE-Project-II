@@ -27,19 +27,6 @@ const CreateCourse = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [message, setMessage] = useState('')
 
-  const fetchOption = {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-      "Authorization": "Bearer " + token
-    },
-    body: JSON.stringify({
-      "code_no": courseCode,
-      "title": courseSubject,
-      "description": courseDesc,
-    })
-  }
-
   const handleSubjectChange = (e) => {
     setCourseSubject(e.target.value);
   }
@@ -64,11 +51,19 @@ const CreateCourse = () => {
 
     let formData = new FormData();
     formData.append("code_no",courseCode)
-    formData.append("title", course)
-    formData.append("code_no",courseCode)
-    formData.append("code_no",courseCode)
+    formData.append("title", courseSubject)
+    formData.append("description",courseDesc)
+    formData.append("thumbnail",thumbnail, thumbnail.name)
 
+    const fetchOption = {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+      body: formData
+    }
 
+    console.log(formData)
     fetch("http://localhost:8000/api/subjects/", fetchOption)
     .then((resp) => {
     return resp.json()
