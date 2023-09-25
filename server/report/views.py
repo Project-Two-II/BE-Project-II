@@ -7,15 +7,42 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 
 
-from subject.models import Subject, SubjectGroup, User
+from subject.models import Subject, SubjectGroup, User, Question
 from userauth.permissions import IsVerified
 
 from .utils import ProgressGenerator, StatsGenerator
 from .permissions import (
     StudentListInASubjectAccessPermission,
     StudentReportOfAQuestionAccessPermission,
-    MySubjectStatsAccessPermission
+    MySubjectStatsAccessPermission,
+    StudentReportOfAChapterAccessPermission
 )
+
+
+class StudentReportOfAChapterAPIView(APIView):
+    """
+    Provides report of a chapter
+    """
+    permission_classes = (IsAuthenticated, IsVerified, StudentReportOfAChapterAccessPermission)
+
+    @staticmethod
+    def get_chapter(subject_id, chapter_id):
+        subject = get_object_or_404(Subject, id=subject_id)
+        return get_object_or_404(subject.chapters, id=chapter_id)
+
+    def get(self, request, subject_id, chapter_id):
+        _chapter_report = []
+        chapter = self.get_chapter(subject_id, chapter_id)
+        user = self.request.user
+        progress_generator = ProgressGenerator
+        for question in Question.objects.filter(chapter=chapter):
+            _question_report = progress_generator.get_question_report(user, question)
+            _question_report["role"] = user.role
+            _chapter_report.append(_question_report)
+        return Response(
+            data=json.dumps(_chapter_report),
+            status=status.HTTP_200_OK
+        )
 
 
 class MySubjectsStatsAPIView(APIView):
@@ -32,9 +59,9 @@ class MySubjectsStatsAPIView(APIView):
         _my_subject_stats["total_subjects"] = _total_subjects
         _total_students = stats_generator.count_my_students(user)
         _my_subject_stats["total_students"] = _total_students
-        return Response(data={
-            json.dumps(_my_subject_stats)
-        }, status=status.HTTP_200_OK
+        return Response(
+            data=json.dumps(_my_subject_stats),
+            status=status.HTTP_200_OK
         )
 
 
@@ -69,9 +96,10 @@ class StudentReportOfAQuestionAPIView(APIView):
             progress_generator = ProgressGenerator
             question_report = progress_generator.get_question_report(user, question)
             question_report["role"] = self.request.user.role
-            return Response(data={
-                json.dumps(question_report),
-            }, status=status.HTTP_200_OK)
+            return Response(
+                data=json.dumps(question_report),
+                status=status.HTTP_200_OK
+            )
 
 
 class StudentListInASubjectAPIView(APIView):

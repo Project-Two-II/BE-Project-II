@@ -33,8 +33,8 @@ class StudentReportOfAQuestionAccessPermission(BasePermission):
 
 class MySubjectStatsAccessPermission(BasePermission):
     """
-        Permission class to view subject statistics
-        """
+    Permission class to view subject statistics
+    """
 
     def has_permission(self, request, view):
         if SubjectGroup.objects.filter(users=request.user).exists():
@@ -42,3 +42,14 @@ class MySubjectStatsAccessPermission(BasePermission):
                 return request.user.is_teacher()
             else:
                 return False
+
+
+class StudentReportOfAChapterAccessPermission(BasePermission):
+    """
+    Permission class to view report of a chapter
+    """
+
+    def has_permission(self, request, view):
+        if SubjectGroup.objects.filter(users=request.user).exists():
+            if request.method == "GET":
+                return True
