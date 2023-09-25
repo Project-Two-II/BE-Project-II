@@ -10,10 +10,11 @@ import './homepage.css'
 import '../../App.css'
 
 const headingStyle = {
-  color: "white",
+  color: "darkblue",
   fontSize: "2rem",
   textDecoration: "underline",
-  paddingLeft: "30px"
+  paddingLeft: "30px",
+  fontWeight:"Bolder"
 }
 const btn_style = {
   color: "white",
@@ -29,7 +30,7 @@ function HomePage() {
   const isTeacher = useSelector((state)=> state.role)
   const token = useSelector((state) => state.token);
   return (
-    <div className="main">
+    <div className="HomeMain">
       {isLoggedIn ? (
         <div className="home-container">
           <div className="headingStyle" style={headingStyle}>My Courses</div>
