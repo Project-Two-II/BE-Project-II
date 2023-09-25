@@ -75,7 +75,8 @@ class SelfEnrollmentAPIView(APIView):
     def enroll_user(self, requested_key, subject):
         user = self.get_current_user()
         actual_key = get_object_or_404(SubjectEnrollment, subject=subject).key
-        if SubjectGroup.objects.get(subject=subject) in [SubjectGroup.objects.get(users=user)]:
+        if SubjectGroup.objects.filter(users=user).exists() and \
+                SubjectGroup.objects.get(subject=subject) in [SubjectGroup.objects.get(users=user)]:
             raise ValueError("You are already enrolled.")
         if not actual_key:
             raise ValueError("Self enrollment is not available.")
@@ -88,9 +89,7 @@ class SelfEnrollmentAPIView(APIView):
 
     def post(self, request, subject_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
-        print(subject)
         key = request.data.get("key")
-        print(key)
         try:
             self.enroll_user(key, subject)
             return Response(data={"detail": "Successfully enrolled.", "subject": subject.title, "key": key},
