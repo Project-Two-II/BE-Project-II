@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import Header from './header';
 import Footer from './Footer/Footer';
-import './Create.css'
+import './Create.css';
 import { useEffect } from 'react';
 
 const tableStyle = {
   borderCollapse: 'collapse',
-  width: '80%',
+  width: '100%',
   margin: '20px auto',
   border: '1px solid #ccc',
 };
@@ -28,6 +28,10 @@ const listStyle = {
   margin: "30px"
 }
 
+const questionCellStyle = { 
+  width: '200 %'
+};
+
 const btnStyle = {
   textDecoration: "none",
   float: "right",
@@ -41,13 +45,11 @@ const btnStyle = {
   textAlign: "center"
 }
 
-const submissionStyle={
+const submissionStyle = {
   margin: "20px"
 }
 
-
 function CQuestionList() {
-
   const param = useParams();
   const courseId = param.subId;
   const studentId = param.studentId;
@@ -70,10 +72,8 @@ function CQuestionList() {
         return resp.json()
       })
       .then(data => {
-        // console.log(data)
         setQuestions(data)
       })
-
   }, [])
 
   const [selectedQuestion, setSelectedQuestion] = useState(null);
@@ -89,9 +89,7 @@ function CQuestionList() {
           return resp.json()
         })
         .then(data => {
-          console.log(data)
           setSubmission(JSON.parse(data))
-          // console.log(data)
         })
         .catch(err => console.log(err))
     }
@@ -99,12 +97,10 @@ function CQuestionList() {
   }
 
   const handleMarksInputChange = (event) => {
-    // Update the marks input when the teacher types
     setMarksInput(event.target.value);
   };
 
   const handleReviewInputChange = (event) => {
-    // Update the review input when the teacher types
     setReviewInput(event.target.value);
   };
 
@@ -131,12 +127,6 @@ function CQuestionList() {
   }
 
   const handleSubmitReview = (questionId, submissionId) => {
-    // Logic to submit the review for the selected question
-    console.log(marksInput)
-    console.log(reviewInput)
-    console.log(submissionId)
-    console.log(questionId)
-    console.log(setMarksOption)
     fetch(`http://localhost:8000/api/submission/${courseId}/${chapterId}/${questionId}/${submissionId}/result/`, setMarksOption)
       .then((resp) => {
         return resp.json()
@@ -154,78 +144,70 @@ function CQuestionList() {
         console.log(data)
       })
       .catch(err => console.log(err))
-
-    const updatedQuestions = questions.map((q) => {
-      if (q.id === questionId) {
-        return {
-          ...q,
-          marks: marksInput,
-          review: reviewInput,
-        };
-      }
-      return q;
-    });
-
-    // Update the questions state with the new data
-    // You can replace this with your data storage logic
-    // For now, we're just updating the state
-    // In a real app, this data would likely be sent to a server or stored in a database
-    // For example: send updatedQuestions to your API
-    // console.log(updatedQuestions);
-
-    // Clear the input fields
-    // setMarksInput(0);
-    // setReviewInput('');
   };
 
   return (
-
     <div>
-      <ul>
-        {questions.map((q, index) => (
-          <li style={listStyle} key={index + 1}>
-            <span>{index + 1}. {q.title}</span>
-            <span>
-              <button style={btnStyle} onClick={() => handleQuestionClick(q.id)}>View Submission</button>
-            </span>
-            {selectedQuestion === q.id && (
+      <table style={tableStyle}>
+        <thead>
+          <tr>
+            <th style={headerStyle}>Question</th>
+            <th style={headerStyle}>View Submission</th>
+          </tr>
+        </thead>
+        <tbody>
 
-              <div style={submissionStyle}>
-                <p>Status: {submission.status === 0 ? 'Not Submitted' : 'Submitted'}</p>
-
-                <div>
-                  <p>Marks:</p>
-                  <input
-                    type="number"
-                    value={marksInput}
-                    onChange={handleMarksInputChange}
-                  />
-                </div>
-
-                <div>
-                  <p>Code:</p>
-                  <pre>{submission.solution}</pre>
-                </div>
-
-                <div>
-                  <p>Review:</p>
-                  <textarea
-                    rows="4"
-                    cols="50"
-                    value={reviewInput}
-                    onChange={handleReviewInputChange}
-                  />
-                </div>
-
-                <button onClick={() => handleSubmitReview(q.id, submission.submission_id)}>
-                  Submit Review
+          {questions.map((q, index) => (
+            <tr key={index + 1}>
+              <td style={thTdStyle}>{q.title}</td>
+              <td style={thTdStyle}>
+                <button style={btnStyle} onClick={() => handleQuestionClick(q.id)}>
+                  View Submission
                 </button>
-              </div>
-            )}
+                {selectedQuestion && (
+        <div style={submissionStyle}>
+          <p>Status: {submission.status === 0 ? 'Not Submitted' : 'Submitted'}</p>
 
-          </li>
-        ))}
-      </ul>
+          <div>
+            <p>Marks:</p>
+            <input
+              type="number"
+              value={marksInput}
+              onChange={handleMarksInputChange}
+            />
+          </div>
+
+          <div>
+            <p>Code:</p>
+            <div style={{ border: '1px solid #ccc', padding: '10px' }}>
+              <pre>{submission.solution}</pre>
+            </div>
+          </div>
+
+          <div>
+            <p>Review:</p>
+            <textarea
+              rows="4"
+              cols="50"
+              value={reviewInput}
+              onChange={handleReviewInputChange}
+            />
+          </div>
+          <button onClick={() => handleSubmitReview(selectedQuestion, submission.submission_id)}>
+            Submit Review
+          </button>
+        </div>
+      )}
+              </td>
+              
+            </tr>
+            
+          ))}
+          
+        </tbody>
+      </table>
+
+      
     </div>
   );
 }
