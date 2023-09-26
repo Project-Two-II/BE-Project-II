@@ -409,6 +409,7 @@ class SubjectDetailApiView(APIView):
     Moreover Teachers associated with subject can Update and Delete the subject
     """
     permission_classes = (IsAuthenticated, IsVerified, SubjectDetailAccessPermission)
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self, subject_id):
         try:
