@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 
 
@@ -18,17 +18,6 @@ function QuestionList() {
     gridGap: '10px',
   };
 
-  /*
-  const chapterStyle = {
-    backgroundColor: '#3F5368',
-    padding: '10px',
-    width: '100%',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    textAlign: 'center',
-  };
-  */
-
   const chapterTitleStyle = {
     margin: '0',
     padding: '10px',
@@ -38,35 +27,27 @@ function QuestionList() {
     textAlign: 'center'
   };
 
-  /*
-  const selectedChapterTitleStyle = {
-    backgroundColor: '#4C6080',
-  };
-
-  const questionTableStyle = {
-    backgroundColor: '#5B718B',
+  const tableStyle = {
     borderCollapse: 'collapse',
-    margin: '10px 0',
-    borderRadius: '5px',
+    width: '80%',
+    margin: '20px auto',
   };
 
-  const questionTableHeaderStyle = {
-    backgroundColor: '#3F5368',
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+  const thTdStyle = {
+    border: '1px solid #ccc',
+    padding: '8px',
+    textAlign: 'left',
   };
 
-  const questionTableRowStyle = {
-    borderBottom: '1px solid white',
+  const headerStyle = {
+    backgroundColor: '#f2f2f2',
   };
 
-  const questionTableDataStyle = {
-    padding: '10px',
-    textAlign: 'center',
-    color: 'white',
-  };
-  */
+
+  const titleStyle = {
+    textAlign: "center",
+    opacity: 0.7
+  }
 
   const [selectedChapter, setSelectedChapter] = useState(null);
 
@@ -76,10 +57,7 @@ function QuestionList() {
 
   const token = useSelector((state) => state.token);
   const [chapters, setChapters] = useState([]);
-  // const [student, setStudent] = useState({})
   const [course, setCourse] = useState({})
-  const [questions, setQuestions] = useState([])
-
 
   const fetchOption = {
     method: "GET",
@@ -88,27 +66,6 @@ function QuestionList() {
       "Authorization": "Bearer " + token
     }
   }
-
-  /*
-  useEffect(()=>{
-    const fetchStudent= async() => {
-      try{
-        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/students/${studentId}/`,fetchOption)
-        // console.log(response)
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data = await response.json();
-        // console.log(data)
-        setStudent(data);
-        // console.log(student)
-      } catch (error) {
-        console.error("Error fetching Students:", error);
-      }
-    };
-    fetchStudent();
-  },[])
-  */
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/subjects/${courseId}/`, fetchOption)
@@ -129,161 +86,45 @@ function QuestionList() {
         console.log(data)
         setChapters(data)
 
-        /*
-        fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${data.id}/questions/`)
-        .then((resp) => {
-          return resp.json()
-        })
-        .then((data) => {
-          console.log(data)
-        })
-        */
-
       })
       .catch(err => console.log(err))
 
 
   }, [])
 
-
-
-  /*
-  useEffect(()=>{
-    const fetchCourse= async() => {
-      try{
-        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/`,fetchOption)
-        // console.log(response)
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data = await response.json();
-        // console.log(data)
-        setCourse(data);
-        // console.log(course)
-      } catch (error) {
-        console.error("Error fetching Courses:", error);
-      }
-    };
-    fetchCourse();
-  },[])
-  */
-
-  /*
-  useEffect(() => {
-    const fetchChapters = async () => {
-      try {
-        console.log("Trying to fetch with", fetchOption)
-        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption);
-        // console.log(response)
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data = await response.json();
-        // console.log(data)
-        setChapters(data);
-        // console.log(chapters)
-      } catch (error) {
-        console.error("Error fetching Chapters:", error);
-      }
-    };
- 
-    fetchChapters();
-  }, []);
-
-  useEffect(()=>{
-    const fetchQuestions = async () => {
-      try {
-        console.log("Trying to fetch with", fetchOption)
-        const response = await fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${data.id}/questions/`, fetchOption);
-        // console.log(response)
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data1 = await response.json();
-        // console.log(data)
-        setQuestions(data1);
-        // console.log(questions)
-      } catch (error) {
-        console.error("Error fetching Questions:", error);
-      }
-    };
-    fetchQuestions();
-  },[])
-  */
-
   return (
-    <div style={containerStyle}>
-      <h1><b>Course Id: {course.title}</b></h1>
-      <h6>{course.description}</h6>
-      <h3><b>Progress of Student Id: {studentId}</b></h3>
-      {/* <p color="darkgrey">courseCode:CMP240</p>
-      <p color ="darkgrey">This is course Description</p> */}
-      <h3><b>Chapters</b></h3>
-      <div style={chapterContainerStyle}>
-        {chapters.map(chapter => (
-          <Link className='route-link' to={`${chapter.id}/questions/`}>
-            <div key={chapter.id}
-            // style={{
-            //   ...chapterStyle,
-            //   ...(selectedChapter === chapter.id ? selectedChapterTitleStyle : null),
-            // }}
-            // onClick={() => setSelectedChapter(selectedChapter === chapter.id ? null : chapter.id)}
-            >
-              <p style={chapterTitleStyle}>{chapter.title}</p>
-            </div>
-          </Link>
-        ))}
+    <div>
+      <div>
+        <h2 style={titleStyle}>{course.code_no} : {course.title}</h2>
+        <p style={titleStyle}>{course.description}</p>
+        <Outlet />
       </div>
-      {/* {selectedChapter !== null && (
-        <table style={questionTableStyle}>
-          <thead>
-            <tr style={questionTableRowStyle}>
-              <th style={{ ...questionTableHeaderStyle, borderTopLeftRadius: '5px' }}>Question</th>
-              <th style={questionTableHeaderStyle}>Auto Grade</th>
-              <th style={{ ...questionTableHeaderStyle, borderTopRightRadius: '5px' }}>Marks</th>
+      <table style={tableStyle}>
+        <thead>
+          <tr>
+            <th style={{ ...thTdStyle, ...headerStyle }}>S.No</th>
+            <th style={thTdStyle}>Chapter</th>
+            <th style={thTdStyle}>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {chapters.map((chapter, index) => (
+            <tr key={chapter.id}>
+              <td style={thTdStyle}>{chapter.id}</td>
+              <td style={thTdStyle}>{chapter.title}</td>
+              <td style={thTdStyle}>
+                <Link to={`${chapter.id}/questions`}>
+                  <button className="view-button">
+                    View
+                  </button>
+                </Link>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {questions.filter(question => question.chapterId === selectedChapter).map(question => (
-              <tr key={question.id} style={questionTableRowStyle}>
-                <td style={questionTableDataStyle}>{question.name}</td>
-                <td style={questionTableDataStyle}>{question.autoGrade ? 'Yes' : 'No'}</td>
-                <td style={questionTableDataStyle}>{`${question.marks} marks`}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )} */}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
 
 export default QuestionList;
-
-/*
-const subjects = [
-  { id: 1, name: 'Programming in C' },
-  { id: 2, name: 'Data Structures' },
-  { id: 3, name: 'Algorithms' },
-];
-
-const chapters = [
-  { id: 1, subjectId: 1, name: 'Introduction to C Programming' },
-  { id: 2, subjectId: 1, name: 'Data Types and Operators' },
-  { id: 3, subjectId: 1, name: 'Control Structures' },
-  { id: 4, subjectId: 1, name: 'Functions and Arrays' },
-  { id: 5, subjectId: 1, name: 'Pointers and Strings' },
-];
-
-const questions = [
-  { id: 1, chapterId: 1, name: 'Write a C program to print "Hello, World!"', autoGrade: true, marks: 5 },
-  { id: 2, chapterId: 1, name: 'Write a C program to add two numbers', autoGrade: true, marks: 5 },
-  { id: 3, chapterId: 2, name: 'What is the difference between int and float data types?', autoGrade: true, marks: 10 },
-  { id: 4, chapterId: 2, name: 'What is the modulus operator in C?', autoGrade: true, marks: 10 },
-  { id: 5, chapterId: 3, name: 'Write a C program to find the largest of three numbers', autoGrade: true, marks: 10 },
-  { id: 6, chapterId: 4, name: 'What is a function in C?', autoGrade: true, marks: 5 },
-  { id: 7, chapterId: 4, name: 'Write a C program to find the sum of elements in an array', autoGrade: true, marks: 5 },
-  { id: 8, chapterId: 5, name: 'What is a pointer in C?', autoGrade: true, marks: 5 },
-  { id: 9, chapterId: 5, name: 'Write a C program to reverse a string', autoGrade: true, marks: 5 },
-];
-*/

@@ -1,34 +1,50 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from './header';
 import Footer from './Footer/Footer';
 import './Create.css'
 import { useEffect } from 'react';
 
+const tableStyle = {
+  borderCollapse: 'collapse',
+  width: '80%',
+  margin: '20px auto',
+  border: '1px solid #ccc',
+};
 
+const thTdStyle = {
+  border: '1px solid #ccc',
+  padding: '8px',
+  textAlign: 'left',
+};
 
-/*
-const questions = [
-  {
-    id: 1,
-    question: '1. Write a C program to print "Hello, World!"',
-    code: '#include <stdio.h>\nint main() {\n    printf("Hello, World!");\n    return 0;\n}',
-    status: 1, // 0 for not submitted, 1 for submitted
-    marks: 0, // Initialize marks to 0
-    review: '', // Initialize review to an empty string
-  },
-  {
-    id: 2,
-    question: '2. Write a C program to add two numbers',
-    code: '#include <stdio.h>\nint main() {\n    int num1, num2, sum;\n    printf("Enter two numbers: ");\n    scanf("%d %d", &num1, &num2);\n    sum = num1 + num2;\n    printf("Sum = %d", sum);\n    return 0;\n}',
-    status: 0,
-    marks: 0,
-    review: '',
-  },
-  // Add more questions here
-];
-*/
+const headerStyle = {
+  backgroundColor: '#f2f2f2',
+};
+
+const listStyle = {
+  width: "100%",
+  margin: "30px"
+}
+
+const btnStyle = {
+  textDecoration: "none",
+  float: "right",
+  padding: "5px",
+  width: "150px",
+  backgroundColor: "green",
+  color: "white",
+  margin: "auto",
+  border: "none",
+  borderRadius: "8px",
+  textAlign: "center"
+}
+
+const submissionStyle={
+  margin: "20px"
+}
+
 
 function CQuestionList() {
 
@@ -36,7 +52,6 @@ function CQuestionList() {
   const courseId = param.subId;
   const studentId = param.studentId;
   const chapterId = param.chapterId;
-  // console.log(chapterId);
 
   const token = useSelector((state) => state.token);
   const [questions, setQuestions] = useState([]);
@@ -159,21 +174,23 @@ function CQuestionList() {
     // console.log(updatedQuestions);
 
     // Clear the input fields
-    setMarksInput(0);
-    setReviewInput('');
+    // setMarksInput(0);
+    // setReviewInput('');
   };
 
   return (
+
     <div>
       <ul>
-        {questions.map((q) => (
-          <li key={q.id}>
-            <button onClick={() => handleQuestionClick(q.id)}>
-              {q.title}
-            </button>
+        {questions.map((q, index) => (
+          <li style={listStyle} key={index + 1}>
+            <span>{index + 1}. {q.title}</span>
+            <span>
+              <button style={btnStyle} onClick={() => handleQuestionClick(q.id)}>View Submission</button>
+            </span>
             {selectedQuestion === q.id && (
 
-              <div>
+              <div style={submissionStyle}>
                 <p>Status: {submission.status === 0 ? 'Not Submitted' : 'Submitted'}</p>
 
                 <div>
@@ -187,8 +204,7 @@ function CQuestionList() {
 
                 <div>
                   <p>Code:</p>
-                  <p>{submission.solution}</p>
-                  {/* <pre>{submission.solution}</pre> */}
+                  <pre>{submission.solution}</pre>
                 </div>
 
                 <div>
@@ -206,6 +222,7 @@ function CQuestionList() {
                 </button>
               </div>
             )}
+
           </li>
         ))}
       </ul>
@@ -214,7 +231,3 @@ function CQuestionList() {
 }
 
 export default CQuestionList;
-
-/*
-
-*/

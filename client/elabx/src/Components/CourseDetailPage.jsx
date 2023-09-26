@@ -46,8 +46,11 @@ const CourseDetailPage = () => {
   const courseId = param.subId;
   // const courseTitle = query.get("title");
   console.log("courseId:" + courseId)
+  const chapterId = param.chapterId
+  console.log(chapterId)
   // console.log("courseTitle:" + courseTitle)
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.token);4
+
   const fetchOption = {
     method: "GET",
     headers: {
@@ -106,7 +109,10 @@ const CourseDetailPage = () => {
         </div>
 
         <div id="detail">
-          <h3 style={titleStyle}>{course.title}</h3>
+          <h2 style={titleStyle}>{course.code_no} : {course.title}</h2>
+          {(chapterId === undefined) &&
+            <p style={titleStyle}>{course.description}</p>
+          }
           <Outlet />
         </div>
       </div>

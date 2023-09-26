@@ -90,8 +90,8 @@ function ChapterList() {
 
   return (
     <div>
-      <h1>{course.title}</h1>
-      <p>{course.description}</p>
+      {/* <h1>{course.title}</h1>
+      <p>{course.description}</p> */}
       <table style={tableStyle}>
         <thead>
           <tr>

@@ -3,30 +3,27 @@ import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function QuestionList() {
-  
-  
+
+
   const tableStyle = {
     borderCollapse: 'collapse',
     width: '80%',
     margin: '20px auto',
     border: '1px solid #ccc',
   };
-  
+
   const thTdStyle = {
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
   };
-  
+
   const headerStyle = {
     backgroundColor: '#f2f2f2',
   };
-  
-  const handleViewCode = (code) => {
-    setSelectedCode(code);
-  };
-  
+
   const [selectedCode, setSelectedCode] = useState(null);
+  
   const param = useParams()
   const courseId = param.subId
   const chapterId = param.chapterId
@@ -41,46 +38,49 @@ function QuestionList() {
       "Authorization": "Bearer " + token
     }
   }
-
+  
   const handleViewRemarks = (chapterId) => {
     alert(`Viewing remarks for Chapter ${chapterId}`);
   };
-
+  
+  const handleViewCode = (code) => {
+    setSelectedCode(code);
+  };
   useEffect(() => {
 
-    const fetchChapters=() => {
+    const fetchChapters = () => {
       fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/`, fetchOption)
-      .then((resp) => {
-        return resp.json()
-      })
-      .then(data => {
-        setChapter(data)
-        console.log(data)
-      })
-      .catch(err => console.log(err))
+        .then((resp) => {
+          return resp.json()
+        })
+        .then(data => {
+          setChapter(data)
+          console.log(data)
+        })
+        .catch(err => console.log(err))
     }
     fetchChapters();
 
-    const fetchQuestions=() => {
+    const fetchQuestions = () => {
       fetch(`http://localhost:8000/api/report/subjects/${courseId}/${chapterId}/`, fetchOption)
-      .then((resp) => {
-        return resp.json()
-      })
-      .then(data => {
-        console.log()
-        // const newdata = JSON.parse(data)
-        // setQuestions(data)
-        // console.log(questions)
-        // console.log(chapters)
-      })
-      .catch(err => console.log(err))
+        .then((resp) => {
+          return resp.json()
+        })
+        .then(data => {
+          console.log(JSON.parse(data))
+          // const newdata = JSON.parse(data)
+          setQuestions(JSON.parse(data))
+          // console.log(questions)
+          // console.log(chapters)
+        })
+        .catch(err => console.log(err))
     }
-    // fetchQuestions();
+    fetchQuestions();
   }, [])
 
   return (
     <div>
-      <h2>{chapter.title}</h2>
+      <h3>{chapter.title}</h3>
       <p>{chapter.description}</p>
       <table style={tableStyle} className="question-table">
         <thead>
@@ -94,28 +94,27 @@ function QuestionList() {
           </tr>
         </thead>
         <tbody>
-          {/* {questions.map((question, index) => (
-            <tr key={question.id}>
+          {questions.map((question, index) => (
+            <tr key={index}>
               <td style={thTdStyle}>{index + 1}</td>
-              <td style={thTdStyle}>{question.text}</td>
+              <td style={thTdStyle}>{question.question_name}</td>
               <td style={thTdStyle}>{question.status}</td>
               <td style={thTdStyle}>{question.marks}</td>
-              <td style={thTdStyle}>{question.comment}</td>
+              <td style={thTdStyle}>{question.review}</td>
               <td style={thTdStyle}>
-                <button
-                  className="view-button"
-                  onClick={() => handleViewCode(question.code)}
+                <button className="view-button"
+                  onClick={() => handleViewCode(question.code_no)}
                 >
                   View Code
                 </button>
-                {selectedCode === question.code && (
+                {selectedCode === question.code_no && (
                   <div>
-                    <pre>{question.code}</pre>
+                    <pre>{question.solution}</pre>
                   </div>
                 )}
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     </div>
