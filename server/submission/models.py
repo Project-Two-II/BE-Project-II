@@ -36,7 +36,7 @@ class Result(models.Model):
     i. autograde, if the user have submission to particular question
     ii. marks, given by teacher
     """
-    submission = models.OneToOneField(Submission, on_delete=models.PROTECT)
+    submission = models.OneToOneField(Submission, on_delete=models.CASCADE)
     marks = models.PositiveIntegerField(
         validators=[
             MinValueValidator(0),
