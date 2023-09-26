@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.urls import reverse
 from ELabX import settings
 
@@ -24,7 +25,6 @@ from .serializers import (
     ProfileSerializer,
     UserLoginSerializer,
     UserRegistrationSerializer,
-    ProfileAvatarSerializer,
     ChangePasswordSerializer,
     EmailVerificationSerializer,
     RequestPasswordResetEmailSerializer,
@@ -290,24 +290,25 @@ class UserAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileAPIView(RetrieveUpdateAPIView):
+class UserProfileAPIView(APIView):
     """
     GET nad UPDATE user profile
     """
     permission_classes = (IsAuthenticated, IsVerified)
-    serializer_class = ProfileSerializer
-    queryset = Profile.objects.all()
+    parser_classes = (MultiPartParser, FormParser)
 
-    def get_object(self):
-        return self.request.user.profile
+    def get_profile(self):
+        user = self.request.user
+        return Profile.objects.get(user=user)
 
+    def get(self, request, *args, **kwargs):
+        profile = self.get_profile()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-class UserAvatarAPIView(RetrieveUpdateAPIView):
-    """
-    GET and UPDATE user avatar
-    """
-    permission_classes = (IsAuthenticated, IsVerified)
-    serializer_class = ProfileAvatarSerializer
-
-    def get_object(self):
-        return self.request.user.profile
+    def put(self, request, *args, **kwargs):
+        profile = self.get_profile()
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
