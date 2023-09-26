@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from subject.models import Chapter, Question, Subject
+from subject.models import Chapter, Question, Subject, ChapterProgress
 from userauth.permissions import IsVerified
 from .permissions import (
     ReviewAccessPermission,
@@ -39,15 +39,36 @@ class SubmissionAPIView(APIView):
         # if yes assign this submission to this question by requested user
         subject = get_object_or_404(Subject, id=subject_id)
         chapter = get_object_or_404(subject.chapters, id=chapter_id)
+        user = self.request.user
+        chapter_progress = ChapterProgress.objects.filter(user=user, chapter=chapter).first()
+        if not (chapter_progress and not chapter_progress.is_locked):
+            return Response(
+                {"detail": "Please complete the previous chapter before accessing this one."},
+                status=status.HTTP_403_FORBIDDEN
+            )
         question = get_object_or_404(chapter.questions, id=question_id)
 
         # assign question and user
         data["question"] = question.id
-        data["submitted_by"] = request.user.id
+        data["submitted_by"] = user.id
 
         serializer = SubmissionSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
+
+            if chapter.questions.filter(submissions__submitted_by=user).count() == chapter.questions.count():
+                next_chapter = chapter.get_next_chapter()
+                if next_chapter:
+                    next_chapter.unlock_for_user(user)
+                    return Response(
+                        {"detail": "Submission accepted. Next chapter unlocked."},
+                        status=status.HTTP_201_CREATED
+                    )
+                else:
+                    return Response(
+                        {"detail": "Congratulations! You have completed the subject."},
+                        status=status.HTTP_201_CREATED
+                    )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

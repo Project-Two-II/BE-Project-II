@@ -70,8 +70,47 @@ class Chapter(models.Model):
     class Meta:
         db_table = "Chapter_elabx"
 
+    def get_next_chapter(self):
+        """
+        Get the next chapter in the order for the same subject.
+        Returns None if there is no next chapter.
+        """
+        next_chapter = Chapter.objects.filter(
+            subject=self.subject, id__gt=self.id
+        ).order_by('id').first()
+        return next_chapter
+
+    def unlock_for_user(self, user):
+        """
+        Unlock this chapter for the specified user.
+        """
+        chapter_progress, created = ChapterProgress.objects.get_or_create(
+            user=user,
+            chapter=self
+        )
+        chapter_progress.is_locked = False
+        chapter_progress.save()
+
     def __str__(self):
         return self.title
+
+
+class ChapterProgress(models.Model):
+    """
+    It provides progress of the chapter,
+    based on it locking system would be applied
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    is_locked = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "ChapterProgress_elabx"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.chapter.title} - Completed: {self.is_locked}"
 
 
 class Question(models.Model):

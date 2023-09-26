@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,7 +13,7 @@ from django.core.exceptions import ValidationError
 from userauth.models import User
 from userauth.permissions import IsVerified
 
-from .models import Subject, Chapter, Question, Test, SubjectGroup, SubjectEnrollment
+from .models import Subject, Chapter, Question, Test, SubjectGroup, SubjectEnrollment, ChapterProgress
 from .permissions import (
     SubjectListAccessPermission,
     SubjectDetailAccessPermission,
@@ -31,6 +33,10 @@ from .serializers import (
     SubjectGroupSerializer,
     SubjectEnrollmentSerializer,
 )
+
+
+def update_chapter_progress(user, chapter):
+    ChapterProgress.objects.get_or_create(user=user, chapter=chapter, defaults={"is_locked": False})
 
 
 class AddEnrollmentKeyAPIView(APIView):
@@ -87,6 +93,10 @@ class SelfEnrollmentAPIView(APIView):
             group = SubjectGroup.objects.get(subject=subject)
             group.users.add(user)
             user.subject_groups.add(group)
+            if not ChapterProgress.objects.filter(user=user,
+                                                  chapter=subject.chapters.first(),
+                                                  is_locked=False).exists():
+                update_chapter_progress(user, subject.chapters.first())
         else:
             raise ValidationError("Key is invalid.")
 
@@ -143,16 +153,21 @@ class SubjectGroupAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, subject_id, *args, **kwargs):
-        group = get_object_or_404(SubjectGroup, subject=subject_id)
+        subject = get_object_or_404(Subject, id=subject_id)
+        group = get_object_or_404(SubjectGroup, subject=subject.id)
         user = get_object_or_404(User, email=request.data["user"])
         group.users.add(user)
+
+        if not ChapterProgress.objects.filter(user=user, chapter=subject.chapters.first(), is_locked=False).exists():
+            update_chapter_progress(user, subject.chapters.first())
+
         user.subject_groups.add(group)
         serializer = SubjectGroupSerializer(group)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, subject_id, *args, **kwargs):
         group = get_object_or_404(SubjectGroup, subject=subject_id)
-        user = get_object_or_404(User, id=request.data["user"])
+        user = get_object_or_404(User, email=request.data["user"])
         group.users.remove(user)
         serializer = SubjectGroupSerializer(group)
         return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
@@ -236,6 +251,10 @@ class QuestionListApiView(APIView):
     def get(self, request, subject_id, chapter_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
         chapter = get_object_or_404(Chapter, id=chapter_id, subject=subject)
+        if self.request.user.is_student() and \
+                not ChapterProgress.objects.filter(user=self.request.user, chapter=chapter, is_locked=False).exists():
+            return Response({"detail": "Please complete the previous chapter before accessing this one."},
+                            status=status.HTTP_403_FORBIDDEN)
         questions = chapter.questions.all()
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -267,7 +286,13 @@ class QuestionDetailApiView(APIView):
             return None
 
     def get(self, request, subject_id, chapter_id, question_id, *args, **kwargs):
-        question = self.get_object(subject_id, chapter_id, question_id)
+        subject = get_object_or_404(Subject, id=subject_id)
+        chapter = get_object_or_404(subject.chapters, id=chapter_id)
+        if self.request.user.is_student() and \
+                not ChapterProgress.objects.filter(user=self.request.user, chapter=chapter, is_locked=False).exists():
+            return Response({"detail": "Please complete the previous chapter before accessing this one."},
+                            status=status.HTTP_403_FORBIDDEN)
+        question = get_object_or_404(chapter.questions, id=question_id)
         if not question:
             return Response(
                 {"detail": "Question does not exists."},
@@ -308,9 +333,20 @@ class ChapterListApiView(APIView):
     permission_classes = (IsAuthenticated, IsVerified, ChapterAccessPermission)
 
     def get(self, request, subject_id, *args, **kwargs):
-        chapters = Chapter.objects.filter(subject=subject_id)
-        serializer = ChapterSerializer(chapters, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        subject = get_object_or_404(Subject, id=subject_id)
+        chapters = Chapter.objects.filter(subject=subject.id)
+        user = self.request.user
+        _chapter_data = list()
+
+        for chapter in chapters:
+            chapter_progress = ChapterProgress.objects.filter(user=user, chapter=chapter, is_locked=False).first()
+            is_locked = chapter_progress.is_locked if chapter_progress is not None else True
+            serializer = ChapterSerializer(chapter)
+            _chapter_data.append({
+                **serializer.data,
+                "is_locked": is_locked
+            })
+        return Response(_chapter_data, status=status.HTTP_200_OK)
 
     def post(self, request, subject_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
@@ -342,6 +378,10 @@ class ChapterDetailApiView(APIView):
                 {"detail": "Chapter does not exists."},
                 status=status.HTTP_400_BAD_REQUEST
             )
+        if self.request.user.is_student() and \
+                not ChapterProgress.objects.filter(user=self.request.user, chapter=chapter, is_locked=False).exists():
+            return Response({"detail": "Please complete the previous chapter before accessing this one."},
+                            status=status.HTTP_403_FORBIDDEN)
         serializer = ChapterSerializer(chapter)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
