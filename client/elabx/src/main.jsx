@@ -50,7 +50,7 @@ import ViewProgress from './Components/ViewProgress'
 import StudentProgress from './Components/StudentProgress'
 import ChapterView from './Components/ChapterView'
 import QuestionList from './Components/QuestionView.jsx'
-
+import SubmissionSucessful from './Components/SubmissionSucessful.jsx'
 import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
 import TestFail from './Components/testfail'
@@ -260,7 +260,12 @@ const router = createBrowserRouter([
   {
     path: "questionview/",
     element: <QuestionView/>
+  },
+  {
+    path: "submissionsucessful/",
+    element: <SubmissionSucessful/>
   }
+
   // {
   //   path:"submissionreview/",
   //   element :<SubmissionReview/>
