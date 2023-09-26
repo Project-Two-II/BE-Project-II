@@ -5,6 +5,7 @@ import { GiBlackBook } from 'react-icons/gi';
 
 const TotalCard = ({ title, count, type }) => {
   const [currentCount, setCurrentCount] = useState(0);
+  console.log(count)
 
   useEffect(() => {
     let interval;

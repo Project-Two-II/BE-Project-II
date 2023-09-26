@@ -31,19 +31,11 @@ const cardStyle = {
   flexDirection: "column"
 }
 
-const btnStyle = {
-  // float: "center",
-  width : "120px",
-  padding: "10px",
-  backgroundColor: "green",
-  color: "white",
-  margin: "5px",
-  border: "none",
-  borderRadius: "8px"
-}
-
-const CourseCard = ({ course }) => {
-  const routeTo = "/syllabus/" + course.id + `?title=${course.title}`;
+const CourseCard = ({ course, showEnrollBtn }) => {
+  var routeTo = "/subject/" + course.id + '/enroll'
+  console.log(showEnrollBtn)
+  if(!showEnrollBtn)
+    routeTo = "/syllabus/" + course.id + `?title=${course.title}`;
   const title = course.title;
 
   return (
@@ -54,8 +46,10 @@ const CourseCard = ({ course }) => {
       <hr className="progressBar" style={progress_bar_style}></hr>
       <Link to={routeTo}> 
        <h3 style={style}>{course.title}</h3>
-      </Link> 
-      <Link to={`/syllabus/${course.id}/enroll`}><button style={btnStyle}>Enroll</button></Link>
+      </Link>
+      {
+        showEnrollBtn ? <Link to={routeTo}>Enroll Now</Link> : ''
+      } 
      </div>
       
     </div>

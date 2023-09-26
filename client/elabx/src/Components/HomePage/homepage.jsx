@@ -27,7 +27,6 @@ const btn_style = {
 function HomePage() {
   const navigate = useNavigate()
   const isLoggedIn = useSelector((state) => state.isLoggedIn)
-  const isTeacher = useSelector((state)=> state.role)
   const token = useSelector((state) => state.token);
   return (
     <div className="HomeMain">

@@ -10,6 +10,8 @@ const course_list_style = {
 
 function CourseList({ token }) {
   const [course, setCourse] = useState([]);
+  const [enrolledCourse, setEnrolledCourse] = useState([]);
+  const [enrolledCourseId, setEnrolledCourseId] = useState([])
 
   const fetchOption = {
     method: "GET",
@@ -19,28 +21,50 @@ function CourseList({ token }) {
     }
   }
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/subjects/", fetchOption);
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data = await response.json();
-        setCourse(data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/subjects/", fetchOption);
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
       }
-    };
+      const data = await response.json();
+      setCourse(data);
+      // It is bad but I've to do this, I need the IDs
+      fetch("http://localhost:8000/api/subjects/mysubjects/", fetchOption)
+      .then((resp)=> resp.json())
+      .then(data => {
+        console.log("Enrolled Course", data)
+        setEnrolledCourseId(data.map((d) => d.id));
 
+      })
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchCourses();
-  }, [token]);
+
+  },[]);
 
   return (
     <div className='course-list' style={course_list_style}>
-      {course.map((course) => (
-        <CourseCard key={course.id} course={course}/>
-      ))}
+      {
+
+        course.map((course) => {
+          console.log(enrolledCourseId)
+          if(enrolledCourseId.includes(course.id)){
+            console.log(enrolledCourseId.includes(course.id))
+            return(
+              <CourseCard key={course.id} course={course} showEnrollBtn={false}/>
+            )
+          } else {
+            return(
+              <CourseCard key={course.id} course={course} showEnrollBtn={true}/>
+            )
+          }
+        })
+      }
     </div>
   );
 }

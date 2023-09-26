@@ -1,24 +1,56 @@
 import TotalCard from './TotalCard';
 import CourseCard from './CourseCard';
 
-import './teacherhome.css'
+import {useSelector } from 'react-redux'
 
-import courseImg2 from '../../media/lab2.png';
-import courseImg3 from '../../media/LAB3.png';
-import courseImg4 from '../../media/lab4.png';
-import courseImg5 from '../../media/lab5.png';
-import courseImg6 from '../../media/lab6.png';
-import courseImg7 from '../../media/lab7.png';
-import courseImg8 from '../../media/lab8.png';
-import courseImg9 from '../../media/lab9.png';
+
+import './teacherhome.css'
+import { useEffect, useState } from 'react';
+
+
+
+const handleProfile = () => {
+
+  console.log("userProfile clicked");
+  setShowDropdown(true);
+};
 
 const TeacherHome = () => {
+
+  const token = useSelector((state) => state.token);
+
+  const [statistics, setStatistics] = useState([])
+
+  const fetchOption = {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": "Bearer " +  token
+    }
+  }
+
+
+  const fetchStatistics = () => {
+    fetch("http://localhost:8000/api/report/statistics/", fetchOption)
+    .then((resp) => resp.json())
+    .then((data) => {
+
+      // api bata gatillo data aayena
+      console.log(data)
+      setStatistics(data)
+
+    })
+  }
+
+  useEffect(fetchStatistics, [])
+
   return(
     <>
-     <div className="total-card-container">
+        <div className="total-card-container">
           <TotalCard title="Total Subjects" count={10} type={"subject"} />
-          <TotalCard title="Total Students" count={100} type ={"student"} />
-     </div>
+          <TotalCard title="Total Students" count={10} type ={"student"} />
+        </div>
+          
     </>
   )
 }

@@ -64,7 +64,7 @@ const SelfEnroll = () => {
           <input name="enrollmentKey" value={key} onChange={handleKeyChange} required />
         </div>
 
-        <button id="submit" className="btn" type="submit">Add</button>
+        <button id="submit" className="btn" type="submit">Enroll</button>
       </form>
     </div>
     <Footer />

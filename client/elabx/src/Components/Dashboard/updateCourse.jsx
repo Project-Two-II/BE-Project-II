@@ -29,7 +29,7 @@ const UpdateCourse = () => {
   const [courseSubject, setCourseSubject] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [courseDesc, setCourseDesc] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState({});
   const [message, setMessage] = useState('')
 
   
@@ -75,6 +75,7 @@ const UpdateCourse = () => {
                 setCourseSubject(data.title)
                 setCourseDesc(data.description)
                 setCourseCode(data.code_no)
+                setThumbnail(data.thumbnail)
             } catch(error)
             {
                 console.error("Error fetching data: ", error)
@@ -91,7 +92,8 @@ const UpdateCourse = () => {
     formData.append("code_no",courseCode)
     formData.append("title", courseSubject)
     formData.append("description",courseDesc)
-    formData.append("thumbnail",thumbnail, thumbnail.name)
+    console.log(thumbnail)
+    formData.append("thumbnail",thumbnail, thumbnail.image)
 
     const updateOption = {
       method: "PUT",

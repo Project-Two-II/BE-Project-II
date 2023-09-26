@@ -111,6 +111,10 @@ const router = createBrowserRouter([
     element: <ChapterView />
   },
   {
+    path:"/subject/:courseId/enroll",
+    element: <SelfEnroll />
+  },
+  {
     path: "/syllabus/:subId",
     element: <CourseDetailPage />,
     errorElement: <NotFoundPage/>,

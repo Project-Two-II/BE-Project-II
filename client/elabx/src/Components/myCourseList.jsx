@@ -10,7 +10,6 @@ const course_list_style = {
 
 function MyCourseList({ token }) {
   const [course, setCourse] = useState([]);
-  const myCourses =[]
 
   const fetchOption = {
     method: "GET",
@@ -19,34 +18,29 @@ function MyCourseList({ token }) {
       "Authorization": "Bearer " +  token
     }
   }
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/subjects/mysubjects/", fetchOption);
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
+      }
+      const data = await response.json();
+      console.log(data)
+      setCourse(data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/subjects/mysubjects/", fetchOption);
-        if (!response.ok) {
-          throw new Error("Network response was not ok.");
-        }
-        const data = await response.json();
-        console.log(data)
-        setCourse(data);
-        // enrolledCourses.push(course.id)
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-    
     fetchCourses();
-    // course.map(course => (myCourses.push(course.id)))
-    // console.log(myCourses)
   }, [token]);
 
   return (
     <div className='course-list' style={course_list_style}>
-      {/* {course.map((course) =>(myCourses.push(course.id))) } */}
-      {/* {course.map((course) => (myCourses.push(course.id)))} */}
+
       {course.map((course) => (
-        <CourseCard key={course.id} course={course} myCourses={myCourses}/>
+        <CourseCard key={course.id} course={course}/>
       ))}
     </div>
   );
