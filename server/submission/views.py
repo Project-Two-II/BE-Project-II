@@ -52,11 +52,14 @@ class SubmissionAPIView(APIView):
         data["question"] = question.id
         data["submitted_by"] = user.id
 
+        print(chapter.questions.filter(submission__submitted_by=user).count())
+        print(chapter.questions.count())
+
         serializer = SubmissionSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
 
-            if chapter.questions.filter(submissions__submitted_by=user).count() == chapter.questions.count():
+            if chapter.questions.filter(submission__submitted_by=user).count() == chapter.questions.count():
                 next_chapter = chapter.get_next_chapter()
                 if next_chapter:
                     next_chapter.unlock_for_user(user)
