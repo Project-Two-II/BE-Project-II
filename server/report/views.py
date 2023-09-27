@@ -40,7 +40,7 @@ class StudentReportOfAChapterAPIView(APIView):
             _question_report["role"] = user.role
             _chapter_report.append(_question_report)
         return Response(
-            data=json.dumps(_chapter_report),
+            data=_chapter_report,
             status=status.HTTP_200_OK
         )
 
@@ -97,7 +97,7 @@ class StudentReportOfAQuestionAPIView(APIView):
             question_report = progress_generator.get_question_report(user, question)
             question_report["role"] = self.request.user.role
             return Response(
-                data=json.dumps(question_report),
+                data=question_report,
                 status=status.HTTP_200_OK
             )
 
@@ -123,4 +123,4 @@ class StudentListInASubjectAPIView(APIView):
                 data["email"] = f"{user.email}"
                 data["progress"] = progress_generator.get_my_progress(user, subject=subject)
                 _subject_report.append(data)
-        return Response(json.dumps(_subject_report), status=status.HTTP_200_OK)
+        return Response(_subject_report, status=status.HTTP_200_OK)
