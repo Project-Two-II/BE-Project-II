@@ -91,6 +91,9 @@ class SelfEnrollmentAPIView(APIView):
             raise ValueError("Self enrollment is not available.")
         if requested_key == actual_key:
             group = SubjectGroup.objects.get(subject=subject)
+            if not subject.chapters.exists():
+                return Response(data={"detail": "Chapters are not Found in this Subject."},
+                                status=status.HTTP_404_NOT_FOUND)
             group.users.add(user)
             user.subject_groups.add(group)
             if not ChapterProgress.objects.filter(user=user,
@@ -155,6 +158,9 @@ class SubjectGroupAPIView(APIView):
     def put(self, request, subject_id, *args, **kwargs):
         subject = get_object_or_404(Subject, id=subject_id)
         group = get_object_or_404(SubjectGroup, subject=subject.id)
+        if not subject.chapters.exists():
+            return Response(data={"detail": "Chapters are not Found in this Subject."},
+                            status=status.HTTP_404_NOT_FOUND)
         user = get_object_or_404(User, email=request.data["user"])
         group.users.add(user)
 
