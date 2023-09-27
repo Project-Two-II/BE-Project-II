@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from './header';
 import Footer from './Footer/Footer';
 import './Create.css';
@@ -56,6 +56,7 @@ function CQuestionList() {
   const chapterId = param.chapterId;
 
   const token = useSelector((state) => state.token);
+  const navigate = useNavigate()
   const [questions, setQuestions] = useState([]);
 
   const fetchOption = {
@@ -144,6 +145,8 @@ function CQuestionList() {
         console.log(data)
       })
       .catch(err => console.log(err))
+
+      useNavigate(`prompt`)
   };
 
   return (

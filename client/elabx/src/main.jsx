@@ -58,8 +58,9 @@ import TestFail from './Components/testfail'
 import StudentAdded from './Components/dialogboxes/StudentAdded'
 import Enrolledsucessfully from './Components/dialogboxes/EnrolledSucessfully'
 import SubjectAdded from './Components/dialogboxes/SubjectAdded'
-import CodeSubmitted from './Components/dialogboxes/CodeSubmitted'
+import CodeSubmitted from './Components/dialogboxes/prompt'
 import QuestionAdded from './Components/dialogboxes/QuestionAdded.jsx'
+import Prompt from './Components/dialogboxes/prompt';
 
 
 
@@ -85,14 +86,12 @@ import QuestionView from './Components/QuestionView.jsx'
 
 import NotFoundPage from './routes/ErrorPage.jsx';
 
-// import CreateQuestion from './Components/CreateQuestion'
-
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <ErrorPage/>
+    errorElement: <ErrorPage />
 
   },
   {
@@ -108,24 +107,25 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    // path: "/home"
-  },
-  {
     path: "/editor",
     element: <Editor />
   },
   {
-    path:"/chapterview",
+    path: "/chapterview",
     element: <ChapterView />
   },
   {
-    path:"/subject/:courseId/enroll",
+    path: "/subject/:courseId/enroll",
     element: <SelfEnroll />
+  },
+  {
+    path: "/subject/:courseId/enroll/prompt",
+    element: <Prompt promptString={"Enrolled to course"}/>
   },
   {
     path: "/syllabus/:subId",
     element: <CourseDetailPage />,
-    errorElement: <NotFoundPage/>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "chapters/:chapterId/questions",
@@ -139,21 +139,13 @@ const router = createBrowserRouter([
         path: "viewchapters/:chapterId/viewquestions",
         element: <QuestionList />
       }
-      // {
-      //   path: "viewprogress/",
-      //   element: <ViewProgress />
-      // },
-      // {
-      //   path: "viewprogress/:chapterId/questions",
-      //   element: <SubmissionReview />
-      // },
     ]
   },
 
   {
     path: "/syllabus/:subId/chapters/:chapterId/questionsolve/:questionId",
     element: <QuestionSolve />,
-    children:[
+    children: [
       {
         path: "testfail",
         element: <TestFail />
@@ -164,11 +156,6 @@ const router = createBrowserRouter([
     path: "/syllabus/:courseId/enroll",
     element: <SelfEnroll />
   },
-
-  // {
-  //   path: "syllabus/:subId/addchapter",
-  //   element: <CreateChapter />
-  // },
   {
     path: "/profile",
     element: <Profile />
@@ -182,45 +169,45 @@ const router = createBrowserRouter([
     element: <CodeReview />
   },
   {
-    path :'/dashboard',
-    element:<Dashboard/>,
+    path: '/dashboard',
+    element: <Dashboard />,
     // loader: TeacherGuard,
-    errorElement: <NotFoundPage/>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "home/",
-        element: <TeacherHome/>,
+        element: <TeacherHome />,
       },
       {
         path: "courses/",
-        element: <ViewCourse/>,
+        element: <ViewCourse />,
       },
       {
         path: "createCourse/",
-        element: <CreateCourse/>
+        element: <CreateCourse />
       },
-      
+
       {
         path: "courses/:subId/chapters/",
-        element: <ViewChapter/>
+        element: <ViewChapter />
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/",
-        element: <ViewQuestion/>
+        element: <ViewQuestion />
       },
       {
         path: "courses/:subId/update/",
-        element: <UpdateCourse/>
+        element: <UpdateCourse />
       },
       {
-        path : "courses/:subId/chapters/:chapterId/update/",
-        element: <UpdateChapter/>
+        path: "courses/:subId/chapters/:chapterId/update/",
+        element: <UpdateChapter />
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/",
-        element: <UpdateQuestion/>
+        element: <UpdateQuestion />
       },
-      
+
       {
         path: "courses/:subId/chapters/add/",
         element: <CreateChapter />
@@ -247,74 +234,92 @@ const router = createBrowserRouter([
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/add/",
-        element: <CreateQuestion/>
+        element: <CreateQuestion />
       },
       {
         path: "courses/:subId/delete/",
-        element: <Delete type={"Course"}/>
+        element: <Delete type={"Course"} />
       },
       {
         path: "courses/:subId/chapters/:chapterId/delete/",
-        element: <Delete type={"Chapter"}/>
+        element: <Delete type={"Chapter"} />
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/delete/",
-        element: <Delete type={"Question"}/>
+        element: <Delete type={"Question"} />
       },
+      {
+        path: "createcourse/prompt",
+        element: <Prompt promptString={"Course added successfully"} />
+      },
+      {
+        path: "courses/:subId/update/prompt",
+        element: <Prompt promptString={"Course updated successfully"} />
+      },
+      {
+        path: "courses/:subId/addenrollmentkey/prompt",
+        element: <Prompt promptString={"Enrollment Key Added"} />
+      },
+      {
+        path: "courses/:subId/addstudent/prompt",
+        element: <Prompt promptString={"Added student to the group"} />
+      },
+      {
+        path: "courses/:subId/chapters/add/prompt",
+        element: <Prompt promptString={"Chapter added successfully"} />
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/update/prompt",
+        element: <Prompt promptString={"Chapter updated successfully"} />
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/add/prompt",
+        element: <Prompt promptString={"Question added successfully"}/>
+      },
+      {
+        path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/prompt",
+        element: <Prompt promptString={"Question updated successfully"}/>
+      },
+      {
+        path: "courses/:subId/viewstudent/:studentId/chapters/:chapterId/questions/",
+        element: <Prompt promptString={"Review Posted"}/>
+      }
 
     ],
-    
+
   },
   {
     path: "chapterview/",
-    element: <ChapterView/>
+    element: <ChapterView />
   },
   {
     path: "questionview/",
-    element: <QuestionView/>
+    element: <QuestionView />
   },
   {
     path: "submissionsucessful/",
-    element: <SubmissionSucessful/>
+    element: <SubmissionSucessful />
   },
-
-  // {
-  //   path:"submissionreview/",
-  //   element :<SubmissionReview/>
-  // },
-  // {
-  //   path:"submissionreview/",
-  //   element :<SubmissionReview/>
-  // },
-  // {
-  //   path:"coursedetailpage/",
-  //   element :<CourseDetailPage/>
-  // },
   {
     path: "studentadded/",
-    element: <StudentAdded/>
+    element: <StudentAdded />
   },
   {
     path: "subjectadded/",
-    element: <SubjectAdded/>
+    element: <SubjectAdded />
   },
   {
     path: "enrolledsucessfully/",
-    element: <Enrolledsucessfully/>
+    element: <Enrolledsucessfully />
   },
   {
     path: "QuestionAdded/",
-    element: <QuestionAdded/>
+    element: <QuestionAdded />
   },
   {
     path: "codesubmitted/",
-    element: <CodeSubmitted/>
+    element: <CodeSubmitted />
   }
-
-
-
-
-
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

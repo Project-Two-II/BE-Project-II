@@ -93,6 +93,7 @@ const UpdateChapter = () => {
           setMessage(data.detail);
         })
         .catch(err => console.log(err))
+        navigate(`prompt`)
     }
 
   return (
@@ -124,7 +125,7 @@ const UpdateChapter = () => {
 
       <div className="buttonGroup">
         <button className="btn createBtn" type="button" onClick={handleSubmission}>
-          Create
+          Update
         </button>
       </div>
     </form>

@@ -74,7 +74,7 @@ const CreateCourse = () => {
    })
   .catch(err => console.log(err))
 
-  navigate("/dashboard/courses")
+  navigate(`prompt`)
   }
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Create.css';
 
 import { useSelector } from 'react-redux'
-import {  useParams, useLocation } from 'react-router-dom'
+import {  useParams, useLocation, useNavigate } from 'react-router-dom'
 
 
 function useQuery() {
@@ -13,6 +13,7 @@ function useQuery() {
 
 const CreateChapter = () => {
 
+  const navigate = useNavigate()
    const token = useSelector((state) => state.token);
 
     const param = useParams();
@@ -52,7 +53,7 @@ const CreateChapter = () => {
               console.log(data)
             })
     .catch(err => console.log(err))
-
+  navigate(`prompt`)
   }
 
   return (

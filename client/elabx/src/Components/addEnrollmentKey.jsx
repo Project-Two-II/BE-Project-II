@@ -52,7 +52,7 @@ const AddEnrollmentKey = () => {
       setMessage(data.detail);
     })
     .catch(err => console.log(err))
-    
+    navigate("prompt")
   }
 
   return (

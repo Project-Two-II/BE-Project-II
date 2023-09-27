@@ -3,7 +3,7 @@ import './Create.css';
 
 import { useSelector } from 'react-redux'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 
 const CreateQuestion = () => {
@@ -11,6 +11,7 @@ const CreateQuestion = () => {
   const token = useSelector((state) => state.token);
 
   const param = useParams();
+  const navigate = useNavigate()
   const courseId = param.subId;
   const chapterId = param.chapterId
 
@@ -59,10 +60,6 @@ const CreateQuestion = () => {
         "Authorization": "Bearer " + token
       },
       body: JSON.stringify({
-        // "title": title,
-        // "description": questionDescription,
-        // "boilerplate":boilerplateText,
-        // "question":"question",
         "source_code": testDescription
       })
     }
@@ -82,9 +79,8 @@ const CreateQuestion = () => {
           .catch(err => console.log(err))
       })
       .catch(err => console.log(err))
-
-
     console.log(questionId)
+    navigate(`prompt`)
   }
 
   return (
@@ -143,38 +139,6 @@ const CreateQuestion = () => {
         </button>
       </div>
     </div>
-    // <div className="formContainer">
-    //   <form className="ipContainer">
-    //     <div className="inputGroup">
-    //     </div>
-    //       <div className="inputGroup">
-    //         <label >Question Title:</label>
-    //         <input value={title} onChange={handleQuestionChange} required />
-    //         <label>Question Description:</label>
-    //         <div className="questionGroup">
-    //           <textarea
-    //             value={questionDescription}
-    //             onChange={handleDescriptionChange}
-    //             required
-    //           />
-    //         </div>
-    //       </div>
-
-
-
-    //     <div className="inputGroup">
-    //       <label htmlFor="boilerplateText">Boilerplate Text:</label>
-    //       <textarea
-    //         name="boilerplateText"
-    //         id="boilerplateText"
-    //         value={boilerplateText}
-    //         onChange={handleBoilerplateChange}
-    //         required
-    //       />
-    //     </div>
-    //     <button className="btn" type="button" onClick={handleSubmission}>Add</button>
-    //   </form>
-    // </div>
   );
 }
 

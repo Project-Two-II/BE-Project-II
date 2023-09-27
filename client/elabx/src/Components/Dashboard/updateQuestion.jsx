@@ -65,27 +65,6 @@ const UpdateQuestion = () => {
     }
   }
 
-  // const handleQuestionChange = (e) => {
-  //   setQuestionTitle(e.target.value);
-  // }
-
-  // const handleDescriptionChange = (e) => {
-  //   setQuestionDescription(e.target.value)
-  // }
-
-  // const handleBoilerplateChange = (e) => {
-  //   setBoilerplateText(e.target.value);
-  // }
-  // const handleAddQuestion = () => {
-
-  //   console.log('Question Title:', questionTitle);
-  //   console.log('Question Description:', questionDescription);
-  //   console.log('Boilerplate Code:', boilerplateText);
-  //   console.log('Test Description:', testDescription);
-
-  // };
-
-
   useEffect(() => {
     const fetchQuestion = async () => {
 
@@ -152,6 +131,7 @@ const UpdateQuestion = () => {
         setMessage(data.detail);
       })
       .catch(err => console.log(err))
+      navigate('prompt')
   }
 
   return (
@@ -210,38 +190,6 @@ const UpdateQuestion = () => {
         </button>
       </div>
     </div>
-    // <div className="formContainer">
-    //   <form className="ipContainer">
-    //     <div className="inputGroup">
-    //     </div>
-    //       <div className="inputGroup">
-    //         <label >Question Title:</label>
-    //         <input value={questionTitle} onChange={handleQuestionChange} required />
-    //         <label>Question Description:</label>
-    //         <div className="questionGroup">
-    //           <textarea
-    //             value={questionDescription}
-    //             onChange={handleDescriptionChange}
-    //             required
-    //           />
-    //         </div>
-    //       </div>
-
-
-
-    //     <div className="inputGroup">
-    //       <label htmlFor="boilerplateText">Boilerplate Text:</label>
-    //       <textarea
-    //         name="boilerplateText"
-    //         id="boilerplateText"
-    //         value={boilerplateText}
-    //         onChange={handleBoilerplateChange}
-    //         required
-    //       />
-    //     </div>
-    //     <button className="btn" type="button" onClick={handleSubmission}>Add</button>
-    //   </form>
-    // </div>
   );
 }
 
