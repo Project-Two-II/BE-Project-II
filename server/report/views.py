@@ -60,7 +60,7 @@ class MySubjectsStatsAPIView(APIView):
         _total_students = stats_generator.count_my_students(user)
         _my_subject_stats["total_students"] = _total_students
         return Response(
-            data=json.dumps(_my_subject_stats),
+            data=_my_subject_stats,
             status=status.HTTP_200_OK
         )
 

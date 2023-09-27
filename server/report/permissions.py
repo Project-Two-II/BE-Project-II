@@ -37,11 +37,10 @@ class MySubjectStatsAccessPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if SubjectGroup.objects.filter(users=request.user).exists():
-            if request.method == "GET":
-                return request.user.is_teacher()
-            else:
-                return False
+        if request.method == "GET":
+            return request.user.is_teacher()
+        else:
+            return False
 
 
 class StudentReportOfAChapterAccessPermission(BasePermission):

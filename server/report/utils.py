@@ -7,15 +7,18 @@ from submission.models import Submission, Result, Review
 class StatsGenerator:
     @staticmethod
     def count_my_subjects(user):
-        return SubjectGroup.objects.filter(users=user).count()
+        return SubjectGroup.objects.filter(users=user).count() if SubjectGroup.objects.filter(users=user).exists() else 0
 
     @staticmethod
     def count_my_students(user):
         _users = set()
         groups = SubjectGroup.objects.filter(users=user)
-        for group in groups:
-            _users.update(group.users.all())
-        return len(_users)
+        if groups.exists():
+            for group in groups:
+                _users.update(group.users.all())
+            return len(_users)
+        else:
+            return 0
 
 
 class ProgressGenerator:
