@@ -15,7 +15,7 @@ class StatsGenerator:
         groups = SubjectGroup.objects.filter(users=user)
         if groups.exists():
             for group in groups:
-                _users.update(group.users.all())
+                _users.update(group.users.all().filter(role=0))
             return len(_users)
         else:
             return 0
