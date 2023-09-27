@@ -97,7 +97,7 @@ function ChapterList() {
           <tr>
             <th style={{ ...thTdStyle, ...headerStyle }}>S.No</th>
             <th style={thTdStyle}>Chapter</th>
-            <th style={thTdStyle}>Remarks</th>
+            <th style={thTdStyle}>Submission Details</th>
           </tr>
         </thead>
         <tbody>

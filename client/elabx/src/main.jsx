@@ -55,6 +55,14 @@ import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
 import TestFail from './Components/testfail'
 
+import StudentAdded from './Components/dialogboxes/StudentAdded'
+import Enrolledsucessfully from './Components/dialogboxes/EnrolledSucessfully'
+import SubjectAdded from './Components/dialogboxes/SubjectAdded'
+import CodeSubmitted from './Components/dialogboxes/CodeSubmitted'
+import QuestionAdded from './Components/dialogboxes/QuestionAdded.jsx'
+
+
+
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 import "slick-carousel/slick/slick.css";
@@ -268,7 +276,7 @@ const router = createBrowserRouter([
   {
     path: "submissionsucessful/",
     element: <SubmissionSucessful/>
-  }
+  },
 
   // {
   //   path:"submissionreview/",
@@ -282,6 +290,30 @@ const router = createBrowserRouter([
   //   path:"coursedetailpage/",
   //   element :<CourseDetailPage/>
   // },
+  {
+    path: "studentadded/",
+    element: <StudentAdded/>
+  },
+  {
+    path: "subjectadded/",
+    element: <SubjectAdded/>
+  },
+  {
+    path: "enrolledsucessfully/",
+    element: <Enrolledsucessfully/>
+  },
+  {
+    path: "QuestionAdded/",
+    element: <QuestionAdded/>
+  },
+  {
+    path: "codesubmitted/",
+    element: <CodeSubmitted/>
+  }
+
+
+
+
 
 ]);
 
