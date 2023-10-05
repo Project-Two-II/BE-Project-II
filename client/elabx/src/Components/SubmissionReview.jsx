@@ -146,7 +146,7 @@ function CQuestionList() {
       })
       .catch(err => console.log(err))
 
-      useNavigate(`prompt`)
+      navigate(`prompt`)
   };
 
   return (

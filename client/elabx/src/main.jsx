@@ -55,11 +55,11 @@ import ViewChapter from './Components/Dashboard/viewChapter'
 import TeacherHome from './Components/Dashboard/teacherhome';
 import TestFail from './Components/testfail'
 
-import StudentAdded from './Components/dialogboxes/StudentAdded'
-import Enrolledsucessfully from './Components/dialogboxes/EnrolledSucessfully'
-import SubjectAdded from './Components/dialogboxes/SubjectAdded'
-import CodeSubmitted from './Components/dialogboxes/prompt'
-import QuestionAdded from './Components/dialogboxes/QuestionAdded.jsx'
+// import StudentAdded from './Components/dialogboxes/StudentAdded'
+// import Enrolledsucessfully from './Components/dialogboxes/EnrolledSucessfully'
+// import SubjectAdded from './Components/dialogboxes/SubjectAdded'
+// import CodeSubmitted from './Components/dialogboxes/prompt'
+// import QuestionAdded from './Components/dialogboxes/QuestionAdded.jsx'
 import Prompt from './Components/dialogboxes/prompt';
 
 
@@ -296,30 +296,30 @@ const router = createBrowserRouter([
     path: "questionview/",
     element: <QuestionView />
   },
-  {
-    path: "submissionsucessful/",
-    element: <SubmissionSucessful />
-  },
-  {
-    path: "studentadded/",
-    element: <StudentAdded />
-  },
-  {
-    path: "subjectadded/",
-    element: <SubjectAdded />
-  },
-  {
-    path: "enrolledsucessfully/",
-    element: <Enrolledsucessfully />
-  },
-  {
-    path: "QuestionAdded/",
-    element: <QuestionAdded />
-  },
-  {
-    path: "codesubmitted/",
-    element: <CodeSubmitted />
-  }
+  // {
+  //   path: "submissionsucessful/",
+  //   element: <SubmissionSucessful />
+  // },
+  // {
+  //   path: "studentadded/",
+  //   element: <StudentAdded />
+  // },
+  // {
+  //   path: "subjectadded/",
+  //   element: <SubjectAdded />
+  // },
+  // {
+  //   path: "enrolledsucessfully/",
+  //   element: <Enrolledsucessfully />
+  // },
+  // {
+  //   path: "QuestionAdded/",
+  //   element: <QuestionAdded />
+  // },
+  // {
+  //   path: "codesubmitted/",
+  //   element: <CodeSubmitted />
+  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

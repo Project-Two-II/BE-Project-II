@@ -31,9 +31,9 @@ function StudentProgressTable() {
           return resp.json()
         })
         .then((data) => {
-          const newdata = JSON.parse(data)
-          console.log(newdata);
-          setStudents(newdata);
+          // const newdata = JSON.parse(data)
+          console.log(data);
+          setStudents(data);
         })
     };
     getStudents();
