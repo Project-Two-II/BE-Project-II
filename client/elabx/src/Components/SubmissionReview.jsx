@@ -91,6 +91,8 @@ function CQuestionList() {
         })
         .then(data => {
           setSubmission(JSON.parse(data))
+          setMarksInput(JSON.parse(data).marks)
+          setReviewInput(JSON.parse(data).review)
         })
         .catch(err => console.log(err))
     }

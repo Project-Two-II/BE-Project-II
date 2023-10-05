@@ -124,13 +124,8 @@ const UpdateChapter = () => {
         />
       </div>
 
-<<<<<<< HEAD
-      <div className="buttonGroup">
-        <button className="btn createBtn" type="button" onClick={handleSubmission}>
-=======
       <div>
         <button style={btnStyle} type="button" onClick={handleSubmission}>
->>>>>>> 1574ef8 (bulk add)
           Update
         </button>
       </div>

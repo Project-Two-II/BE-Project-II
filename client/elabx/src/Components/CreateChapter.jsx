@@ -3,13 +3,10 @@ import './Create.css';
 
 import { useSelector } from 'react-redux'
 import {  useParams, useLocation, useNavigate } from 'react-router-dom'
-<<<<<<< HEAD
-=======
 
 const btnStyle = {
   padding: "10px"
 }
->>>>>>> 1574ef8 (bulk add)
 
 
 function useQuery() {
@@ -20,13 +17,8 @@ function useQuery() {
 
 const CreateChapter = () => {
 
-<<<<<<< HEAD
-  const navigate = useNavigate()
-   const token = useSelector((state) => state.token);
-=======
   const token = useSelector((state) => state.token);
   const navigate = useNavigate();
->>>>>>> 1574ef8 (bulk add)
 
   const param = useParams();
   const courseId = param.subId;

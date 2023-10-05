@@ -58,7 +58,7 @@ function Editor(props) {
 
 
     //test type verifier ends
-    let finalCode = initialHeader + code + testCode;
+    var finalCode = initialHeader + code + testCode;
     API = new WorkerAPI();
     API.compileLinkRun(finalCode);
   }

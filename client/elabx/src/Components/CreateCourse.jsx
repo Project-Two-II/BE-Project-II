@@ -95,10 +95,6 @@ const CreateCourse = () => {
        }
       )
 
-<<<<<<< HEAD
-  navigate(`prompt`)
-=======
->>>>>>> 1574ef8 (bulk add)
   }
 
   return (
