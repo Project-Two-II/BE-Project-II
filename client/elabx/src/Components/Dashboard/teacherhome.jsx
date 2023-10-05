@@ -1,19 +1,12 @@
 import TotalCard from './TotalCard';
 import CourseCard from './CourseCard';
 
-import {useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 
 import './teacherhome.css'
 import { useEffect, useState } from 'react';
 
-
-
-const handleProfile = () => {
-
-  console.log("userProfile clicked");
-  setShowDropdown(true);
-};
 
 const TeacherHome = () => {
 
@@ -25,32 +18,33 @@ const TeacherHome = () => {
     method: "GET",
     headers: {
       "Content-type": "application/json",
-      "Authorization": "Bearer " +  token
+      "Authorization": "Bearer " + token
     }
   }
 
 
   const fetchStatistics = () => {
     fetch("http://localhost:8000/api/report/statistics/", fetchOption)
-    .then((resp) => resp.json())
-    .then((data) => {
-
-      // api bata gatillo data aayena
-      console.log(data)
-      setStatistics(data)
-
-    })
-  }
+      .then((resp) => {
+        if(!resp.ok) throw new Error("Network response is not ok")
+        return resp.json()
+      })
+      .then((data) => {
+        console.log(data)
+        setStatistics(data)
+      })
+      .catch((err) => console.log("Something went wrong: ", err))
+    }
 
   useEffect(fetchStatistics, [])
 
-  return(
+  return (
     <>
-        <div className="total-card-container">
-          <TotalCard title="Total Subjects" count={10} type={"subject"} />
-          <TotalCard title="Total Students" count={10} type ={"student"} />
-        </div>
-          
+      <div className="total-card-container">
+        <TotalCard title="Total Subjects" count={statistics.total_subjects} type={"subject"} />
+        <TotalCard title="Total Students" count={statistics.total_students} type={"student"} />
+      </div>
+
     </>
   )
 }

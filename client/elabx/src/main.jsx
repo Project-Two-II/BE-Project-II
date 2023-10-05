@@ -27,7 +27,6 @@ import CreateChapter from './Components/CreateChapter.jsx'
 import ProfileEdit from './routes/editProfile'
 import CodeReview from './routes/codeReview'
 // import CreateQuestion from './Components/CreateQuestion.jsx'
-import CreateTest from './Components/CreateTest.jsx'
 // import AddStudent from './Components/AddStudent.jsx'
 // import TeacherCourseDetails from './Components/TeacherCourseDetails.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
@@ -207,7 +206,6 @@ const router = createBrowserRouter([
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/",
         element: <UpdateQuestion />
       },
-
       {
         path: "courses/:subId/chapters/add/",
         element: <CreateChapter />

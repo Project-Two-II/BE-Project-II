@@ -9,11 +9,12 @@ body {
 
 .formContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   overflow-y: auto;
-  width: 20px;
+  /* width: 20px; */
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 

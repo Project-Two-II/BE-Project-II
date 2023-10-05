@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import Header from './header';
-import Footer from './Footer/Footer';
 
 import './Create.css';
+
+const errStyle = {
+  color: "red",
+}
+
+const successStyle = {
+  color: "green"
+}
 
 const AddStudent = () => {
 
@@ -19,7 +25,8 @@ const AddStudent = () => {
   console.log(token)
 
   const [student, setStudent] = useState('')
-  const [message, setMessage] = useState('')
+  const [errMessage, setErrMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const fetchOption = {
     method: "PUT",
@@ -38,15 +45,18 @@ const AddStudent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setMessage('');
-
+    setErrMessage('');
+    setSuccessMessage('')
     fetch(`http://localhost:8000/api/subjects/${courseId}/group/`,fetchOption)
     .then((resp) => {
+      if(!resp.ok){
+         setErrMessage("Something went Wrong.. Try again in a while")
+      }
       return resp.json()
     })
     .then((data) => {
       console.log(data);
-      setMessage(data.detail);
+      setSuccessMessage(data.detail);
     })
     .catch(err => console.log(err))
     navigate(`prompt`)
@@ -55,6 +65,9 @@ const AddStudent = () => {
   return (
       <div className="formContainer">
       <form className="ipContainer" onSubmit={handleSubmit}>
+        <p style={errStyle}>{errMessage}</p>
+        <p style={successStyle}>{successMessage}</p>
+
         <div className="inputGroup">
           <label>Student Email:</label>
           <input name="studentEmail" id="studentEmail" value={student} onChange={handleStudentChange} required />

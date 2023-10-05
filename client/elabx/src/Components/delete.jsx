@@ -1,10 +1,15 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useNavigate } from 'react-router-dom';
 
 
 import { useSelector } from 'react-redux';
 import './Create.css';
+
+const btnContainerStyle = {
+  display: "flex",
+  justifyContent: "flex-end"
+}
 
 const Delete = ({type}) => {
     const token = useSelector((state) => state.token)
@@ -38,12 +43,12 @@ const Delete = ({type}) => {
 
     const del = () => {
      fetch(reqURL, fetchOption)
-     .then((resp) => {return resp.json()})
-     .then(data => {
-        console.log(data)
-        navigate(-1)
-
-     })
+     .then((resp) => {
+      if (!resp.ok) {
+        throw new Error('Network response was not ok');
+      }
+      navigate(-1)
+    })
     .catch( err => console.log(err))
     }
 
@@ -55,10 +60,9 @@ const Delete = ({type}) => {
       <div className="delete-dialog">
         <div className="delete-dialog-content">
           <p>Are you sure you want to delete this {type}?</p>
-          <div className="button-container">
-            <button onClick={del}>Yes</button>
-            <button onClick={goBack}>No</button>
-
+          <div style={btnContainerStyle}>
+            <button style={{margin:"4px"}} onClick={del}>Yes</button>
+            <button style={{margin:"4px"}} onClick={goBack}>No</button>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@ const Register = () => {
   const userRole  = useSelector((state) => state.role);
 
   if (isLoggedIn){
-    if(iserRole == 1) return <Navigate to={'/dashboard/home'}/>
+    if(userRole == 1) return <Navigate to={'/dashboard/home'}/>
     if (userRole == 0) return <Navigate to={'/home'}/>
   } 
 
@@ -97,7 +97,6 @@ const Register = () => {
       .then((resp) => {
         if(resp.status == 400){
           setHasError(true);
-          setOkMessage('');
           return resp.json()
         }
         else {
@@ -108,11 +107,9 @@ const Register = () => {
         if(hasError){
           setErrMessage(data.detail)
           setOkMessage('');
-          setHasError(false)
         } else{
           setOkMessage(data.detail)
           setErrMessage('');
-          setHasError(false);
         }
       })
       .catch(err => console.log(err))

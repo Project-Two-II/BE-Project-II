@@ -3,6 +3,13 @@ import './Create.css';
 
 import { useSelector } from 'react-redux'
 import {  useParams, useLocation, useNavigate } from 'react-router-dom'
+<<<<<<< HEAD
+=======
+
+const btnStyle = {
+  padding: "10px"
+}
+>>>>>>> 1574ef8 (bulk add)
 
 
 function useQuery() {
@@ -13,14 +20,20 @@ function useQuery() {
 
 const CreateChapter = () => {
 
+<<<<<<< HEAD
   const navigate = useNavigate()
    const token = useSelector((state) => state.token);
+=======
+  const token = useSelector((state) => state.token);
+  const navigate = useNavigate();
+>>>>>>> 1574ef8 (bulk add)
 
-    const param = useParams();
-    const courseId = param.subId;
+  const param = useParams();
+  const courseId = param.subId;
 
   const [chapterName, setChapterName] = useState('');
   const [chapterDescription, setChapterDescription] = useState('');
+  const [msg, setMsg] = useState('')
 
   const handleChapterNameChange = (e) => {
     setChapterName(e.target.value);
@@ -32,6 +45,11 @@ const CreateChapter = () => {
 
   const handleSubmission = (e) =>{
     e.preventDefault();
+
+    if(chapterName == '' || chapterDescription == ''){
+      setMsg("All the fields are required");
+      return;
+    }
 
 
     const fetchOption = {
@@ -47,11 +65,12 @@ const CreateChapter = () => {
   }
 
     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
-    .then(resp => resp.json())
-            .then(data => {
-              // todo: add a success message
-              console.log(data)
-            })
+    .then((resp) => {
+      if (!resp.ok) throw new Error ("Network response was not OK");
+      navigate(-1)
+      return resp.json()
+    })
+        
     .catch(err => console.log(err))
   navigate(`prompt`)
   }
@@ -84,7 +103,7 @@ const CreateChapter = () => {
         </div>
 
         <div className="buttonGroup">
-          <button className="btn createBtn" type="button" onClick={handleSubmission}>
+          <button style={btnStyle} type="button" onClick={handleSubmission}>
             Create
           </button>
         </div>

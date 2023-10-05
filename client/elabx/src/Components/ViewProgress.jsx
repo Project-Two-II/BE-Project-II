@@ -70,6 +70,7 @@ function QuestionList() {
   useEffect(() => {
     fetch(`http://localhost:8000/api/subjects/${courseId}/`, fetchOption)
       .then((resp) => {
+        if(!resp.ok) throw new Error("Network Response was not ok")
         return resp.json();
       })
       .then((data) => {
@@ -80,6 +81,7 @@ function QuestionList() {
 
     fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/`, fetchOption)
       .then((resp) => {
+        if(!resp.ok) throw new Error("Network Response was not ok")
         return resp.json();
       })
       .then((data) => {
@@ -99,7 +101,9 @@ function QuestionList() {
         <p style={titleStyle}>{course.description}</p>
         <Outlet />
       </div>
-      <table style={tableStyle}>
+      {
+        chapters.length > 0 ?
+        <table style={tableStyle}>
         <thead>
           <tr>
             <th style={{ ...thTdStyle, ...headerStyle }}>S.No</th>
@@ -123,6 +127,9 @@ function QuestionList() {
           ))}
         </tbody>
       </table>
+      : "No chapters here yet"
+      }
+      
     </div>
   );
 }

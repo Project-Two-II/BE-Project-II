@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import './Create.css'
-import { useNavigate , redirect} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
+const errMessageStyle = {
+  color: "red"
+}
+const successMessageStyle = {
+  color: "green"
+}
 const CreateCourse = () => {
 
   const navigate = useNavigate();
@@ -10,7 +16,6 @@ const CreateCourse = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const role = useSelector((state) => state.role)
   const token = useSelector((state) => state.token)
-  console.log(token)
 
 
   if (!isLoggedIn) {
@@ -25,7 +30,9 @@ const CreateCourse = () => {
   const [courseCode, setCourseCode] = useState("");
   const [courseDesc, setCourseDesc] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
-  const [message, setMessage] = useState('')
+  const [errMessage, setErrMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+
 
   const handleSubjectChange = (e) => {
     setCourseSubject(e.target.value);
@@ -47,7 +54,15 @@ const CreateCourse = () => {
 
   const handleCourseSubmission = async(e) => {
     e.preventDefault();
-    setMessage(' ');
+    setErrMessage(' ');
+    setSuccessMessage('')
+
+    // check if all fields are filled
+    if(courseSubject === "" || courseCode === "" || courseDesc === "" || thumbnail === null){
+      setErrMessage("All the fields are required");
+      return;
+    }
+
 
     let formData = new FormData();
     formData.append("code_no",courseCode)
@@ -66,22 +81,32 @@ const CreateCourse = () => {
     console.log(formData)
     fetch("http://localhost:8000/api/subjects/", fetchOption)
     .then((resp) => {
-    return resp.json()
-    })
-   .then((data) => {
-    console.log(data);
-    setMessage(data.detail);
-   })
-  .catch(err => console.log(err))
+      if(!resp.ok){
+        throw new Error("Network response was not OK")
+      } 
+      // todo: display sucess dialog
+      setSuccessMessage("Course Added Successfully. Exiting soon")
+      navigate(-1)
+      })
+     .catch(err => {
+        console.log(err)
+        setErrMessage("Something Went Wrong");
+        setSuccessMessage("");
+       }
+      )
 
+<<<<<<< HEAD
   navigate(`prompt`)
+=======
+>>>>>>> 1574ef8 (bulk add)
   }
 
   return (
 
     <div className="formContainer">
-      <p>{message}</p>
       <form className="ipContainer">
+      <p style={errMessageStyle}>{errMessage}</p>
+      <p style={successMessageStyle}>{successMessage}</p>
         <div className="inputGroup">
           <label htmlFor="subject">Course Title:</label>
           <input

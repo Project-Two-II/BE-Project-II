@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import courseImg3 from "../../media/LAB3.png";
+
 
 import MyCourseList from '../myCourseList.jsx'
 import CourseList from '../CourseList.jsx'

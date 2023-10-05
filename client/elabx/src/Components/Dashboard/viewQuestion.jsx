@@ -68,6 +68,7 @@ const ViewQuestion = () => {
   return(
     <>
     <Link style={btnStyle} to={`add`}>Add New Question</Link>
+    { question.length > 0 ? 
      <Table bordered>
         <thead>
           <tr>
@@ -94,6 +95,8 @@ const ViewQuestion = () => {
             
         </tbody>
       </Table>
+       : "No questions here"
+       }
     </>
     
   )
