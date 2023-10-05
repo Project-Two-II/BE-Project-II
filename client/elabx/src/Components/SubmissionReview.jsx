@@ -90,7 +90,17 @@ function CQuestionList() {
           return resp.json()
         })
         .then(data => {
+<<<<<<< HEAD
           setSubmission(JSON.parse(data))
+=======
+          console.log(JSON.parse(data))
+          setSubmission(JSON.parse(data))
+          setMarksInput(JSON.parse(data).marks)
+          setReviewInput(JSON.parse(data).review)
+
+          
+          // console.log(data)
+>>>>>>> 1574ef8 (bulk add)
         })
         .catch(err => console.log(err))
     }
@@ -106,7 +116,7 @@ function CQuestionList() {
   };
 
   const setMarksOption = {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " + token
@@ -117,7 +127,7 @@ function CQuestionList() {
   }
 
   const setReviewOption = {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " + token
@@ -146,7 +156,21 @@ function CQuestionList() {
       })
       .catch(err => console.log(err))
 
+<<<<<<< HEAD
       useNavigate(`prompt`)
+=======
+    const updatedQuestions = questions.map((q) => {
+      if (q.id === questionId) {
+        return {
+          ...q,
+          marks: marksInput,
+          review: reviewInput,
+        };
+      }
+      return q;
+    });
+
+>>>>>>> 1574ef8 (bulk add)
   };
 
   return (

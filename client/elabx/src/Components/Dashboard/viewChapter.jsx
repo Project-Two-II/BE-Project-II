@@ -67,6 +67,7 @@ const ViewChapter = () => {
   return(
     <>
      <Link to={`add`} style={btnStyle}>Create New Chapter</Link>
+      {chapter.length > 0 ? 
       <Table bordered>
         <thead>
           <tr>
@@ -94,8 +95,9 @@ const ViewChapter = () => {
             
         </tbody>
       </Table>
+       : "No Chapters here"
+       } 
     </>
-    
   )
 }
 

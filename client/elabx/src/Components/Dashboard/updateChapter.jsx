@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import '../Create.css'
 import { useNavigate } from 'react-router-dom';
-import Header from '../header';
 const UpdateChapter = () => {
 
   const param = useParams('');
@@ -15,6 +13,10 @@ const UpdateChapter = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const role = useSelector((state) => state.role)
   const token = useSelector((state) => state.token)
+
+  const btnStyle = {
+    padding : "10px",
+  }
 
   if (!isLoggedIn) {
     navigate("/login")
@@ -68,7 +70,6 @@ const UpdateChapter = () => {
                 }
                 const data = await response.json();
                 setChapter(data);
-                // console.log(data)
                 setChapterName(data.title)
                 setChapterDescription(data.description)
                 
@@ -123,8 +124,13 @@ const UpdateChapter = () => {
         />
       </div>
 
+<<<<<<< HEAD
       <div className="buttonGroup">
         <button className="btn createBtn" type="button" onClick={handleSubmission}>
+=======
+      <div>
+        <button style={btnStyle} type="button" onClick={handleSubmission}>
+>>>>>>> 1574ef8 (bulk add)
           Update
         </button>
       </div>

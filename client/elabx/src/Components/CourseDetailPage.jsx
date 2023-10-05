@@ -4,6 +4,8 @@ import { Link, Outlet, useParams, useLocation, Navigate } from 'react-router-dom
 
 import { useSelector } from 'react-redux'
 
+import {BiSolidLockAlt} from 'react-icons/bi'
+
 
 import './Dashboard/dashboard.css'
 
@@ -13,7 +15,13 @@ const titleStyle = {
 }
 
 const listStyle = {
-  display: "inline-block"
+  display: "inline-block",
+}
+
+const lockedStyle = {
+  color: "green",
+  display: "inline-block",
+
 }
 
 const btnStyle = {
@@ -41,6 +49,7 @@ const CourseDetailPage = () => {
 
   let [chapters, setChapters] = useState([]);
   let [course, setCourse] = useState([])
+  // let [isLocked, setLock] = useState(false)
   let query = useQuery();
   const param = useParams();
   const courseId = param.subId;
@@ -65,7 +74,7 @@ const CourseDetailPage = () => {
       .then(resp => resp.json())
       .then(data => {
         setChapters(data)
-        console.log(data)
+        console.log("Chapters",data)
         // console.log("Fetched sth")
       })
       .catch(err => console.log(err))
@@ -98,11 +107,23 @@ const CourseDetailPage = () => {
           <nav>
             <ul>
               {
-                chapters.map((chapter, index) => (
+                chapters.map((chapter, index) => {
+                  if(chapter.is_locked){
+                    return(
+                      <li key={index}>
+                        <h6 style={lockedStyle}>{index + 1}. {chapter.title}</h6>
+                        <BiSolidLockAlt size={18} color='green'/>
+                      </li>
+                   
+                  )
+                } else{
+                  return(
                   <li key={index}>
                     <Link style={listStyle} to={`chapters/${chapter.id}/questions`}>{index + 1}. {chapter.title}</Link>
                   </li>
-                ))
+                )}
+                 
+                 })
               }
             </ul>
           </nav>

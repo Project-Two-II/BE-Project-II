@@ -17,7 +17,7 @@ const UserProfileEdit = () => {
 
     const param = useParams()
     // const userId = param.userId;
-    const [profile, setProfile] = useState({});
+    const [profile, setProfile] = useState();
 
     const token = useSelector((state) => state.token);
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -51,7 +51,7 @@ const UserProfileEdit = () => {
         fetchDetails();
     },[])
 
-    const updateOption = {
+    const updateOptionUser = {
         method: "PUT",
         headers: {
             "Content-type": "application/json",
@@ -63,11 +63,17 @@ const UserProfileEdit = () => {
         })
     }
 
+    
+
     const handleSubmission = async (e) => {
         e.preventDefault();
+
+        let formdata = FormData();
+        formdata.appendd('avatar',)
+
         console.log('First Name: ' + firstName);
         console.log('Last Name: ' + lastName);
-        fetch(`http://localhost:8000/api/userauth/`, updateOption)
+        fetch(`http://localhost:8000/api/userauth/`, updateOptionUser)
         .then((resp) => {
             return resp.json();
         })
@@ -83,7 +89,7 @@ const UserProfileEdit = () => {
                 <div className="user-card user-card-0">
                     <img className="user-info user-logo" src={userlogo} style={logo_style} alt="user-logo" />
                     <p className="user-info">Change Profile Picture</p>
-                    <input className="user-info" type="file"></input>
+                    <input className="user-info" type="file" accept="image/*" onChange={handleProfileChange}></input>
                     <br />
                     <h3 className="user-info user-name">{firstName + (' ') + lastName}</h3>
                     {

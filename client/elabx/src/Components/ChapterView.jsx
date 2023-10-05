@@ -80,7 +80,7 @@ function ChapterList() {
         console.log()
         // const newdata = JSON.parse(data)
         setChapters(data)
-        console.log(chapters)
+        console.log("Chapters",chapters)
         // console.log(chapters)
       })
       .catch(err => console.log(err))

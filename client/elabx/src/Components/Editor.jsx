@@ -47,6 +47,17 @@ function Editor(props) {
   
   const RunClickHandler = (e) => {
     e.preventDefault();
+    // test type verifier starts : checks if testCode actually contains a source code or expected string
+    // If you just want to verify for output string
+    // the test should contain something like this
+    // Expected:Hello, World
+    // For the above scenario, our program will check if Hello, World is written or not
+    // It is somewhat stricter
+
+    if (testCode.includes("Expected:"))
+
+
+    //test type verifier ends
     let finalCode = initialHeader + code + testCode;
     API = new WorkerAPI();
     API.compileLinkRun(finalCode);
