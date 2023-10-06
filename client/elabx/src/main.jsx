@@ -279,10 +279,9 @@ const router = createBrowserRouter([
         element: <Prompt promptString={"Question updated successfully"}/>
       },
       {
-        path: "courses/:subId/viewstudent/:studentId/chapters/:chapterId/questions/",
+        path: "courses/:subId/viewstudent/:studentId/chapters/:chapterId/questions/prompt",
         element: <Prompt promptString={"Review Posted"}/>
       }
-
     ],
 
   },

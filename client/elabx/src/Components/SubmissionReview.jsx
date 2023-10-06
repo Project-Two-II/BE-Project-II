@@ -90,9 +90,10 @@ function CQuestionList() {
           return resp.json()
         })
         .then(data => {
-          setSubmission(JSON.parse(data))
-          setMarksInput(JSON.parse(data).marks)
-          setReviewInput(JSON.parse(data).review)
+          setSubmission(data)
+          console.log(data)
+          setMarksInput(data.marks)
+          setReviewInput(data.review)
         })
         .catch(err => console.log(err))
     }
@@ -108,7 +109,7 @@ function CQuestionList() {
   };
 
   const setMarksOption = {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " + token
@@ -119,7 +120,7 @@ function CQuestionList() {
   }
 
   const setReviewOption = {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer " + token
