@@ -2,7 +2,7 @@
 import { Terminal } from 'xterm';
 
 class WorkerAPI {
-    constructor() {
+    constructor(expected) {
       this.nextResponseId = 0;
       this.responseCBs = new Map();
       this.worker = new Worker('/worker.js');
@@ -16,7 +16,8 @@ class WorkerAPI {
                               [remotePort]);
       this.term = null;
       this.msg = ""
-      this.testPassed = false; 
+      this.testPassed = false;
+      this.output = expected;
     }
 
     getTestPassStatus(){
@@ -50,7 +51,7 @@ class WorkerAPI {
       this.port.postMessage({id: 'compileLinkRun', data: contents});
     }
   
-    async getOutput(){
+    getOutput(){
       return this.output;
     }
   
@@ -69,9 +70,20 @@ class WorkerAPI {
           if (this.term !== null){
             this.term.clear()
             this.term.writeln(this.msg)
+
+            console.log(this.output)
+
+            if(this.output === this.msg){
+              event.data.data = "All Test Passed";
+              this.testPassed = true;
+            }
+
             console.log("Includes:", event.data.data.includes("All Test Passed"))
             if(event.data.data.includes("All Test Passed")){
               this.testPassed = true;
+            } else{
+              this.testPassed = false;
+              this.term.writeln("Test Failed")
             }
           }
           break;
