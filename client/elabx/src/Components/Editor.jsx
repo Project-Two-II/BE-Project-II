@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import EditorWindow from "@monaco-editor/react";
+import { useNavigate } from 'react-router-dom';
 
 import WorkerAPI from '../shared_web.js';
 import './Editor.css'
@@ -15,6 +16,7 @@ function Editor(props) {
   const token = useSelector((state) =>  state.token);
   const [code, setCode] = useState("")
   const [testCode, setTestCode] = useState("");
+  const navigate = useNavigate()
 
   var API = null;
 
@@ -95,12 +97,13 @@ function Editor(props) {
             console.log(data)
           })
           .catch(err => console.log(err))
+          navigate(`prompt/testpass`)
     } else{
       console.log("Trying hard to navigate")
       redirect('testfail')
+      navigate(`prompt/testfail`)
       // return <Navigate to={'testfail'}/>
     }
-    
   }
   return (
     <div className="editorSection">

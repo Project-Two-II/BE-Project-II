@@ -67,9 +67,11 @@ function QuestionList() {
           return resp.json()
         })
         .then(data => {
-          console.log(JSON.parse(data))
+          console.log(data)
+          // console.log(JSON.parse(data))
           // const newdata = JSON.parse(data)
-          setQuestions(JSON.parse(data))
+          // setQuestions(JSON.parse(data))
+          setQuestions(data)
           // console.log(questions)
           // console.log(chapters)
         })

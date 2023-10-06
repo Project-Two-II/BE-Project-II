@@ -92,9 +92,12 @@ function CQuestionList() {
     fetch(`http://localhost:8000/api/report/subjects/${courseId}/${chapterId}/${questionId}/students/${studentId}/`, fetchOption)
       .then((resp) => resp.json())
       .then((data) => {
-        setSubmission(JSON.parse(data));
-        setMarksInput(JSON.parse(data).marks);
-        setReviewInput(JSON.parse(data).review);
+        setSubmission(data);
+        setMarksInput(data.marks);
+        setReviewInput(data.review);
+        // setSubmission(JSON.parse(data));
+        // setMarksInput(JSON.parse(data).marks);
+        // setReviewInput(JSON.parse(data).review);
       })
       .catch((err) => console.log(err));
   };
@@ -108,7 +111,7 @@ function CQuestionList() {
   };
 
   const setMarksOption = {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Content-type': 'application/json',
       Authorization: 'Bearer ' + token,
@@ -119,7 +122,7 @@ function CQuestionList() {
   };
 
   const setReviewOption = {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Content-type': 'application/json',
       Authorization: 'Bearer ' + token,

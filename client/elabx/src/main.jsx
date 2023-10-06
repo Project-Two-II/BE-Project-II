@@ -119,7 +119,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/subject/:courseId/enroll/prompt",
-    element: <Prompt promptString={"Enrolled to course"}/>
+    element: <Prompt promptString={"Enrolled to course"} />
   },
   {
     path: "/syllabus/:subId",
@@ -139,6 +139,14 @@ const router = createBrowserRouter([
         element: <QuestionList />
       }
     ]
+  },
+  {
+    path: "syllabus/:subId/chapters/:chapterId/questionsolve/:questionId/prompt/testpass",
+    element: <Prompt promptString={"Submitted sucessfully"} />
+  },
+  {
+    path: "syllabus/:subId/chapters/:chapterId/questionsolve/:questionId/prompt/testfail",
+    element: <Prompt promptString={"Cannot submit until all tests are passed"} />
   },
 
   {
@@ -276,15 +284,15 @@ const router = createBrowserRouter([
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/add/prompt",
-        element: <Prompt promptString={"Question added successfully"}/>
+        element: <Prompt promptString={"Question added successfully"} />
       },
       {
         path: "courses/:subId/chapters/:chapterId/questions/:questionId/update/prompt",
-        element: <Prompt promptString={"Question updated successfully"}/>
+        element: <Prompt promptString={"Question updated successfully"} />
       },
       {
         path: "courses/:subId/viewstudent/:studentId/chapters/:chapterId/questions/prompt",
-        element: <Prompt promptString={"Review Posted"}/>
+        element: <Prompt promptString={"Review Posted"} />
       }
     ],
 

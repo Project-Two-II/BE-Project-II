@@ -68,7 +68,7 @@ const CreateQuestion = () => {
       .then(resp => resp.json())
       .then(data => {
         // todo: add a success message
-        console.log(data.id)
+        console.log(data)
         // setQuestionId(data.id)
         fetch(`http://localhost:8000/api/subjects/${courseId}/chapters/${chapterId}/questions/${data.id}/test/`, fetchTestOption)
           .then(resp => resp.json())
