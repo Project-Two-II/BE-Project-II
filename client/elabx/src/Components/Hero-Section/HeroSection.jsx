@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import heroImg from "../../media/herro.png";
 import "./hero-section.css";
+import "../../App.css"
 
 import {Link} from 'react-router-dom';
 
@@ -20,7 +21,7 @@ const HeroSection = () => {
                 Anytime Anywhere <br /> Learn on your <br /> Suitable Schedule
               </h2>
               <div className="mt-top">
-              <Link style={btnStyle} to={"/register"} className="Register">Register Now</Link>
+              <Link style={btnStyle} to={"/register"} className="Register btn-hover">Register Now</Link>
           </div>
             </div>
           </Col>

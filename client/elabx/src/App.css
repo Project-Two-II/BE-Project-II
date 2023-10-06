@@ -164,3 +164,8 @@ hr{
   right: "105px";
   width: "max-content"
 }
+
+.btn-hover:hover{
+  border: 2px solid black;
+  opacity: 0.9;
+}

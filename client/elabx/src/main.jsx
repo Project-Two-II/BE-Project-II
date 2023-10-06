@@ -164,6 +164,10 @@ const router = createBrowserRouter([
     element: <ProfileEdit />
   },
   {
+    path: "/editprofile/prompt",
+    element: <Prompt promptString={"Profile edited successfully"} />
+  },
+  {
     path: "/codereview",
     element: <CodeReview />
   },

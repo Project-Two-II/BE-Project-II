@@ -29,7 +29,7 @@ const searchbar_style = {
 };
 
 const dropdown_style = {
-  backgroundColor: "black",
+  backgroundColor: "rgba(50,50,50)",
   width: "120px",
   padding: "0",
   zIndex: "999",
@@ -48,6 +48,11 @@ const sideStyle = {
   flexDirection: "row",
   paddingTop : "10px"
 }
+
+const linkStyle = {
+  textDecoration: "none",
+  color: "white"
+};
 
 function Header({SearchBar}) {
   const token = useSelector((state) => state.token);
@@ -92,9 +97,11 @@ function Header({SearchBar}) {
 
   return (
     <header style={header_style}>
+      <Link to={"/home"}>
       <span className="elabx">
         <img src={elabx_logo} height={80} width={80}/>
       </span>
+      </Link>
       <div style={sideStyle}>
       {SearchBar && <span style={searchbar_style}>
         <input type="text" placeholder="Search" />
@@ -111,7 +118,7 @@ function Header({SearchBar}) {
         />
         {showDropdown && (
           <div className="dropdown-menu" style={dropdown_style}>
-            <Link className="route-link-style" to="/profile">
+            <Link style={linkStyle} to="/profile">
               <div className="dropdown-option" style={optionStyle} onClick={handleProfile}>Profile</div>
             </Link>
               <div className="dropdown-option" style={optionStyle} onClick={handleLogout}>Logout</div>

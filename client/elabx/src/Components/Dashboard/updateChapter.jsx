@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+import '../../App.css'
+
 const UpdateChapter = () => {
 
   const param = useParams('');
@@ -125,7 +128,7 @@ const UpdateChapter = () => {
       </div>
 
       <div>
-        <button style={btnStyle} type="button" onClick={handleSubmission}>
+        <button className='btn-hover' style={btnStyle} type="button" onClick={handleSubmission}>
           Update
         </button>
       </div>

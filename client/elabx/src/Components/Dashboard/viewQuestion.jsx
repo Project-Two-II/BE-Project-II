@@ -9,6 +9,8 @@ import {BiSolidPencil} from 'react-icons/bi'
 
 import { Link, useParams } from 'react-router-dom';
 
+import '../../App.css'
+
 const iconStyle = {
   cursor: "pointer",
   height: "20px",
@@ -67,7 +69,7 @@ const ViewQuestion = () => {
   }, []);
   return(
     <>
-    <Link style={btnStyle} to={`add`}>Add New Question</Link>
+    <Link style={btnStyle} to={`add`} className="btn-hover">Add New Question</Link>
     { question.length > 0 ? 
      <Table bordered>
         <thead>

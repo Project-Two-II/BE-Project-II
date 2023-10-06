@@ -6,6 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import '../login.css'
+import '../App.css'
 
 
 const errMessageStyle = {
@@ -151,7 +152,7 @@ const Register = () => {
           </select>
         </div>
 
-          <button className="SubmitButton" type="submit" onClick={handleFormSubmission}>Register</button>
+          <button className="SubmitButton btn-hover" type="submit" onClick={handleFormSubmission}>Register</button>
         </Form>
         <br />
         <hr />

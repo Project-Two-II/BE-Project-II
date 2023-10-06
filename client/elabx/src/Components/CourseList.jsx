@@ -4,8 +4,8 @@ import CourseCard from './CourseCard.jsx';
 const course_list_style = {
   padding: "20px",
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-  gridGap: "40px",
+  gridTemplateColumns: "1fr 1fr 1fr 1fr",
+  gridGap: "20px",
 };
 
 function CourseList({ token }) {

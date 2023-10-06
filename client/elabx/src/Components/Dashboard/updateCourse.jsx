@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../Create.css'
+import '../../App.css'
 import { useNavigate } from 'react-router-dom';
 
 const UpdateCourse = () => {
@@ -171,7 +172,7 @@ const UpdateCourse = () => {
           />
         </div>
 
-        <button id="submit" className="btn" type="submit" onClick={handleCourseSubmission}>
+        <button id="submit" className="btn btn-hover" type="submit" onClick={handleCourseSubmission}>
           Update
         </button>
       </form>

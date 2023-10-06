@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../Create.css'
+import '../../App.css'
 import { useNavigate } from 'react-router-dom';
 
 const UpdateQuestion = () => {
@@ -185,7 +186,7 @@ const UpdateQuestion = () => {
           onChange={(e) => setTestDescription(e.target.value)}
           style={{ height: "300px", width: "400px", resize: "vertical" }}
         />
-        <button className="add-question-button" onClick={handleSubmission}>
+        <button className="add-question-button btn-hover" onClick={handleSubmission}>
           Add Question
         </button>
       </div>

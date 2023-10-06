@@ -1,6 +1,6 @@
 import './userprofile.css'
 import userlogo from '../../media/people.svg';
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { stripBasename } from '@remix-run/router';
@@ -14,8 +14,11 @@ const logo_style = {
 const UserProfileEdit = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [role, setRole] = useState('')
+    const [email, setEmail] = useState('')
 
     const param = useParams()
+    const navigate = useNavigate();
     // const userId = param.userId;
     const [profile, setProfile] = useState();
 
@@ -42,6 +45,8 @@ const UserProfileEdit = () => {
                 console.log(data)
                 setFirstName(data.first_name)
                 setLastName(data.last_name)
+                setRole(data.role)
+                setEmail(data.email)
                 setProfile(data)
             }
             catch (error) {
@@ -68,8 +73,8 @@ const UserProfileEdit = () => {
     const handleSubmission = async (e) => {
         e.preventDefault();
 
-        let formdata = FormData();
-        formdata.appendd('avatar',)
+        // let formdata = new FormData();
+        // formdata.append('avatar',)
 
         console.log('First Name: ' + firstName);
         console.log('Last Name: ' + lastName);
@@ -81,6 +86,10 @@ const UserProfileEdit = () => {
             console.log(data)
         })
         .catch(err => console.log(err))
+        navigate(`prompt`)
+    }
+    const handleProfileChange = () => {
+        console.log("profile changed")
     }
 
     return (
@@ -93,10 +102,10 @@ const UserProfileEdit = () => {
                     <br />
                     <h3 className="user-info user-name">{firstName + (' ') + lastName}</h3>
                     {
-                        profile.role &&
+                        role &&
                         <span className="user-info user-role">Teacher</span>
                         ||
-                        !profile.role &&
+                        !role &&
                         <span className="user-info user-role">Student</span>
                     }
                 </div>
@@ -124,7 +133,7 @@ const UserProfileEdit = () => {
                                     <div className="col-sm-3">
                                         <h6 className="mb-0">Email</h6>
                                     </div>
-                                    <div className="col-sm-9 text-secondary">{profile.email}
+                                    <div className="col-sm-9 text-secondary">{email}
                                     </div>
                                 </div>
                                 <hr />

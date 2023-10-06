@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Navigate } from "react-router-dom";
 import '../login.css'
+import '../App.css'
 
 const errMessageStyle = {
   color: "blue"
@@ -115,7 +116,7 @@ const Login = () => {
                     <input type = "password" placeholder = "Password" name = "password" value={password} onChange={handlePasswordChange}/>
                 </div>
   
-                <button className="SubmitButton" onClick={handleFormSubmission}>Login</button>
+                <button className="SubmitButton btn-hover" onClick={handleFormSubmission}>Login</button>
                 <Link to={"/register"}>Create a new account</Link>
             </Form>
             <br/>

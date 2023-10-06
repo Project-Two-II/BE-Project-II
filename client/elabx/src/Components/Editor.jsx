@@ -54,12 +54,22 @@ function Editor(props) {
     // For the above scenario, our program will check if Hello, World is written or not
     // It is somewhat stricter
 
-    if (testCode.includes("Expected:"))
+    if (testCode.includes("Expected:")){
+      var expected_output = testCode.slice(9)
+    }
 
 
     //test type verifier ends
-    var finalCode = initialHeader + code + testCode;
-    API = new WorkerAPI();
+    var finalCode;
+    if(expected_output) {
+      API = new WorkerAPI(expected_output);
+      finalCode = initialHeader + code;
+
+    }
+    else {
+      API = new WorkerAPI(null)
+      finalCode = initialHeader + code + testCode;
+    }
     API.compileLinkRun(finalCode);
   }
 
@@ -104,7 +114,7 @@ function Editor(props) {
             height="100%"
             defaultLanguage={props.props.defaultLang}
             theme="vs-dark"
-            value = {props.props.boilerplate}
+            value = {code}
             onChange={handleCodeChange}
           />  
         </div>

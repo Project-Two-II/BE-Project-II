@@ -9,6 +9,8 @@ import {BiSolidPencil} from 'react-icons/bi'
 
 import { Link, useParams } from 'react-router-dom';
 
+import '../../App.css'
+
 
 const iconStyle = {
   cursor: "pointer",
@@ -66,7 +68,7 @@ const ViewChapter = () => {
   }, []);
   return(
     <>
-     <Link to={`add`} style={btnStyle}>Create New Chapter</Link>
+     <Link to={`add`} style={btnStyle} className="btn-hover">Create New Chapter</Link>
       {chapter.length > 0 ? 
       <Table bordered>
         <thead>
