@@ -1,0 +1,65 @@
+.code-review-section {
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.code-container {
+  flex-grow: 1;
+  overflow-y: scroll; 
+  max-width: 800px; 
+  margin: 0;
+}
+
+.code-section {
+  background-color: #1F2334;
+  padding: 10px;
+  margin-top: 20px;
+  height: 50vh; 
+}
+
+.code-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #FFFFFF; 
+  opacity: 0.5; 
+}
+
+.comments-container {
+  margin-top: 20px;
+}
+
+.comments-header {
+  margin-bottom: 10px;
+}
+
+.comments-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.comment-form {
+  margin-top: 20px;
+}
+
+.comment-input {
+  width: 100%;
+  min-height: 100px;
+}
+
+.submit-comment-btn {
+  margin-top: 10px;
+  background-color: #1F2334;
+  font-size: x-large;
+  color: aliceblue;
+}
+.crHeader{
+  display:flex;
+  justify-content: space-between;
+}

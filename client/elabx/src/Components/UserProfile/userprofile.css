@@ -1,0 +1,47 @@
+.container {
+    /* margin: 10px auto; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.row {
+    align-items: center;
+}
+
+.user-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-card-0 {
+    height: max-content;
+    width: max-content;
+}
+
+.user-info {
+    margin: auto;
+    padding: 10px;
+}
+.user-name{
+    max-width: fit-content;
+    white-space: wrap;
+}
+
+.user-card-1 {
+    padding: 10px;
+    max-height: 100% !important;
+    flex-grow: 1;
+}
+
+.input {
+    border: 1px solid gray;
+}
+
+p {
+    color: gray;
+}

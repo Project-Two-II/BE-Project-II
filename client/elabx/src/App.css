@@ -1,0 +1,171 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+* {
+  margin: none;
+}
+
+.main {
+   position: static;
+   background-color: #1f2334;
+   display: "flex";
+    flex-direction: "column";
+    color: white;
+    padding: 15px;
+    height: max-content;
+}
+
+.App .courseHeader {
+  /* height: "18vh"; */
+  position: "static";
+  background-color: "#1F2334"
+
+}
+
+.App .courseTitle {
+  color: "white";
+  position: "relative";
+  top: "35px";
+  left: "100px";
+  font-size: "3rem";
+  text-decoration: "underline"
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+  background-color: #1F2334;
+}
+
+.body .question {
+  height: fit-content;
+  width: 40%;
+  position: static;
+}
+
+.question .questionTitle {
+  font-size: 1.5rem;
+}
+
+.question .ques {
+  margin: 4px auto;
+  width: 90%;
+  border-radius: 15px;
+  color: white;
+  padding: 20px;
+}
+
+
+.question .backBtn {
+  background-color: #0038FF;
+  color: white;
+  /* position: relative;
+  bottom: -10px;
+  left: 30px; */
+}
+
+.editorButtons {
+  background-color: #1f1e1f;
+  /* width: 100%; */
+  position: static;
+  padding: 15px;
+}
+
+.btn {
+  height: 5vh;
+  width: 15vh;
+  border-radius: 5px;
+  font-size: 1em;
+  border: none;
+  text-transform: uppercase;
+}
+
+.btn:hover{
+  cursor: pointer;
+}
+
+.submitBtn, .runBtn {
+  /* position: relative; */
+  /* left: 100px; */
+  background-color: #3585b3;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+.body .editorSection {
+  background-color: #1F2334;
+  /* width: 60%; */
+  display: flex;
+  border-left: 5px solid white;
+}
+
+/* .editorFooter {
+  padding: "20px",
+  margin: "auto",
+  background-color: "#1f1e1f",
+  border-radius: "10px",
+  color: "white",
+} */
+
+.footer {
+  padding: 0px;
+  margin: 0px;
+  height: fit-content;
+  background-color: #3C3D47;
+  display: flex;
+  flex-direction: column;
+}
+.footer div{
+  padding: 20px;
+}
+.description{
+  position: static;
+}
+.statusBtn{
+  width: 120px;
+  margin: 10px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  color: black;
+  text-transform: uppercase;
+  font-size:1em;
+}
+li{
+  list-style: none;
+}
+hr{
+  width: 90%;
+  margin: auto;
+}
+.route-link{
+  text-decoration: none;
+  color: white;
+}
+.dropdown-option:hover{
+  background-color: white;
+  color: black;
+}
+.create-btn{
+  color: "white";
+  background-Color: "green";
+  position: "absolute";
+  right: "105px";
+  width: "max-content"
+}
+
+.btn-hover:hover{
+  border: 2px solid black;
+  opacity: 0.9;
+}
