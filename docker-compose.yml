@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:latest
+    container_name: "elabx_db"
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: "elabx_db"
+      MYSQL_USER: "elabx"
+      MYSQL_PASSWORD: "elabx_password"
+      MYSQL_ROOT_PASSWORD: "root"
+
+    ports:
+      - "3306:3306"
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "elabx", "-p${MYSQL_PASSWORD}" ]
+      interval: 15s
+      retries: 35
+
+    volumes:
+      - ./server/data/mysql:/var/lib/mysql
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+
+    container_name: "elabx_server"
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    command:
+      - sh
+      - -c
+      - |
+        python manage.py makemigrations userauth subject submission &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+
+    volumes:
+      - ./server:/usr/src/app
+
+  client:
+    build:
+      context: ./client/elabx
+      dockerfile: Dockerfile
+
+    container_name: "elabx_client"
+    ports:
+      - 80:80
+    depends_on:
+      - server

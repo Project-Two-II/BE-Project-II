@@ -1,0 +1,14 @@
+id,title,description,chapter
+1,Print Hello World,"### //This is the description of the question
+
+Read the *question* and solve the problem
+
+```cpp 
+void hello() {
+  cout << ""hello"";
+}
+```",1
+2,Add two integer numbers,Declare two integer variables and and print their sum,1
+3,Even or Odd?,Input a number from the user and check if its odd or even,1
+4,Construct a class,Declare a class called 'student' and make two variables 'student_name' and 'student_roll'. Assign values to them and print them.,2
+5,A class and its methods,"Construct a class called 'animal'. Declare a method 'getName()' and invoke it to ask the to enter the name of their pet. Then, assign that input to the class variable 'animal_name' and print it.",2

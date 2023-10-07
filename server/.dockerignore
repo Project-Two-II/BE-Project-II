@@ -1,0 +1,23 @@
+# Exclude common development and localfile
+
+.idea
+.gitignore
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+*/__pycache__
+*/*/__pycache__
+venv
+*/migrations
+inti_db.py
+mysql.conf
+htmlcov
+elabx_db_.sqlite3
+
+
+# Exclude docker specific files
+
+Dockerfile
+.dockerignore
+docker-compose.yml

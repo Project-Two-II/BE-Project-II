@@ -1,0 +1,7 @@
+.editorButtons{
+    display: flex;
+    justify-content: space-between;
+}
+.editorMain{
+    height: 100vh;
+}

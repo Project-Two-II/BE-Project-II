@@ -1,0 +1,52 @@
+.hero__content h2 {
+  font-weight: 600;
+  line-height: 50px;
+}
+
+.hero__content {
+  padding-top: 5px;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-variant: small-caps;
+}
+.search input {
+  border: none;
+  outline: none;
+  padding: 7px 10%;
+  background-color: rgb(6, 6, 39);
+}
+
+.hero__img {
+  padding: 1rem;
+  margin:7rem 2rem 2rem 2rem;
+}
+
+@keyframes glowing {
+  0% {
+    background-color:rgb(51, 236, 51);
+    box-shadow: 0 0 3px rgb(81, 99, 81);
+  }
+  50% {
+    background-color: #14770b;
+    box-shadow: 0 0 10px #074607;
+  }
+  100% {
+    background-color: #023804;
+    box-shadow: 0 0 3px #00160a;
+  }
+}
+
+.mt-top{
+  margin-top: 140px;;
+}
+
+
+.Register{
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  font-size: 22px;
+  /* animation: glowing 1300ms infinite; */
+  background-color: #1c305c;
+  text-decoration: none;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
