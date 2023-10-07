@@ -1,0 +1,252 @@
+[
+   {
+      "model":"userauth.user",
+      "pk":1,
+      "fields":{
+         "password":"pbkdf2_sha256$600000$TlUQnmCX3haCJEoXesSjGQ$MTVqBWy33alS1E27IYDhxmInoaeGDbfECNUlWyPuFdQ=",
+         "last_login":null,
+         "is_superuser":false,
+         "username":"riya.191333@ncit.edu.np",
+         "first_name":"Riya",
+         "last_name":"Pant",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2023-10-06T08:22:20.327Z",
+         "email":"riya.191333@ncit.edu.np",
+         "role":0,
+         "is_verified":true,
+         "groups":[
+            
+         ],
+         "user_permissions":[
+            
+         ]
+      }
+   },
+   {
+      "model":"userauth.user",
+      "pk":2,
+      "fields":{
+         "password":"pbkdf2_sha256$600000$W7kOFyw0OsseKhif9sqJYi$zeEOuiQz4+C+3p57YVXOLBm+pnr0xBun8n5abfcTxvU=",
+         "last_login":null,
+         "is_superuser":false,
+         "username":"pantriyapant@gmail.com",
+         "first_name":"Riya",
+         "last_name":"Teacher",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2023-10-06T08:24:23.450Z",
+         "email":"pantriyapant@gmail.com",
+         "role":1,
+         "is_verified":true,
+         "groups":[
+            
+         ],
+         "user_permissions":[
+            
+         ]
+      }
+   },
+   {
+      "model":"subject.subject",
+      "pk":1,
+      "fields":{
+         "code_no":"CMP111",
+         "title":"CPP",
+         "owner":2,
+         "description":"C++ (pronounced \"C plus plus\") is a popular and versatile programming language that combines the best of both worlds: it inherits the low-level memory manipulation capabilities of C while offering high-level features like object-oriented programming and a rich standard library. Developed by Bjarne Stroustrup in the early 1980s, C++ is widely used in various domains, including software development, game development, system programming, and embedded systems. Its ability to strike a balance between performance and abstraction makes it a valuable choice for programmers seeking efficiency and flexibility in their projects.",
+         "thumbnail":"subject_thumbnails/CMP111/cppthumbnail.jpg"
+      }
+   },
+   {
+      "model":"subject.subjectenrollment",
+      "pk":1,
+      "fields":{
+         "subject":1,
+         "key":"cpp123"
+      }
+   },
+   {
+      "model":"subject.chapter",
+      "pk":1,
+      "fields":{
+         "title":"Getting Started",
+         "description":"In this chapter, you'll learn the basic syntax of the C++ language. Let's get started!",
+         "subject":1
+      }
+   },
+   {
+      "model":"subject.chapter",
+      "pk":2,
+      "fields":{
+         "title":"Getting Into Flow",
+         "description":"Here we will get a little more into details. Write some algorithms, check loops, conditional and branching statements and more. Here we go!",
+         "subject":1
+      }
+   },
+   {
+      "model":"subject.chapterprogress",
+      "pk":1,
+      "fields":{
+         "user":1,
+         "chapter":1,
+         "is_locked":false,
+         "created_at":"2023-10-06T08:51:45.486Z",
+         "updated_at":"2023-10-06T08:51:45.486Z"
+      }
+   },
+   {
+      "model":"subject.chapterprogress",
+      "pk":2,
+      "fields":{
+         "user":1,
+         "chapter":2,
+         "is_locked":false,
+         "created_at":"2023-10-06T09:04:52.500Z",
+         "updated_at":"2023-10-06T09:04:52.672Z"
+      }
+   },
+   {
+      "model":"subject.question",
+      "pk":2,
+      "fields":{
+         "title":"Hello, World",
+         "description":"# Hello, World\nThis is your first time writing C++ and how can we break the tradition. \nTo pass this question you have to write a program that writes `Hello, World` to the console.\n\n```cpp\nint main(){\n   std::cout << \"Hello, Mumma\";\n}\n```\nThe above program prints `Hello, Mumma` to the console.\nNow you have to write similar program that prints `Hello, World` to the console.\nNote: You need not include any header files and you should match all the punctuation's as well",
+         "boilerplate":"//delete this line and write your code",
+         "chapter":1
+      }
+   },
+   {
+      "model":"subject.question",
+      "pk":3,
+      "fields":{
+         "title":"Working with operators",
+         "description":"# Working with Basic Operators\n\nC++ Supports all the basic operators you might have heard of.\n`+` for Addition\n`-` for Subtraction\n`*` for Multiplication\n`/` for Integral Division\n`%`for remainder of a Division Operation\n\nTo pass this question you have to define 5 functions that returns the sum, difference, product, quotient and remainder of the given input number.\n\n```cpp\nint getSum(int x, int y){\n // return the sum of x and y\n}\n\nint getDiff(int x, int y){\n // return the difference between x and y\n}\n\nint getProduct(int x, int y){\n // return the product of x and y\n}\n\nint getQuotient(int x, int y){\n\n}\n\nint getRemainder(int x, int y){\n\n}\n```\n\n## Expected Output\n```cpp\ngetSum(5,5) == 10\ngetDiff(10,10) == 0\ngetProduct(10, 10) == 100\ngetQuotient(10,5) == 2\ngetRemainder(10, 5) == 0\n```",
+         "boilerplate":"int getSum(int x, int y){\n}\n\nint getDiff(int x, int y){\n}\n\nint getProduct(int x, int y){\n}\n\nint getQuotient(int x, int y){\n}\n\nint getRemainder(int x, int y){ \n}",
+         "chapter":1
+      }
+   },
+   {
+      "model":"subject.question",
+      "pk":4,
+      "fields":{
+         "title":"Check if a number is prime",
+         "description":"# Checking If a number is Prime or Not\nAny number is said to be prime if it is divisible by only 2 numbers; by itself and 1.\nTo pass this test you have to define a function `checkPrime(int n)` that checks whether  the input `n` is a prime number or not.\n\n```cpp\nbool checkPrime(int n){\n //\n}\n```\n\n## Expected Output\n```cpp\ncheckPrime(5) == true\ncheckPrime(44) == false \ncheckPrime(4) == false\n```",
+         "boilerplate":"bool checkPrime(int n){\n \n}",
+         "chapter":2
+      }
+   },
+   {
+      "model":"subject.question",
+      "pk":5,
+      "fields":{
+         "title":"Find factorial of a number",
+         "description":"# Finding Factorial of a Number\nFactorial of any number `n` is denoted by `n!` and is represented by:\n`n! = n * (n - 1) * (n - 2) * (n -3) * ..... 3 * 2 * 1`\n\nTo pass this test you have to define a function `get_factorial(int n)`  that returns the factorial of `n`, `0 <= n <= 8`\n\n## Expected Output\n```cpp\nget_factorial(5) == 120\nget_factorial(0) == 1\nget_factorial(4) == 24\n```",
+         "boilerplate":"int get_factorial(int n){\n\n}",
+         "chapter":2
+      }
+   },
+   {
+      "model":"subject.test",
+      "pk":2,
+      "fields":{
+         "source_code":"Expected:Hello, World",
+         "question":2
+      }
+   },
+   {
+      "model":"subject.test",
+      "pk":3,
+      "fields":{
+         "source_code":"int err_status = 0;\n\nvoid _test__sum(){\n    while(err_status == 0){\n        if(getSum(1,2) != 3) {err_status = 1; break;}\n        if(getSum(100,500) != 600) {err_status = 1; break;}\n        if(getSum(3333,3333) != 6666) { err_status = 1; break;}\n        if(getSum(-1, -1) != -2) {err_status = 1; break;}\n        if(getSum(-1, 0) != -1) {err_status = 1; break;}\n        if(getSum(0, 0) != 0) {err_status = 1; break;}\n        break;\n    }\n}\n\nvoid _test__diff(){\n    while(err_status == 0){\n        if(getDiff(1,2) != -1) {err_status = 1; break;}\n        if(getDiff(100,500) != -400) {err_status = 1; break;}\n        if(getDiff(3333,3333) != 0) { err_status = 1; break;}\n        if(getDiff(-1, -1) != -0) {err_status = 1; break;}\n        if(getDiff(-1, 0) != -1) {err_status = 1; break;}\n        if(getDiff(0, 0) != 0) {err_status = 1; break;}\n        break;\n    }\n}\n\nvoid _test__product(){\n    while(err_status == 0){\n        if(getProduct(1,2) != 2) {err_status = 1; break;}\n        if(getProduct(100,500) != 50000) {err_status = 1; break;}\n        if(getProduct(3333,3333) != 11108889) { err_status = 1; break;}\n        if(getProduct(-1, -1) != 1) {err_status = 1; break;}\n        if(getProduct(-1, 0) != 0) {err_status = 1; break;}\n        if(getProduct(0, 0) != 0) {err_status = 1; break;}\n        break;\n    }\n}\n\nvoid _test__quotient(){\n    while(err_status == 0){\n        if(getQuotient(2,1) != 2) {err_status = 1; break;}\n        if(getQuotient(500,100) != 5) {err_status = 1; break;}\n        if(getQuotient(3333,3333) != 1) { err_status = 1; break;}\n        if(getQuotient(-1, -1) != 1) {err_status = 1; break;}\n        if(getQuotient(50, 20) != 2) {err_status = 1; break;}\n        if(getQuotient(60, 70) != 0) {err_status = 1; break;}\n        break;\n    }\n}\n\nvoid _test__remainder(){\n    while(err_status == 0){\n        if(getRemainder(2,2) != 0) {err_status = 1; break;}\n        if(getRemainder(40,30) != 10) {err_status = 1; break;}\n        break;\n    }\n}\n\nint main(){\n  _test__sum();\n  _test__diff();\n  _test__product();\n  _test__quotient();\n  _test__remainder();\n\n  if(err_status != 0){\n    std::cout << \"Test Failed... Try Again... Exiting\\n\";\n    exit(-1);\n  } else {\n    std::cout << \"All Test Passed... You can Submit now..\";\n  }\n}",
+         "question":3
+      }
+   },
+   {
+      "model":"subject.test",
+      "pk":4,
+      "fields":{
+         "source_code":"int err_status = 0;\n\n\n\nvoid _test__prime(){\n  while(err_status == 0){\n    if(!checkPrime(5)){\n       err_status = 1;\n       std::cout << \"Fail 1\";\n       break;\n    }\n    if(checkPrime(50)){\n       err_status = 1;\n       std::cout << \"Fail 2\";\n       break;\n    }\n    if(!checkPrime(37)){\n       err_status = 1;\n       std::cout << \"Fail 3\";\n       break;\n    }\n    if(checkPrime(99)){\n       err_status = 1;\n       std::cout << \"Fail 4\";\n       break;\n    }\n    if(!checkPrime(7)){\n       err_status = 1;\n        std::cout << \"Fail 5\";\n       break;\n    }\n    if(!checkPrime(3)){\n       err_status = 1;\n       std::cout << \"Fail 6\";\n       break;\n    }\n    break;\n  }\n}\n\nint main(){\n\n    _test__prime();\n\n  if(err_status != 0){\n    std::cout << \"Test Failed... Try Again... Exiting\\n\";\n    exit(-1);\n  } else {\n    std::cout << \"All Test Passed... You can Submit now..\";\n  }\n}",
+         "question":4
+      }
+   },
+   {
+      "model":"subject.test",
+      "pk":5,
+      "fields":{
+         "source_code":"int err_status = 0;\n\nvoid test_factorial(){\n    while(err_status == 0){\n        if(get_factorial(0) != 1){\n          err_status = -1;\n          break;\n        }\n\n        if(get_factorial(1) != 1){\n           err_status = -1;\n           break;\n          }\n        if(get_factorial(5) != 120){\n           err_status = -1;\n           break;\n          }\n        if(get_factorial(4) != 24){\n           err_status = -1;\n           break;\n          }\n        if(get_factorial(3) != 6){\n           err_status = -1;\n           break;\n          }\n        break;\n    }\n}\n\nint main(){\n  test_factorial();\n\n  if (err_status == -1){\n    std::cout << \"Test Failed... Try Again... Exiting\\n\";\n    exit(-1);\n  } else {\n    std::cout << \"All Test Passed... You can Submit now..\";\n  }\n\n}",
+         "question":5
+      }
+   },
+   {
+      "model":"submission.submission",
+      "pk":1,
+      "fields":{
+         "question":2,
+         "solution":"int main()\n{\n    std::cout << \"Hello, World\";\n}",
+         "submitted_by":1,
+         "submitted_at":"2023-10-06T08:52:59.628Z",
+         "updated_at":"2023-10-06T08:52:59.629Z"
+      }
+   },
+   {
+      "model":"submission.submission",
+      "pk":2,
+      "fields":{
+         "question":3,
+         "solution":"int getSum(int x, int y){\nreturn x+y;\n}\n\nint getDiff(int x, int y){\nreturn x-y;\n}\n\nint getProduct(int x, int y){\nreturn x*y;\n}\n\nint getQuotient(int x, int y){\nreturn x/y;\n}\n\nint getRemainder(int x, int y){\nreturn x%y;\n}",
+         "submitted_by":1,
+         "submitted_at":"2023-10-06T09:04:52.279Z",
+         "updated_at":"2023-10-06T09:04:52.279Z"
+      }
+   },
+   {
+      "model":"submission.submission",
+      "pk":3,
+      "fields":{
+         "question":4,
+         "solution":"bool checkPrime(int n){\n    int count = 0;\n    for(int i = 2; i<n/2; i++){\n        if(n%i == 0)\n        {\n            count++;\n            break;\n        }\n    }\n    if(count == 0){\n        return true;\n    }\n    else{\n        return false;\n    }\n}",
+         "submitted_by":1,
+         "submitted_at":"2023-10-06T09:14:27.826Z",
+         "updated_at":"2023-10-06T09:14:27.826Z"
+      }
+   },
+   {
+      "model":"submission.result",
+      "pk":1,
+      "fields":{
+         "submission":1,
+         "marks":5
+      }
+   },
+   {
+      "model":"submission.result",
+      "pk":2,
+      "fields":{
+         "submission":2,
+         "marks":5
+      }
+   },
+   {
+      "model":"submission.review",
+      "pk":1,
+      "fields":{
+         "submission":1,
+         "message":"review",
+         "reviewed_by":2,
+         "reviewed_at":"2023-10-06T09:08:29.614Z",
+         "updated_at":"2023-10-06T09:08:29.614Z"
+      }
+   },
+   {
+      "model":"submission.review",
+      "pk":2,
+      "fields":{
+         "submission":2,
+         "message":"this is good",
+         "reviewed_by":2,
+         "reviewed_at":"2023-10-06T09:09:01.191Z",
+         "updated_at":"2023-10-06T09:09:01.191Z"
+      }
+   }
+]
